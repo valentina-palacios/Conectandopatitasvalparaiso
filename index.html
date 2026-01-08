@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conectando Patitas | Valparaíso</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        display: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            orange: '#FF9F1C',
+                            yellow: '#FFBF69',
+                            cream: '#CBF3F0',
+                            teal: '#2EC4B6',
+                            dark: '#1F2937'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito', sans-serif;
+        }
+        .paw-pattern {
+            background-color: #ffffff;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff9f1c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero-curve {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .hero-curve svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF9F1C;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-700 flex flex-col min-h-screen">
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-24 right-5 bg-white border-l-4 border-brand-teal shadow-2xl rounded-lg p-4 transform translate-x-full transition-transform duration-300 z-50 flex items-center">
+        <div class="text-brand-teal mr-3 text-xl"><i class="fas fa-check-circle"></i></div>
+        <div>
+            <h4 class="font-bold text-gray-800">¡Mensaje Enviado!</h4>
+            <p class="text-sm text-gray-600">Te contactaremos desde Valparaíso pronto.</p>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="bg-brand-orange text-white p-2 rounded-full w-10 h-10 flex items-center justify-center group-hover:rotate-12 transition-transform">
+                        <i class="fas fa-paw text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-gray-800 tracking-tight">Conectando<span class="text-brand-orange">Patitas</span></span>
+                </a>
+
+                <div class="hidden md:flex items-center space-x-8 font-semibold">
+                    <a href="#inicio" class="text-gray-600 hover:text-brand-orange transition-colors">Inicio</a>
+                    <a href="#donar" class="text-gray-600 hover:text-brand-orange transition-colors">Ayudar</a>
+                    <a href="#adoptar" class="text-gray-600 hover:text-brand-orange transition-colors">Adopta</a>
+                    <a href="#proceso" class="text-gray-600 hover:text-brand-orange transition-colors">Proceso</a>
+                </div>
+
+                <button class="md:hidden text-gray-600 focus:outline-none" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-2 border-t pt-4">
+                <a href="#inicio" class="block py-2 text-gray-600 hover:text-brand-orange">Inicio</a>
+                <a href="#donar" class="block py-2 text-brand-teal font-bold">Ayudar</a>
+                <a href="#adoptar" class="block py-2 text-gray-600 hover:text-brand-orange">Adopta</a>
+                <a href="#proceso" class="block py-2 text-gray-600 hover:text-brand-orange">Proceso</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative bg-brand-yellow/10 pt-16 pb-32 overflow-hidden">
+        <div class="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center relative z-10">
+            <div class="w-full md:w-1/2 text-center md:text-left mt-10 md:mt-0">
+                <span class="inline-block py-1 px-3 rounded-full bg-brand-orange/10 text-brand-orange font-bold text-sm mb-4">
+                    <i class="fas fa-map-marker-alt mr-1"></i> Nos ubicamos en Valparaíso
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-gray-800">
+                    Conectando Patitas con <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-red-500">corazones porteños</span>.
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
+                    Somos rescatistas independientes unidos por el amor a los animales de los cerros de Valpo. No compres, adopta y dales la segunda oportunidad que merecen.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#adoptar" class="px-8 py-3 bg-brand-orange text-white rounded-full font-bold shadow-lg hover:bg-orange-600 transition-all transform hover:-translate-y-1">
+                        Ver Rescatados
+                    </a>
+                    <a href="#contacto" class="px-8 py-3 bg-white text-brand-orange border-2 border-brand-orange rounded-full font-bold hover:bg-brand-orange/5 transition-all">
+                        Contáctanos
+                    </a>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 flex justify-center relative">
+                <div class="relative w-80 h-80 md:w-[500px] md:h-[500px]">
+                    <div class="absolute inset-0 bg-brand-yellow rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
+                    <img src="images//liah.jpeg" 
+                         alt="Perro y Gato felices" 
+                         class="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
+                    <div class="absolute -bottom-5 -left-5 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
+                        <div class="bg-green-100 p-2 rounded-full text-green-600">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Buscando hogar</p>
+                            <p class="font-bold text-gray-800">12 Peludos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Wave Divider -->
+        <div class="hero-curve text-brand-teal fill-current">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Donation / CTA -->
+    <section id="donar" class="py-20 bg-brand-teal relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 pattern-dots"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center text-white">
+            <h2 class="text-4xl font-bold mb-6">¿No puedes adoptar?</h2>
+            <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">Como somos independientes, costeamos todo de nuestro bolsillo. Tu aporte nos ayuda con alimento, veterinario y esterilizaciones.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="openDonationModal()" class="px-8 py-3 bg-white text-brand-teal font-bold rounded-full shadow-lg hover:bg-gray-100 transition-colors transform hover:scale-105">
+                    <i class="fas fa-hand-holding-heart mr-2"></i> Donar
+                </button>
+                <button onclick="openFosterModal()" class="px-8 py-3 bg-brand-orange text-white font-bold rounded-full shadow-lg hover:bg-orange-600 transition-colors">
+                    Ser Hogar Temporal
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adoption Gallery -->
+    <section id="adoptar" class="py-20 paw-pattern">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-brand-dark mb-4">Nuestros <span class="text-brand-orange">Rescatados</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Estos pequeños han sido rescatados de las calles y cerros de Valparaíso. Están listos para bajar del cerro a tu corazón.</p>
+                
+                <div class="flex justify-center gap-4 mt-8">
+                    <button onclick="filterPets('all')" class="filter-btn active px-6 py-2 rounded-full border-2 border-brand-orange bg-brand-orange text-white font-bold transition-all hover:shadow-lg focus:outline-none" data-filter="all">Todos</button>
+                    <button onclick="filterPets('dog')" class="filter-btn px-6 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold transition-all hover:shadow-lg focus:outline-none" data-filter="dog">
+                        <i class="fas fa-dog mr-2"></i>Perros
+                    </button>
+                    <button onclick="filterPets('cat')" class="filter-btn px-6 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold transition-all hover:shadow-lg focus:outline-none" data-filter="cat">
+                        <i class="fas fa-cat mr-2"></i>Gatos
+                    </button>
+                </div>
+            </div>
+
+            <div id="pets-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Pets injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="proceso" class="py-20 bg-brand-cream/30">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">¿Cómo <span class="text-brand-teal">Adoptar?</span></h2>
+                <p class="text-gray-600 mt-2">Nuestro proceso busca el mejor hogar definitivo.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center relative group hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-16 h-16 bg-brand-orange text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-orange-200 shadow-xl">1</div>
+                    <h3 class="text-xl font-bold mb-3">Conócelo</h3>
+                    <p class="text-gray-600">Revisa nuestra galería. Si te enamoras de alguno, contáctanos para coordinar una visita en su hogar temporal.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center relative group hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-16 h-16 bg-brand-teal text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-teal-200 shadow-xl">2</div>
+                    <h3 class="text-xl font-bold mb-3">Entrevista</h3>
+                    <p class="text-gray-600">Hacemos una pequeña entrevista para asegurar que ambos sean compatibles y el entorno sea seguro.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center relative group hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-16 h-16 bg-brand-yellow text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-yellow-200 shadow-xl">3</div>
+                    <h3 class="text-xl font-bold mb-3">¡A Casa!</h3>
+                    <p class="text-gray-600">Firmamos el compromiso de adopción responsable y llevamos a tu nuevo amigo a su hogar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community & Education Section -->
+    <section class="py-16 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            
+            <!-- Mission Banner -->
+            <div class="bg-brand-orange rounded-3xl p-8 md:p-12 shadow-xl text-white mb-16 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-10 -mb-10 transition-transform group-hover:scale-110 duration-700"></div>
+                
+                <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
+                    <div class="md:w-2/3">
+                        <div class="inline-block bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-4 backdrop-blur-sm">
+                            <i class="fas fa-bullhorn mr-1"></i> Difusión y Apoyo
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Apoya en redes sociales</h2>
+                        <p class="text-lg opacity-90 leading-relaxed mb-6">
+                            Nuestra misión es vincular y dar voz a los rescatistas y refugios independientes de Valparaíso que luchan solos en su proyecto.
+                            <br><strong>¡Tu "Compartir" salva vidas!</strong> Síguenos y ayúdanos a difundir sus historias para encontrarles un hogar.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#" class="bg-white text-brand-orange hover:bg-gray-100 font-bold py-2 px-6 rounded-full transition-all shadow-md flex items-center gap-2 transform hover:-translate-y-1">
+                                <i class="fab fa-instagram text-xl"></i> @patitasvalpo
+                            </a>
+                            <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-2 px-6 rounded-full transition-all flex items-center gap-2">
+                                <i class="fab fa-facebook-f"></i> Compartir Causa
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="bg-white/20 p-6 rounded-2xl backdrop-blur-sm text-center transform rotate-3 hover:rotate-0 transition-all duration-300 border border-white/30 shadow-lg">
+                            <i class="fas fa-hands-helping text-5xl mb-3 block"></i>
+                            <span class="font-bold text-xl">Red de Apoyo</span>
+                            <p class="text-sm mt-2 opacity-90">Uniendo fuerzas por los sin voz en los cerros.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sterilization Info -->
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-brand-dark mb-4">Tenencia Responsable: <span class="text-brand-teal">Esteriliza</span></h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">La esterilización es el único método ético y efectivo para controlar la sobrepoblación y el abandono en nuestros cerros. ¡Es un acto de amor!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-shadow border-l-4 border-brand-teal group">
+                    <div class="w-12 h-12 bg-brand-teal/10 text-brand-teal rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800 mb-2">Salud y Vida</h4>
+                    <p class="text-gray-600 text-sm">Previene tumores, infecciones uterinas y cáncer. Tu mascota vivirá más tiempo y más sana.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-shadow border-l-4 border-brand-orange group">
+                    <div class="w-12 h-12 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-brand-orange group-hover:text-white transition-colors">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800 mb-2">Fin al Abandono</h4>
+                    <p class="text-gray-600 text-sm">Evita camadas no deseadas que terminan sufriendo en las calles. Corta el ciclo del abandono.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-shadow border-l-4 border-brand-yellow group">
+                    <div class="w-12 h-12 bg-brand-yellow/10 text-brand-yellow rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-brand-yellow group-hover:text-white transition-colors">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800 mb-2">Comportamiento</h4>
+                    <p class="text-gray-600 text-sm">Reduce el marcaje de territorio, la agresividad y las fugas por celo. Hogares más tranquilos.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-paw text-brand-orange text-2xl"></i>
+                        <span class="text-2xl font-bold">Conectando<span class="text-brand-orange">Patitas</span></span>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed mb-6 max-w-md">
+                        Somos un grupo de rescatistas independientes de Valparaíso, Chile. Dedicamos nuestro tiempo y recursos a rescatar, rehabilitar y buscar familias para los animales abandonados en nuestra región.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-brand-orange transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-brand-orange transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-brand-orange transition-colors"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Enlaces</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#inicio" class="hover:text-white transition-colors">Inicio</a></li>
+                        <li><a href="#adoptar" class="hover:text-white transition-colors">Mascotas</a></li>
+                        <li><a href="#proceso" class="hover:text-white transition-colors">Proceso</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Transparencia</a></li>
+                    </ul>
+                </div>
+                <div id="contacto">
+                    <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Contáctanos</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-brand-orange"></i>
+                            <span>Valparaíso, Chile<br>(Atención coordinada)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-brand-orange"></i>
+                            <span>+56 9 1234 5678</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-brand-orange"></i>
+                            <span>hola@patitasvalpo.cl</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2024 Conectando Patitas Valparaíso. Hecho con amor.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Pet Modal -->
+    <div id="pet-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-xl text-gray-600"></i>
+            </button>
+            <div class="flex flex-col md:flex-row h-full">
+                <div class="w-full md:w-1/2 h-64 md:h-auto relative">
+                    <img id="modal-img" src="" alt="Pet" class="w-full h-full object-cover">
+                </div>
+                <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col overflow-y-auto max-h-[80vh] md:max-h-full">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 id="modal-name" class="text-3xl font-extrabold text-gray-800">Name</h3>
+                        <span id="modal-gender" class="bg-blue-100 text-blue-600 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide">Macho</span>
+                    </div>
+                    <p id="modal-breed" class="text-gray-500 font-medium mb-4 text-lg">Raza</p>
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="text-center p-3 bg-gray-50 rounded-xl">
+                            <span class="block text-gray-400 text-xs uppercase">Edad</span>
+                            <span id="modal-age" class="font-bold text-gray-800">2 años</span>
+                        </div>
+                        <div class="text-center p-3 bg-gray-50 rounded-xl">
+                            <span class="block text-gray-400 text-xs uppercase">Tamaño</span>
+                            <span id="modal-size" class="font-bold text-gray-800">Mediano</span>
+                        </div>
+                        <div class="text-center p-3 bg-gray-50 rounded-xl">
+                            <span class="block text-gray-400 text-xs uppercase">Vacunado</span>
+                            <span class="font-bold text-green-500"><i class="fas fa-check"></i></span>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-gray-800 mb-2">Sobre mí</h4>
+                    <p id="modal-desc" class="text-gray-600 mb-8 leading-relaxed">Descripción...</p>
+                    <div class="mt-auto">
+                        <form onsubmit="handleAdoptionSubmit(event)" class="space-y-3">
+                            <h4 class="font-bold text-gray-800 border-t pt-4">¿Te interesa adoptarme?</h4>
+                            <div class="flex gap-2">
+                                <input type="email" placeholder="Tu correo electrónico" required class="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-brand-orange focus:border-brand-orange block p-2.5">
+                                <button type="submit" class="bg-brand-orange hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">Enviar</button>
+                            </div>
+                            <p class="text-xs text-gray-400">Te enviaremos el formulario de pre-adopción.</p>
+                        </form>
+                        
+                        <!-- BOTÓN DONAR / APADRINAR -->
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <button onclick="closeModal(); openDonationModal()" class="w-full py-3 bg-brand-cream text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-white transition-colors flex items-center justify-center gap-2 group">
+                                <i class="fas fa-hand-holding-heart group-hover:scale-110 transition-transform"></i>
+                                Apadrinar o Donar
+                            </button>
+                            <p class="text-xs text-center text-gray-400 mt-2">¿No puedes adoptar? Ayúdanos a cuidarlo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donation-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeDonationModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            
+            <div class="p-8">
+                <div class="text-center mb-4">
+                     <div class="inline-block p-3 bg-brand-cream rounded-full text-brand-teal text-2xl shadow-sm">
+                        <i class="fas fa-hand-holding-heart"></i>
+                     </div>
+                </div>
+
+                <h3 class="text-2xl font-bold text-center text-brand-dark mb-2">Conectando tu Ayuda</h3>
+                <p class="text-center text-gray-500 mb-4 text-sm leading-relaxed px-2">
+                    Tu aporte se distribuye directamente entre nuestros <span class="font-bold text-brand-orange">refugios independientes</span> y casos urgentes de Valparaíso.
+                </p>
+
+                <div class="flex justify-center gap-2 mb-6 text-xs font-semibold text-gray-600">
+                    <span class="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-1 border border-gray-200"><i class="fas fa-utensils text-brand-orange"></i> Alimento</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-1 border border-gray-200"><i class="fas fa-stethoscope text-brand-teal"></i> Veterinario</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-1 border border-gray-200"><i class="fas fa-home text-brand-yellow"></i> Refugio</span>
+                </div>
+                
+                <div class="flex bg-gray-100 p-1 rounded-xl mb-6">
+                    <button onclick="setDonationType('unique')" id="btn-unique" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-brand-teal shadow-sm transition-all">Aporte Único</button>
+                    <button onclick="setDonationType('monthly')" id="btn-monthly" class="flex-1 py-2 text-sm font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all">Padrino Mensual</button>
+                </div>
+
+                <div class="space-y-4">
+                    <p id="donation-text" class="text-sm text-gray-600 font-medium text-center">Selecciona un monto para ayudar:</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectAmount(this)" class="amount-btn border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/5 text-brand-teal font-bold py-3 rounded-xl transition-all">$3.000</button>
+                        <button onclick="selectAmount(this)" class="amount-btn border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/5 text-brand-teal font-bold py-3 rounded-xl transition-all">$5.000</button>
+                        <div class="col-span-2">
+                            <input type="number" placeholder="Ingresa otro monto voluntario" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-teal text-center font-bold text-gray-700 transition-colors">
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-brand-teal text-white font-bold py-3 rounded-xl mt-6 hover:bg-teal-600 shadow-lg shadow-teal-200 transition-all transform active:scale-95 flex justify-center items-center gap-2 group">
+                        <span>Donar Ahora</span> <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    
+                    <p class="text-xs text-center text-gray-400 mt-4 flex items-center justify-center gap-1">
+                        <i class="fas fa-shield-alt text-brand-teal"></i> Transferencia directa a la cuenta de la agrupación
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Foster Modal (NEW) -->
+    <div id="foster-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeFosterModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            
+            <div class="p-8">
+                <div class="text-center mb-6">
+                     <div class="inline-block p-3 bg-brand-orange/10 rounded-full text-brand-orange text-2xl shadow-sm">
+                        <i class="fas fa-home"></i>
+                     </div>
+                     <h3 class="text-2xl font-bold text-brand-dark mt-4">Ser Hogar Temporal</h3>
+                     <p class="text-gray-500 text-sm">¡Gracias por querer abrir las puertas de tu casa!</p>
+                </div>
+
+                <form onsubmit="handleFosterSubmit(event)" class="space-y-4">
+                    
+                    <!-- Patio -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">¿Tienes patio o espacio cerrado?</label>
+                        <select class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brand-orange transition-colors">
+                            <option>Sí, patio cerrado</option>
+                            <option>Departamento con mallas</option>
+                            <option>No tengo patio</option>
+                        </select>
+                    </div>
+
+                    <!-- Otras Mascotas -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">¿Convives con más animales?</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 border-2 border-gray-100 p-3 rounded-xl w-full cursor-pointer hover:border-brand-orange/50">
+                                <input type="radio" name="pets" class="accent-brand-orange">
+                                <span class="text-sm">Sí</span>
+                            </label>
+                            <label class="flex items-center gap-2 border-2 border-gray-100 p-3 rounded-xl w-full cursor-pointer hover:border-brand-orange/50">
+                                <input type="radio" name="pets" class="accent-brand-orange">
+                                <span class="text-sm">No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Experiencia con Maltrato (NUEVO) -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">¿Has tenido contacto con animales maltratados?</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 border-2 border-gray-100 p-3 rounded-xl w-full cursor-pointer hover:border-brand-orange/50">
+                                <input type="radio" name="abuse_contact" class="accent-brand-orange">
+                                <span class="text-sm">Sí</span>
+                            </label>
+                            <label class="flex items-center gap-2 border-2 border-gray-100 p-3 rounded-xl w-full cursor-pointer hover:border-brand-orange/50">
+                                <input type="radio" name="abuse_contact" class="accent-brand-orange">
+                                <span class="text-sm">No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Modalidad -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Modalidad de ayuda</label>
+                        <div class="space-y-2">
+                             <label class="flex items-center gap-2 border-2 border-gray-100 p-3 rounded-xl w-full cursor-pointer hover:border-green-400 bg-green-50/50">
+                                <input type="radio" name="mode" class="accent-green-500">
+                                <div class="text-sm">
+                                    <span class="font-bold block text-green-700">Lo hago por ayudar ❤️</span>
+                                    <span class="text-xs text-green-600">Voluntario gratuito</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-2 border-2 border-gray-100 p-3 rounded-xl w-full cursor-pointer hover:border-blue-400 bg-blue-50/50">
+                                <input type="radio" name="mode" class="accent-blue-500">
+                                <div class="text-sm">
+                                    <span class="font-bold block text-blue-700">Cobro tarifa diaria 💰</span>
+                                    <span class="text-xs text-blue-600">Pensionado pagado</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Contacto -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Tu contacto</label>
+                        <input type="text" placeholder="+56 9..." class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brand-orange transition-colors">
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-orange text-white font-bold py-3 rounded-xl mt-4 hover:bg-orange-600 shadow-lg transition-all transform active:scale-95">
+                        Enviar Postulación
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const pets = [
+            { id: 1, name: "Negrito", type: "dog", breed: "Mestizo Chileno", age: "3 años", gender: "Macho", size: "Mediano", img: "images//lobito.jpeg", desc: "El clásico negrito fiel. Fue rescatado cerca de la Plaza Victoria. Es extremadamente leal, un poco guardián pero muy cariñoso con quienes conoce." },
+            { id: 2, name: "Michi", type: "cat", breed: "Romano Tigre", age: "2 años", gender: "Hembra", size: "Pequeño", img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Michi es la reina de la casa. Rescatada de una colonia en el puerto. Es independiente pero ronronea como motor cuando quiere cariño." },
+            { id: 3, name: "Barboncito", type: "dog", breed: "Quiltro Barbón", age: "5 años", gender: "Macho", size: "Pequeño", img: "images//doddy.jpeg", desc: "Un viejito con alma joven. Ideal para departamento o para hacer compañía a adultos mayores. Tranquilo, sabio y muy agradecido." },
+            { id: 4, name: "Manchitas", type: "cat", breed: "Vaca (B&N)", age: "1 año", gender: "Macho", size: "Mediano", img: "images//ragnar.jpeg", desc: "Manchitas es pura curiosidad. Le encanta mirar por la ventana y cazar moscas. Se lleva bien con otros gatos." },
+            { id: 5, name: "Chocolate", type: "dog", breed: "Mestizo Café", age: "8 meses", gender: "Macho", size: "Mediano", img: "https://images.unsplash.com/photo-1596492784531-6e6eb5ea92f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Un cachorro adolescente lleno de energía. Necesita paciencia y cariño para terminar de educarse. ¡Es un amor con patas!" },
+            { id: 6, name: "Pelusa", type: "dog", breed: "Mestiza Pelo Largo", age: "2 años", gender: "Hembra", size: "Pequeño", img: "https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido, pero una vez que confía es la más dulce del mundo." },
+            { id: 7, name: "Garfield", type: "cat", breed: "Mestizo Naranjo", age: "4 años", gender: "Macho", size: "Grande", img: "https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer. Perfecto para un hogar relajado." },
+            { id: 8, name: "Canela", type: "dog", breed: "Mestiza Chilena", age: "1.5 años", gender: "Hembra", size: "Mediano", img: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde. Muy despierta, ágil y compañera." }
+        ];
+
+        function renderPets(filter = 'all') {
+            const grid = document.getElementById('pets-grid');
+            grid.innerHTML = '';
+            const filteredPets = filter === 'all' ? pets : pets.filter(pet => pet.type === filter);
+            filteredPets.forEach(pet => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl overflow-hidden shadow-md card-hover group h-full flex flex-col';
+                card.innerHTML = `
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${pet.img}" alt="${pet.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
+                            <h3 class="text-white text-2xl font-bold">${pet.name}</h3>
+                            <p class="text-white/90 text-sm"><i class="fas fa-${pet.type === 'dog' ? 'dog' : 'cat'} mr-1"></i> ${pet.breed}</p>
+                        </div>
+                        <button onclick="openModal(${pet.id})" class="absolute top-3 right-3 bg-white/90 hover:bg-white text-brand-orange p-2 rounded-full shadow-lg transition-colors"><i class="fas fa-heart"></i></button>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                            <span class="bg-gray-100 px-2 py-1 rounded-md"><i class="far fa-clock mr-1"></i> ${pet.age}</span>
+                            <span class="bg-gray-100 px-2 py-1 rounded-md"><i class="fas fa-venus-mars mr-1"></i> ${pet.gender}</span>
+                        </div>
+                        <p class="text-gray-600 line-clamp-2 mb-4 text-sm">${pet.desc}</p>
+                        <button onclick="openModal(${pet.id})" class="w-full py-2 border-2 border-brand-teal text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-white transition-colors">Conóceme</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterPets(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if(btn.dataset.filter === type) {
+                    btn.classList.add('bg-brand-orange', 'text-white');
+                    btn.classList.remove('text-brand-orange', 'hover:bg-brand-orange');
+                } else {
+                    btn.classList.remove('bg-brand-orange', 'text-white');
+                    btn.classList.add('text-brand-orange', 'hover:bg-brand-orange');
+                }
+            });
+            renderPets(type);
+        }
+
+        // --- Pet Modal Logic ---
+        const modal = document.getElementById('pet-modal');
+        const modalContent = modal.querySelector('div');
+
+        function openModal(id) {
+            const pet = pets.find(p => p.id === id);
+            if(!pet) return;
+            document.getElementById('modal-img').src = pet.img;
+            document.getElementById('modal-name').textContent = pet.name;
+            document.getElementById('modal-breed').textContent = pet.breed;
+            document.getElementById('modal-age').textContent = pet.age;
+            document.getElementById('modal-gender').textContent = pet.gender;
+            document.getElementById('modal-size').textContent = pet.size;
+            document.getElementById('modal-desc').textContent = pet.desc;
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        function handleAdoptionSubmit(e) {
+            e.preventDefault();
+            closeModal();
+            showToast();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => { toast.classList.add('translate-x-full'); }, 3000);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // --- Donation Modal Logic ---
+        const donationModal = document.getElementById('donation-modal');
+        const donationContent = donationModal.querySelector('div');
+
+        function openDonationModal() {
+            donationModal.classList.remove('hidden');
+            setTimeout(() => {
+                donationModal.classList.remove('opacity-0');
+                donationContent.classList.remove('scale-95');
+                donationContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeDonationModal() {
+            donationModal.classList.add('opacity-0');
+            donationContent.classList.remove('scale-100');
+            donationContent.classList.add('scale-95');
+            setTimeout(() => { donationModal.classList.add('hidden'); }, 300);
+        }
+
+        function setDonationType(type) {
+            const btnUnique = document.getElementById('btn-unique');
+            const btnMonthly = document.getElementById('btn-monthly');
+            const text = document.getElementById('donation-text');
+            if (type === 'unique') {
+                btnUnique.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-brand-teal shadow-sm transition-all";
+                btnMonthly.className = "flex-1 py-2 text-sm font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all";
+                text.textContent = "Selecciona un monto único:";
+            } else {
+                btnMonthly.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-brand-teal shadow-sm transition-all";
+                btnUnique.className = "flex-1 py-2 text-sm font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all";
+                text.textContent = "Selecciona tu aporte mensual:";
+            }
+        }
+
+        function selectAmount(btn) {
+            document.querySelectorAll('.amount-btn').forEach(b => {
+                b.classList.remove('bg-brand-teal', 'text-white', 'border-brand-teal');
+                b.classList.add('text-brand-teal', 'border-brand-teal/30');
+            });
+            btn.classList.remove('text-brand-teal', 'border-brand-teal/30');
+            btn.classList.add('bg-brand-teal', 'text-white', 'border-brand-teal');
+        }
+
+        donationModal.addEventListener('click', (e) => { if (e.target === donationModal) closeDonationModal(); });
+        
+        // --- Foster Modal Logic ---
+        const fosterModal = document.getElementById('foster-modal');
+        const fosterContent = fosterModal.querySelector('div');
+
+        function openFosterModal() {
+            fosterModal.classList.remove('hidden');
+            setTimeout(() => {
+                fosterModal.classList.remove('opacity-0');
+                fosterContent.classList.remove('scale-95');
+                fosterContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeFosterModal() {
+            fosterModal.classList.add('opacity-0');
+            fosterContent.classList.remove('scale-100');
+            fosterContent.classList.add('scale-95');
+            setTimeout(() => { fosterModal.classList.add('hidden'); }, 300);
+        }
+        
+        function handleFosterSubmit(e) {
+            e.preventDefault();
+            closeFosterModal();
+            showToast();
+        }
+
+        fosterModal.addEventListener('click', (e) => { if (e.target === fosterModal) closeFosterModal(); });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => { renderPets(); });
+
+    </script>
+</body>
+</html>
