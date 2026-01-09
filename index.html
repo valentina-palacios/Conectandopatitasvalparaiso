@@ -80,7 +80,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-700 flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-700 flex flex-col min-h-screen relative overflow-x-hidden">
 
     <!-- Notification Toast -->
     <div id="toast" class="fixed top-24 right-5 bg-white border-l-4 border-brand-teal shadow-2xl rounded-lg p-4 transform translate-x-full transition-transform duration-300 z-50 flex items-center">
@@ -88,6 +88,57 @@
         <div>
             <h4 class="font-bold text-gray-800">¡Mensaje Enviado!</h4>
             <p class="text-sm text-gray-600">Te contactaremos desde Valparaíso pronto.</p>
+        </div>
+    </div>
+
+    <!-- Floating Info Sidebar -->
+    <div class="fixed right-0 top-1/2 transform -translate-y-1/2 z-40 transition-transform duration-300 translate-x-[17rem] hover:translate-x-0 group">
+        <div class="bg-white/95 backdrop-blur-md shadow-2xl rounded-l-3xl p-6 border-l-4 border-brand-orange w-80 relative h-auto">
+            
+            <!-- Visible Tab Handle -->
+            <div class="absolute left-0 top-8 -translate-x-full bg-brand-orange text-white py-3 px-2 rounded-l-xl shadow-lg cursor-pointer flex flex-col items-center justify-center gap-2 group-hover:opacity-0 transition-opacity">
+                <i class="fas fa-info-circle text-2xl animate-pulse"></i>
+            </div>
+
+            <div class="flex items-center gap-2 mb-4 border-b pb-2 border-gray-100">
+                <i class="fas fa-paw text-brand-orange"></i>
+                <h3 class="text-xl font-bold text-gray-800">Guía Patitas</h3>
+            </div>
+            
+            <div class="space-y-3">
+                <!-- Item 1: Salud Mental -->
+                <button onclick="openInfoModal('mental')" class="w-full flex items-center gap-3 text-left hover:bg-red-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-red-100">
+                    <div class="w-10 h-10 rounded-full bg-red-100 flex-shrink-0 flex items-center justify-center text-red-500 group-hover/item:scale-110 transition-transform">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-bold text-gray-800 text-sm">Salud Mental</h6>
+                        <p class="text-xs text-gray-500">Amor que sana</p>
+                    </div>
+                </button>
+                
+                <!-- Item 2: Cuidado -->
+                <button onclick="openInfoModal('care')" class="w-full flex items-center gap-3 text-left hover:bg-teal-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-teal-100">
+                    <div class="w-10 h-10 rounded-full bg-teal-100 flex-shrink-0 flex items-center justify-center text-brand-teal group-hover/item:scale-110 transition-transform">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-bold text-gray-800 text-sm">Tips de Cuidado</h6>
+                        <p class="text-xs text-gray-500">Aprende a cuidar</p>
+                    </div>
+                </button>
+                
+                <!-- Item 3: Tenencia -->
+                <button onclick="openInfoModal('ownership')" class="w-full flex items-center gap-3 text-left hover:bg-yellow-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-yellow-100">
+                    <div class="w-10 h-10 rounded-full bg-yellow-100 flex-shrink-0 flex items-center justify-center text-yellow-600 group-hover/item:scale-110 transition-transform">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <h6 class="font-bold text-gray-800 text-sm">Tenencia</h6>
+                        <p class="text-xs text-gray-500">Sé responsable</p>
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -128,14 +179,14 @@
         <div class="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center relative z-10">
             <div class="w-full md:w-1/2 text-center md:text-left mt-10 md:mt-0">
                 <span class="inline-block py-1 px-3 rounded-full bg-brand-orange/10 text-brand-orange font-bold text-sm mb-4">
-                    <i class="fas fa-map-marker-alt mr-1"></i> Nos ubicamos en Valparaíso
+                    <i class="fas fa-map-marker-alt mr-1"></i> Somos de Valparaíso
                 </span>
                 <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-gray-800">
                     Conectando Patitas con <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-red-500">corazones porteños</span>.
                 </h1>
                 <p class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
-                    Somos rescatistas independientes unidos por el amor a los animales de los cerros de Valpo. No compres, adopta y dales la segunda oportunidad que merecen.
+                    Vinculamos refugios y rescatistas de los cerros de Valparaíso con personas que quieren ayudar, adoptar y darles la segunda oportunidad que merecen.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                     <a href="#adoptar" class="px-8 py-3 bg-brand-orange text-white rounded-full font-bold shadow-lg hover:bg-orange-600 transition-all transform hover:-translate-y-1">
@@ -149,9 +200,14 @@
             <div class="w-full md:w-1/2 flex justify-center relative">
                 <div class="relative w-80 h-80 md:w-[500px] md:h-[500px]">
                     <div class="absolute inset-0 bg-brand-yellow rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
-                    <img src="images//liah.jpeg" 
+                    
+                    <!-- !!! FOTO PORTADA (CAMBIAR AQUÍ) !!! -->
+                    <!-- Asegúrate de que tu foto se llame 'portada.jpg' y esté en la carpeta 'images' -->
+                    <img src="images/portada.jpg" 
+                         onerror="this.src='https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
                          alt="Perro y Gato felices" 
                          class="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
+                    
                     <div class="absolute -bottom-5 -left-5 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
                         <div class="bg-green-100 p-2 rounded-full text-green-600">
                             <i class="fas fa-home"></i>
@@ -164,7 +220,6 @@
                 </div>
             </div>
         </div>
-        <!-- Wave Divider -->
         <div class="hero-curve text-brand-teal fill-current">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
@@ -177,12 +232,14 @@
         <div class="absolute inset-0 opacity-10 pattern-dots"></div>
         <div class="container mx-auto px-6 relative z-10 text-center text-white">
             <h2 class="text-4xl font-bold mb-6">¿No puedes adoptar?</h2>
-            <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">Como somos independientes, costeamos todo de nuestro bolsillo. Tu aporte nos ayuda con alimento, veterinario y esterilizaciones.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="openDonationModal()" class="px-8 py-3 bg-white text-brand-teal font-bold rounded-full shadow-lg hover:bg-gray-100 transition-colors transform hover:scale-105">
+            <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                Gracias a tu ayuda, un corazón peludo tendrá la segunda oportunidad que merece.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <button onclick="openDonationModal()" class="px-10 py-4 text-lg bg-white text-brand-teal font-bold rounded-full shadow-xl hover:bg-gray-100 transition-colors transform hover:scale-105 hover:shadow-2xl">
                     <i class="fas fa-hand-holding-heart mr-2"></i> Donar
                 </button>
-                <button onclick="openFosterModal()" class="px-8 py-3 bg-brand-orange text-white font-bold rounded-full shadow-lg hover:bg-orange-600 transition-colors">
+                <button onclick="openFosterModal()" class="px-10 py-4 text-lg bg-brand-orange text-white font-bold rounded-full shadow-xl hover:bg-orange-600 transition-colors hover:shadow-2xl">
                     Ser Hogar Temporal
                 </button>
             </div>
@@ -192,17 +249,25 @@
     <!-- Adoption Gallery -->
     <section id="adoptar" class="py-20 paw-pattern">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
+            <div class="text-center mb-8">
                 <h2 class="text-3xl md:text-5xl font-bold text-brand-dark mb-4">Nuestros <span class="text-brand-orange">Rescatados</span></h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">Estos pequeños han sido rescatados de las calles y cerros de Valparaíso. Están listos para bajar del cerro a tu corazón.</p>
                 
-                <div class="flex justify-center gap-4 mt-8">
-                    <button onclick="filterPets('all')" class="filter-btn active px-6 py-2 rounded-full border-2 border-brand-orange bg-brand-orange text-white font-bold transition-all hover:shadow-lg focus:outline-none" data-filter="all">Todos</button>
-                    <button onclick="filterPets('dog')" class="filter-btn px-6 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold transition-all hover:shadow-lg focus:outline-none" data-filter="dog">
-                        <i class="fas fa-dog mr-2"></i>Perros
-                    </button>
-                    <button onclick="filterPets('cat')" class="filter-btn px-6 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold transition-all hover:shadow-lg focus:outline-none" data-filter="cat">
-                        <i class="fas fa-cat mr-2"></i>Gatos
+                <!-- Filters & Match Button -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-8">
+                    <div class="flex gap-2">
+                        <button onclick="filterPets('all')" class="filter-btn active px-4 py-2 rounded-full border-2 border-brand-orange bg-brand-orange text-white font-bold text-sm transition-all hover:shadow-lg focus:outline-none" data-filter="all">Todos</button>
+                        <button onclick="filterPets('dog')" class="filter-btn px-4 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold text-sm transition-all hover:shadow-lg focus:outline-none" data-filter="dog">
+                            <i class="fas fa-dog mr-1"></i>Perros
+                        </button>
+                        <button onclick="filterPets('cat')" class="filter-btn px-4 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold text-sm transition-all hover:shadow-lg focus:outline-none" data-filter="cat">
+                            <i class="fas fa-cat mr-1"></i>Gatos
+                        </button>
+                    </div>
+                    
+                    <!-- Match Button -->
+                    <button onclick="openMatchModal()" class="ml-0 md:ml-4 px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2 animate-pulse">
+                        <i class="fas fa-magic"></i> Quiz: Encuentra tu Match
                     </button>
                 </div>
             </div>
@@ -261,7 +326,7 @@
                         </p>
                         <div class="flex flex-wrap gap-4">
                             <a href="#" class="bg-white text-brand-orange hover:bg-gray-100 font-bold py-2 px-6 rounded-full transition-all shadow-md flex items-center gap-2 transform hover:-translate-y-1">
-                                <i class="fab fa-instagram text-xl"></i> @patitasvalpo
+                                <i class="fab fa-instagram text-xl"></i> @conectandopatitasvalparaiso
                             </a>
                             <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-2 px-6 rounded-full transition-all flex items-center gap-2">
                                 <i class="fab fa-facebook-f"></i> Compartir Causa
@@ -354,7 +419,7 @@
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-envelope text-brand-orange"></i>
-                            <span>hola@patitasvalpo.cl</span>
+                            <span>hola@conectandopatitasvalparaiso.cl</span>
                         </li>
                     </ul>
                 </div>
@@ -373,6 +438,7 @@
             </button>
             <div class="flex flex-col md:flex-row h-full">
                 <div class="w-full md:w-1/2 h-64 md:h-auto relative">
+                    <!-- IMAGEN MASCOTA (MODAL) -->
                     <img id="modal-img" src="" alt="Pet" class="w-full h-full object-cover">
                 </div>
                 <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col overflow-y-auto max-h-[80vh] md:max-h-full">
@@ -395,17 +461,35 @@
                             <span class="font-bold text-green-500"><i class="fas fa-check"></i></span>
                         </div>
                     </div>
-                    <h4 class="font-bold text-gray-800 mb-2">Sobre mí</h4>
-                    <p id="modal-desc" class="text-gray-600 mb-8 leading-relaxed">Descripción...</p>
+
+                    <!-- SECCIÓN SOBRE MÍ CON ETIQUETA DE ESTADO -->
+                    <div class="flex items-center gap-3 mb-2">
+                        <h4 class="font-bold text-gray-800">Sobre mí</h4>
+                        <span id="modal-status" class="px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border">Refugio</span>
+                    </div>
+                    
+                    <p id="modal-desc" class="text-gray-600 mb-4 leading-relaxed">Descripción...</p>
+                    
+                    <!-- BOTÓN CONOCER HISTORIA (NUEVO) -->
+                    <button onclick="toggleStory()" id="btn-story" class="text-brand-orange font-bold text-sm mb-6 flex items-center gap-2 hover:underline focus:outline-none transition-all">
+                        <i class="fas fa-book-reader"></i> Conocer historia de rescate
+                    </button>
+
+                    <!-- HISTORIA DESPLEGABLE (NUEVO) -->
+                    <div id="modal-story" class="hidden bg-orange-50 p-4 rounded-xl mb-6 text-sm text-gray-700 italic border-l-4 border-brand-orange transition-all duration-300">
+                        <!-- Se llena con JS -->
+                    </div>
+
                     <div class="mt-auto">
-                        <form onsubmit="handleAdoptionSubmit(event)" class="space-y-3">
+                        <!-- SECCIÓN DE ADOPCIÓN ACTUALIZADA -->
+                        <div class="space-y-3">
                             <h4 class="font-bold text-gray-800 border-t pt-4">¿Te interesa adoptarme?</h4>
-                            <div class="flex gap-2">
-                                <input type="email" placeholder="Tu correo electrónico" required class="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-brand-orange focus:border-brand-orange block p-2.5">
-                                <button type="submit" class="bg-brand-orange hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">Enviar</button>
-                            </div>
-                            <p class="text-xs text-gray-400">Te enviaremos el formulario de pre-adopción.</p>
-                        </form>
+                            <p class="text-sm text-gray-600">Para asegurar que somos la familia perfecta el uno para el otro, necesitamos conocerte un poco más.</p>
+                            
+                            <button onclick="closeModal(); openAdoptionForm()" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex justify-center items-center gap-2 shadow-lg shadow-orange-200 transform active:scale-95">
+                                <i class="fas fa-clipboard-list"></i> Llenar Formulario de Pre-Adopción
+                            </button>
+                        </div>
                         
                         <!-- BOTÓN DONAR / APADRINAR -->
                         <div class="mt-4 pt-4 border-t border-gray-100">
@@ -417,6 +501,219 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matchmaking Modal -->
+    <div id="match-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeMatchModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            
+            <div class="p-8">
+                <div class="text-center mb-6">
+                     <div class="inline-block p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white text-3xl shadow-lg mb-2">
+                        <i class="fas fa-magic"></i>
+                     </div>
+                     <h3 class="text-2xl font-bold text-gray-800">Encuentra tu Match Ideal</h3>
+                     <p class="text-gray-500 text-sm">Responde 3 preguntas simples y te diremos quién te espera.</p>
+                </div>
+
+                <form id="match-form" onsubmit="handleMatchSubmit(event)" class="space-y-5">
+                    
+                    <!-- P1: Especie -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">1. ¿Qué buscas?</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="match_type" value="dog" class="peer hidden" required>
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-brand-orange peer-checked:bg-orange-50 transition-all">
+                                    <i class="fas fa-dog text-xl mb-1 block text-gray-400 peer-checked:text-brand-orange"></i>
+                                    <span class="text-xs font-bold text-gray-600">Perro</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="match_type" value="cat" class="peer hidden">
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-brand-orange peer-checked:bg-orange-50 transition-all">
+                                    <i class="fas fa-cat text-xl mb-1 block text-gray-400 peer-checked:text-brand-orange"></i>
+                                    <span class="text-xs font-bold text-gray-600">Gato</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="match_type" value="any" class="peer hidden">
+                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-brand-orange peer-checked:bg-orange-50 transition-all">
+                                    <i class="fas fa-heart text-xl mb-1 block text-gray-400 peer-checked:text-brand-orange"></i>
+                                    <span class="text-xs font-bold text-gray-600">Me da igual</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- P2: Energía -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">2. Tu estilo de vida es...</label>
+                        <select name="match_energy" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            <option value="low">Tranquilo (Sofá, series, paseos cortos)</option>
+                            <option value="medium">Equilibrado (Juego un rato, descanso otro)</option>
+                            <option value="high">Activo (Trekking, correr, mucha actividad)</option>
+                        </select>
+                    </div>
+
+                    <!-- P3: Espacio -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">3. Vives en...</label>
+                        <select name="match_space" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            <option value="apartment">Departamento (Espacio reducido)</option>
+                            <option value="house">Casa con patio (Espacio medio)</option>
+                            <option value="parcel">Parcela / Espacio grande</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-dark text-white font-bold py-3 rounded-xl mt-4 hover:bg-gray-800 shadow-lg transition-all transform active:scale-95">
+                        ¡Buscar mi Match!
+                    </button>
+                </form>
+
+                <!-- Results Section -->
+                <div id="match-results" class="hidden mt-4 text-center">
+                    <h4 class="font-bold text-brand-orange text-lg mb-3">¡Encontramos a tu media naranja!</h4>
+                    <div id="match-list" class="space-y-3 max-h-48 overflow-y-auto">
+                        <!-- Results injected here -->
+                    </div>
+                    <button onclick="resetMatchForm()" class="text-xs text-gray-400 underline mt-4">Volver a intentar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adoption Form Modal -->
+    <div id="adoption-form-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeAdoptionForm()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            
+            <div class="p-8">
+                <div class="text-center mb-8">
+                     <div class="inline-block p-3 bg-brand-orange/10 rounded-full text-brand-orange text-3xl shadow-sm mb-3">
+                        <i class="fas fa-heart"></i>
+                     </div>
+                     <h3 class="text-3xl font-bold text-brand-dark">Formulario de Pre-Adopción</h3>
+                     <p class="text-gray-500 text-sm mt-2">Queremos asegurarnos de que nuestros rescatados encuentren un hogar para toda la vida.</p>
+                </div>
+
+                <form onsubmit="handleFullAdoptionSubmit(event)" class="space-y-6">
+                    
+                    <!-- Sección 1: Datos Personales -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-user"></i> Datos Personales</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Nombre Completo</label>
+                                <input type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Edad</label>
+                                <input type="number" required min="18" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Teléfono / WhatsApp</label>
+                                <input type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Comuna de residencia</label>
+                                <input type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección 2: Vivienda -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-home"></i> Vivienda y Seguridad</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Tipo de Vivienda</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option>Casa con patio cerrado</option>
+                                    <option>Casa con patio abierto</option>
+                                    <option>Departamento</option>
+                                    <option>Parcela</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Tenencia</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option>Propia</option>
+                                    <option>Arrendada (Con permiso escrito)</option>
+                                    <option>Arrendada (Sin permiso explícito)</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Protección (Mallas/Cercos)</label>
+                                <textarea placeholder="¿Tienes mallas de seguridad en ventanas o cercos seguros para que no escape?" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange h-16"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección 3: Familia y Mascotas -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-users"></i> Familia y Convivencia</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">¿Quiénes viven en casa?</label>
+                                <input type="text" placeholder="Ej: Yo, mi pareja y dos niños (5 y 8 años)" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">¿Tienes otras mascotas actualmente?</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option>No, no tengo</option>
+                                    <option>Sí, perros</option>
+                                    <option>Sí, gatos</option>
+                                    <option>Sí, perros y gatos</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="sterilized" class="accent-brand-orange w-4 h-4">
+                                <label for="sterilized" class="text-sm text-gray-600">Mis otras mascotas están esterilizadas y vacunadas.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección 4: Compromiso -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-handshake"></i> Compromiso de Vida</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">¿Qué harías si te cambias de casa/país?</label>
+                                <input type="text" placeholder="Respuesta honesta..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">¿Estás dispuesto/a a cubrir gastos veterinarios ante enfermedades?</label>
+                                <div class="flex gap-4 mt-1">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="vet_commitment" class="accent-brand-orange">
+                                        <span class="text-sm">Sí, totalmente</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="vet_commitment" class="accent-brand-orange">
+                                        <span class="text-sm">Depende del costo</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Horas que pasará solo el animal al día</label>
+                                <input type="text" placeholder="Ej: 4 horas en la mañana" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-orange text-white font-bold py-4 rounded-xl shadow-xl hover:bg-orange-600 transition-all transform active:scale-95 text-lg">
+                        Enviar Postulación
+                    </button>
+                    <p class="text-xs text-center text-gray-400 mt-2">Al enviar, aceptas que te contactemos para una entrevista.</p>
+                </form>
             </div>
         </div>
     </div>
@@ -461,7 +758,7 @@
                         </div>
                     </div>
                     
-                    <button class="w-full bg-brand-teal text-white font-bold py-3 rounded-xl mt-6 hover:bg-teal-600 shadow-lg shadow-teal-200 transition-all transform active:scale-95 flex justify-center items-center gap-2 group">
+                    <button onclick="closeDonationModal(); openPaymentModal()" class="w-full bg-brand-teal text-white font-bold py-3 rounded-xl mt-6 hover:bg-teal-600 shadow-lg shadow-teal-200 transition-all transform active:scale-95 flex justify-center items-center gap-2 group">
                         <span>Donar Ahora</span> <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </button>
                     
@@ -473,7 +770,83 @@
         </div>
     </div>
 
-    <!-- Foster Modal (NEW) -->
+    <!-- Payment Method Modal -->
+    <div id="payment-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closePaymentModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            
+            <div class="p-8">
+                <h3 class="text-2xl font-bold text-center text-brand-dark mb-2">Elige tu medio de pago</h3>
+                <p class="text-center text-gray-500 mb-6 text-sm">Tu aporte llega a los peludos.</p>
+
+                <div class="space-y-3">
+                    <!-- WebPay -->
+                    <button onclick="showToastPayment('Redirigiendo a WebPay...')" class="w-full border-2 border-gray-100 hover:border-brand-teal hover:bg-teal-50 p-4 rounded-xl flex items-center justify-between group transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600"><i class="fas fa-credit-card"></i></div>
+                            <div class="text-left">
+                                <span class="block font-bold text-gray-800">WebPay / Tarjetas</span>
+                                <span class="text-xs text-gray-500">Débito, Crédito, Prepago</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-brand-teal"></i>
+                    </button>
+
+                    <!-- Mercado Pago -->
+                    <button onclick="showToastPayment('Abriendo Mercado Pago...')" class="w-full border-2 border-gray-100 hover:border-blue-400 hover:bg-blue-50 p-4 rounded-xl flex items-center justify-between group transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-500"><i class="fas fa-hand-holding-usd"></i></div>
+                            <div class="text-left">
+                                <span class="block font-bold text-gray-800">Mercado Pago</span>
+                                <span class="text-xs text-gray-500">QR, Saldo en cuenta</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
+                    </button>
+
+                    <!-- Transferencia (Desplegable) -->
+                    <div class="border-2 border-gray-100 rounded-xl overflow-hidden">
+                        <button onclick="toggleTransferDetails()" class="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-brand-orange/20 p-2 rounded-lg text-brand-orange"><i class="fas fa-university"></i></div>
+                                <div class="text-left">
+                                    <span class="block font-bold text-gray-800">Transferencia</span>
+                                    <span class="text-xs text-gray-500">Datos bancarios</span>
+                                </div>
+                            </div>
+                            <i id="transfer-arrow" class="fas fa-chevron-down text-gray-300 transition-transform"></i>
+                        </button>
+                        
+                        <!-- Datos Ocultos -->
+                        <div id="transfer-details" class="hidden bg-gray-50 p-4 border-t border-gray-100 text-sm text-gray-600 space-y-2">
+                            <p class="font-bold text-brand-dark mb-2">Datos de Transferencia:</p>
+                            <div class="flex justify-between items-center bg-white p-2 rounded border border-gray-200">
+                                <span>Banco Estado</span>
+                                <span class="text-xs font-bold bg-gray-200 px-2 py-1 rounded">Vista/RUT</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white p-2 rounded border border-gray-200 group cursor-pointer" onclick="copyText('12345678')">
+                                <span>Cuenta: 12345678</span>
+                                <i class="far fa-copy text-gray-400 group-hover:text-brand-teal"></i>
+                            </div>
+                            <div class="flex justify-between items-center bg-white p-2 rounded border border-gray-200 group cursor-pointer" onclick="copyText('65.432.100-k')">
+                                <span>RUT: 65.432.100-k</span>
+                                <i class="far fa-copy text-gray-400 group-hover:text-brand-teal"></i>
+                            </div>
+                            <div class="flex justify-between items-center bg-white p-2 rounded border border-gray-200 group cursor-pointer" onclick="copyText('hola@conectandopatitasvalparaiso.cl')">
+                                <span class="truncate pr-2">Email: hola@conectandopatitasvalparaiso.cl</span>
+                                <i class="far fa-copy text-gray-400 group-hover:text-brand-teal"></i>
+                            </div>
+                            <p class="text-xs text-center text-gray-400 mt-2">Haz clic en los datos para copiar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Foster Modal -->
     <div id="foster-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeFosterModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
@@ -491,7 +864,6 @@
 
                 <form onsubmit="handleFosterSubmit(event)" class="space-y-4">
                     
-                    <!-- Patio -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">¿Tienes patio o espacio cerrado?</label>
                         <select class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brand-orange transition-colors">
@@ -501,7 +873,6 @@
                         </select>
                     </div>
 
-                    <!-- Otras Mascotas -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">¿Convives con más animales?</label>
                         <div class="flex gap-4">
@@ -516,7 +887,7 @@
                         </div>
                     </div>
 
-                    <!-- Experiencia con Maltrato (NUEVO) -->
+                    <!-- Experiencia con Maltrato -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">¿Has tenido contacto con animales maltratados?</label>
                         <div class="flex gap-4">
@@ -531,7 +902,6 @@
                         </div>
                     </div>
 
-                    <!-- Modalidad -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Modalidad de ayuda</label>
                         <div class="space-y-2">
@@ -542,17 +912,31 @@
                                     <span class="text-xs text-green-600">Voluntario gratuito</span>
                                 </div>
                             </label>
-                            <label class="flex items-center gap-2 border-2 border-gray-100 p-3 rounded-xl w-full cursor-pointer hover:border-blue-400 bg-blue-50/50">
-                                <input type="radio" name="mode" class="accent-blue-500">
-                                <div class="text-sm">
-                                    <span class="font-bold block text-blue-700">Cobro tarifa diaria 💰</span>
-                                    <span class="text-xs text-blue-600">Pensionado pagado</span>
+                            
+                            <!-- Opción con Input Integrado al Lado -->
+                            <div class="border-2 border-gray-100 p-3 rounded-xl w-full hover:border-blue-400 bg-blue-50/50 transition-colors">
+                                <div class="flex items-center justify-between gap-2">
+                                    <label class="flex items-center gap-2 cursor-pointer flex-grow">
+                                        <input type="radio" name="mode" class="accent-blue-500">
+                                        <div class="text-sm">
+                                            <span class="font-bold block text-blue-700">Cobro tarifa diaria 💰</span>
+                                            <span class="text-xs text-blue-600">Pensionado pagado</span>
+                                        </div>
+                                    </label>
+                                    
+                                    <!-- Input de monto (A la derecha) -->
+                                    <div class="w-32 flex-shrink-0">
+                                        <div class="relative">
+                                            <span class="absolute left-2 top-1.5 text-gray-500 font-bold text-sm">$</span>
+                                            <input type="number" placeholder="3000" class="w-full border border-blue-200 rounded-lg pl-5 pr-2 py-1 text-sm focus:outline-none focus:border-blue-400 bg-white font-bold text-gray-700">
+                                        </div>
+                                        <p class="text-[10px] text-blue-600 text-center mt-1">Máx. sugerido $4.000</p>
+                                    </div>
                                 </div>
-                            </label>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Contacto -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Tu contacto</label>
                         <input type="text" placeholder="+56 9..." class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brand-orange transition-colors">
@@ -566,25 +950,208 @@
         </div>
     </div>
 
+    <!-- Info Modal (NEW) -->
+    <div id="info-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeInfoModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            <div class="p-8">
+                <div class="text-center">
+                    <div id="info-icon-container" class="inline-block p-4 rounded-full mb-4 shadow-sm">
+                        <i id="info-icon" class="text-3xl"></i>
+                    </div>
+                    <h3 id="info-title" class="text-2xl font-bold text-gray-800 mb-4">Título</h3>
+                    <div id="info-content" class="text-left text-gray-600 space-y-3">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+                <button onclick="closeInfoModal()" class="w-full bg-gray-100 text-gray-600 font-bold py-3 rounded-xl mt-6 hover:bg-gray-200 transition-colors">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
+        // ==========================================
+        //      BASE DE DATOS DE MASCOTAS
+        // ==========================================
+        
         const pets = [
-            { id: 1, name: "Negrito", type: "dog", breed: "Mestizo Chileno", age: "3 años", gender: "Macho", size: "Mediano", img: "images//lobito.jpeg", desc: "El clásico negrito fiel. Fue rescatado cerca de la Plaza Victoria. Es extremadamente leal, un poco guardián pero muy cariñoso con quienes conoce." },
-            { id: 2, name: "Michi", type: "cat", breed: "Romano Tigre", age: "2 años", gender: "Hembra", size: "Pequeño", img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Michi es la reina de la casa. Rescatada de una colonia en el puerto. Es independiente pero ronronea como motor cuando quiere cariño." },
-            { id: 3, name: "Barboncito", type: "dog", breed: "Quiltro Barbón", age: "5 años", gender: "Macho", size: "Pequeño", img: "images//doddy.jpeg", desc: "Un viejito con alma joven. Ideal para departamento o para hacer compañía a adultos mayores. Tranquilo, sabio y muy agradecido." },
-            { id: 4, name: "Manchitas", type: "cat", breed: "Vaca (B&N)", age: "1 año", gender: "Macho", size: "Mediano", img: "images//ragnar.jpeg", desc: "Manchitas es pura curiosidad. Le encanta mirar por la ventana y cazar moscas. Se lleva bien con otros gatos." },
-            { id: 5, name: "Chocolate", type: "dog", breed: "Mestizo Café", age: "8 meses", gender: "Macho", size: "Mediano", img: "https://images.unsplash.com/photo-1596492784531-6e6eb5ea92f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Un cachorro adolescente lleno de energía. Necesita paciencia y cariño para terminar de educarse. ¡Es un amor con patas!" },
-            { id: 6, name: "Pelusa", type: "dog", breed: "Mestiza Pelo Largo", age: "2 años", gender: "Hembra", size: "Pequeño", img: "https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido, pero una vez que confía es la más dulce del mundo." },
-            { id: 7, name: "Garfield", type: "cat", breed: "Mestizo Naranjo", age: "4 años", gender: "Macho", size: "Grande", img: "https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer. Perfecto para un hogar relajado." },
-            { id: 8, name: "Canela", type: "dog", breed: "Mestiza Chilena", age: "1.5 años", gender: "Hembra", size: "Mediano", img: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde. Muy despierta, ágil y compañera." }
+            // --- MASCOTA 1: Lobito ---
+            { 
+                id: 1, 
+                name: "Lobito", 
+                type: "dog", 
+                breed: "Mestizo Chileno", 
+                age: "9 años", 
+                gender: "Macho", 
+                size: "Grande", 
+                status: "Refugio", 
+                energyLevel: "medium", 
+                idealSpace: "house", 
+                desc: "El clásico negrito fiel. Fue rescatado cerca de la Municipalidad de Valparaíso. Es extremadamente leal, guardián y bastante activo pero muy cariñoso con quienes conoce y le demuestran cariño.",
+                story: "Su tutor falleció y quedó en la calle, vagando por las calles enfermito y siempre tan cariñoso con sus vecinos",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'lobito.jpg' dentro de la carpeta 'images'
+                img: "images/lobito.jpeg" 
+            },
+
+            // --- MASCOTA 2: Michi ---
+            { 
+                id: 2, 
+                name: "Michi", 
+                type: "cat", 
+                breed: "Común Europeo", 
+                age: "2 años", 
+                gender: "Hembra", 
+                size: "Pequeño", 
+                status: "Hogar Temporal", 
+                energyLevel: "medium",
+                idealSpace: "apartment",
+                desc: "Michi es la reina de la casa. Rescatada de la calle. Es independiente, y un poquito caprichosa pero ronronea como motor cuando quiere cariño.",
+                story: "La encontramos maullando desesperada bajo la lluvia en el sector puerto. Estaba muy flaca y desconfiada. Le tomó semanas salir de debajo de la cama de su hogar temporal, pero una vez que descubrió los sobres de comida húmeda, se transformó en la reina que es hoy.",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'michi.jpg' dentro de la carpeta 'images'
+                img: "images/michi.jpg"
+            },
+
+            // --- MASCOTA 3: Doddy ---
+            { 
+                id: 3, 
+                name: "Doddy", 
+                type: "dog", 
+                breed: "Poodle Toy", 
+                age: "12 años", 
+                gender: "Macho", 
+                size: "Pequeño", 
+                status: "Refugio", 
+                energyLevel: "low", 
+                idealSpace: "apartment",
+                desc: "Un abuelito muy regalón. Le encanta dormir en la cama y estar calientito. Ideal para hacer compañía tranquila y dar mucho amor.",
+                story: "Doddy llegó a nosotros tras el fallecimiento de su dueña, una señora mayor que lo adoraba. Quedó muy triste y desorientado. No se acostumbra al frío del canil del refugio y busca desesperadamente unos brazos que lo acurruquen de nuevo.",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'doddy.jpg' dentro de la carpeta 'images'
+                img: "images/doddy.jpeg"
+            },
+
+            // --- MASCOTA 4: Ragnar ---
+            { 
+                id: 4, 
+                name: "Ragnar", 
+                type: "cat", 
+                breed: "Felis Silvestris Catus (Pelo largo)", 
+                age: "2 años", 
+                gender: "Macho", 
+                size: "Pequeño", 
+                status: "Hogar Temporal", 
+                energyLevel: "high", 
+                idealSpace: "apartment",
+                desc: "Ragnar es pura curiosidad. Le encanta mirar por la ventana aunque asustadizo. Te despierta mordiendo los pies.",
+                story: "Ragnar y Rolo fueron encontrados en una caja junto a sus otros 6 hermanitos. Estaban todos mojados, húmedos y con los ojitos pegados. Fue un rescate crítico, pero gracias a los cuidados intensivos lograron sobrevivir y ahora buscan un hogar definitivo.",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'ragnar.jpg' dentro de la carpeta 'images'
+                img: "images/ragnar.jpeg"
+            },
+
+            // --- MASCOTA 5: Rolo ---
+            { 
+                id: 5, 
+                name: "Rolo", 
+                type: "cat", 
+                breed: "Felis silvestris catus (pelo corto)", 
+                age: "2 años", 
+                gender: "Macho", 
+                size: "Pequeño", 
+                status: "En Recuperación", 
+                energyLevel: "low", 
+                idealSpace: "apartment",
+                desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación. ¡Es un amor con patas!",
+                story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda donde estaba con sus otros 6 hermanitos, todos mojados y con los ojitos pegados por infección. Es un pequeño guerrero que superó el abandono más cruel.",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'rolo.jpg' dentro de la carpeta 'images'
+                img: "images/rolo.jpeg"
+            },
+
+            // --- MASCOTA 6: Pelusa ---
+            { 
+                id: 6, 
+                name: "Pelusa", 
+                type: "dog", 
+                breed: "Mestiza Pelo Largo", 
+                age: "2 años", 
+                gender: "Hembra", 
+                size: "Pequeño", 
+                status: "Refugio", 
+                energyLevel: "medium",
+                idealSpace: "apartment",
+                desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido, pero una vez que confía es la más dulce del mundo.",
+                story: "Nació en los cerros altos, en una camada que nadie quería. Sobrevivió gracias a la comida que le dejaban los vecinos. Es una perrita resiliente que está aprendiendo por primera vez lo que es una correa, un plato propio y una cama blanda.",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'pelusa.jpg' dentro de la carpeta 'images'
+                img: "images/pelusa.jpg"
+            },
+
+            // --- MASCOTA 7: Garfield ---
+            { 
+                id: 7, 
+                name: "Garfield", 
+                type: "cat", 
+                breed: "Mestizo Naranjo", 
+                age: "4 años", 
+                gender: "Macho", 
+                size: "Grande", 
+                status: "Hogar Temporal", 
+                energyLevel: "low", 
+                idealSpace: "apartment",
+                desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer. Perfecto para un hogar relajado.",
+                story: "Garfield hacía honor a su nombre visitando todas las carnicerías del barrio puerto. Pesaba 8 kilos cuando lo rescatamos. Hoy está a dieta estricta y busca una familia que lo ayude a mantenerse en forma con juegos y amor, no con lasaña.",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'garfield.jpg' dentro de la carpeta 'images'
+                img: "images/garfield.jpg"
+            },
+
+            // --- MASCOTA 8: Canela ---
+            { 
+                id: 8, 
+                name: "Canela", 
+                type: "dog", 
+                breed: "Mestiza Chilena", 
+                age: "1.5 años", 
+                gender: "Hembra", 
+                size: "Mediano", 
+                status: "Caso Externo", 
+                energyLevel: "high", 
+                idealSpace: "house",
+                desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde. Muy despierta, ágil y compañera.",
+                story: "Canela era la 'perrita comunitaria' de un paradero de micro. Todos la alimentaban, pero nadie se la llevaba a casa. Un día la atropellaron levemente y decidimos que no podía seguir en la calle. Es vivaz, entiende todo y está lista para ser tu copiloto.",
+                
+                // >>> FOTO: Tu archivo debe llamarse 'canela.jpg' dentro de la carpeta 'images'
+                img: "images/canela.jpg"
+            }
         ];
 
         function renderPets(filter = 'all') {
             const grid = document.getElementById('pets-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             const filteredPets = filter === 'all' ? pets : pets.filter(pet => pet.type === filter);
             filteredPets.forEach(pet => {
                 const card = document.createElement('div');
+                
+                let genderColorClass = "";
+                let genderIconClass = "";
+                
+                if (pet.gender === "Hembra") {
+                    genderColorClass = "bg-pink-100 text-pink-600";
+                    genderIconClass = "fa-venus";
+                } else {
+                    genderColorClass = "bg-blue-100 text-blue-600";
+                    genderIconClass = "fa-mars";
+                }
+
                 card.className = 'bg-white rounded-2xl overflow-hidden shadow-md card-hover group h-full flex flex-col';
                 card.innerHTML = `
                     <div class="relative h-64 overflow-hidden">
@@ -598,7 +1165,7 @@
                     <div class="p-5 flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
                             <span class="bg-gray-100 px-2 py-1 rounded-md"><i class="far fa-clock mr-1"></i> ${pet.age}</span>
-                            <span class="bg-gray-100 px-2 py-1 rounded-md"><i class="fas fa-venus-mars mr-1"></i> ${pet.gender}</span>
+                            <span class="${genderColorClass} px-2 py-1 rounded-md font-bold"><i class="fas ${genderIconClass} mr-1"></i> ${pet.gender}</span>
                         </div>
                         <p class="text-gray-600 line-clamp-2 mb-4 text-sm">${pet.desc}</p>
                         <button onclick="openModal(${pet.id})" class="w-full py-2 border-2 border-brand-teal text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-white transition-colors">Conóceme</button>
@@ -623,34 +1190,95 @@
 
         // --- Pet Modal Logic ---
         const modal = document.getElementById('pet-modal');
-        const modalContent = modal.querySelector('div');
+        const modalContent = modal?.querySelector('div');
 
         function openModal(id) {
             const pet = pets.find(p => p.id === id);
-            if(!pet) return;
-            document.getElementById('modal-img').src = pet.img;
-            document.getElementById('modal-name').textContent = pet.name;
-            document.getElementById('modal-breed').textContent = pet.breed;
-            document.getElementById('modal-age').textContent = pet.age;
-            document.getElementById('modal-gender').textContent = pet.gender;
-            document.getElementById('modal-size').textContent = pet.size;
-            document.getElementById('modal-desc').textContent = pet.desc;
+            if(!pet || !modal) return;
+            
+            const setSafe = (id, val) => {
+                const el = document.getElementById(id);
+                if(el) el.textContent = val;
+            };
+            const setSrc = (id, val) => {
+                const el = document.getElementById(id);
+                if(el) el.src = val;
+            }
+
+            setSrc('modal-img', pet.img);
+            setSafe('modal-name', pet.name);
+            setSafe('modal-breed', pet.breed);
+            setSafe('modal-age', pet.age);
+            
+            const genderBadge = document.getElementById('modal-gender');
+            if (genderBadge) {
+                genderBadge.innerHTML = ''; 
+                if (pet.gender === "Hembra") {
+                    genderBadge.className = "bg-pink-100 text-pink-600 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide";
+                    genderBadge.innerHTML = '<i class="fas fa-venus mr-1"></i> Hembra';
+                } else {
+                    genderBadge.className = "bg-blue-100 text-blue-600 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide";
+                    genderBadge.innerHTML = '<i class="fas fa-mars mr-1"></i> Macho';
+                }
+            }
+
+            const statusBadge = document.getElementById('modal-status');
+            if (statusBadge) {
+                statusBadge.textContent = pet.status;
+                if(pet.status === 'Refugio') statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-purple-200 bg-purple-50 text-purple-600";
+                else if (pet.status === 'Hogar Temporal') statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-orange-200 bg-orange-50 text-brand-orange";
+                else if (pet.status === 'En Recuperación') statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-red-200 bg-red-50 text-red-600";
+                else statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-gray-200 bg-gray-50 text-gray-600";
+            }
+
+            setSafe('modal-size', pet.size);
+            setSafe('modal-desc', pet.desc);
+            
+            const storyDiv = document.getElementById('modal-story');
+            if (storyDiv) {
+                storyDiv.textContent = pet.story;
+                storyDiv.classList.add('hidden');
+            }
+            
+            const btnStory = document.getElementById('btn-story');
+            if (btnStory) {
+                 const icon = btnStory.querySelector('i');
+                 if(icon) icon.className = "fas fa-book-reader";
+            }
+
             modal.classList.remove('hidden');
             setTimeout(() => {
                 modal.classList.remove('opacity-0');
-                modalContent.classList.remove('scale-95');
-                modalContent.classList.add('scale-100');
+                modalContent?.classList.remove('scale-95');
+                modalContent?.classList.add('scale-100');
             }, 10);
         }
 
         function closeModal() {
+            if (!modal) return;
             modal.classList.add('opacity-0');
-            modalContent.classList.remove('scale-100');
-            modalContent.classList.add('scale-95');
+            modalContent?.classList.remove('scale-100');
+            modalContent?.classList.add('scale-95');
             setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
+        
+        function toggleStory() {
+            const storyDiv = document.getElementById('modal-story');
+            const btnIcon = document.getElementById('btn-story')?.querySelector('i');
+            
+            if (storyDiv) {
+                storyDiv.classList.toggle('hidden');
+                if (btnIcon) {
+                    if (!storyDiv.classList.contains('hidden')) {
+                        btnIcon.className = "fas fa-chevron-up";
+                    } else {
+                        btnIcon.className = "fas fa-book-reader";
+                    }
+                }
+            }
+        }
 
-        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
         function handleAdoptionSubmit(e) {
             e.preventDefault();
@@ -660,31 +1288,158 @@
 
         function showToast() {
             const toast = document.getElementById('toast');
+            if (!toast) return;
             toast.classList.remove('translate-x-full');
             setTimeout(() => { toast.classList.add('translate-x-full'); }, 3000);
         }
 
         function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            document.getElementById('mobile-menu')?.classList.toggle('hidden');
         }
+
+        // --- Adoption Form Modal Logic ---
+        const adoptionFormModal = document.getElementById('adoption-form-modal');
+        const adoptionFormContent = adoptionFormModal?.querySelector('div');
+
+        function openAdoptionForm() {
+            if (!adoptionFormModal) return;
+            adoptionFormModal.classList.remove('hidden');
+            setTimeout(() => {
+                adoptionFormModal.classList.remove('opacity-0');
+                adoptionFormContent?.classList.remove('scale-95');
+                adoptionFormContent?.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeAdoptionForm() {
+            if (!adoptionFormModal) return;
+            adoptionFormModal.classList.add('opacity-0');
+            adoptionFormContent?.classList.remove('scale-100');
+            adoptionFormContent?.classList.add('scale-95');
+            setTimeout(() => { adoptionFormModal.classList.add('hidden'); }, 300);
+        }
+
+        function handleFullAdoptionSubmit(e) {
+            e.preventDefault();
+            closeAdoptionForm();
+            showToast();
+        }
+
+        adoptionFormModal?.addEventListener('click', (e) => { if (e.target === adoptionFormModal) closeAdoptionForm(); });
+
+        // --- Matchmaking Modal Logic ---
+        const matchModal = document.getElementById('match-modal');
+        const matchContent = matchModal?.querySelector('div');
+
+        function openMatchModal() {
+            if (!matchModal) return;
+            // Reset form UI
+            document.getElementById('match-results').classList.add('hidden');
+            document.getElementById('match-form').classList.remove('hidden');
+            
+            matchModal.classList.remove('hidden');
+            setTimeout(() => {
+                matchModal.classList.remove('opacity-0');
+                matchContent?.classList.remove('scale-95');
+                matchContent?.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeMatchModal() {
+            if (!matchModal) return;
+            matchModal.classList.add('opacity-0');
+            matchContent?.classList.remove('scale-100');
+            matchContent?.classList.add('scale-95');
+            setTimeout(() => { matchModal.classList.add('hidden'); }, 300);
+        }
+
+        function handleMatchSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const type = formData.get('match_type');
+            const energy = formData.get('match_energy');
+            const space = formData.get('match_space');
+
+            // Algorithm
+            const matches = pets.filter(pet => {
+                let score = 0;
+                // Type match
+                if (type === 'any' || pet.type === type) score += 2;
+                
+                // Energy match
+                if (pet.energyLevel === energy) score += 2;
+                else if (
+                    (energy === 'medium' && (pet.energyLevel === 'low' || pet.energyLevel === 'high')) || 
+                    (energy === 'high' && pet.energyLevel === 'medium') ||
+                    (energy === 'low' && pet.energyLevel === 'medium')
+                ) score += 1;
+
+                // Space match
+                if (space === 'parcel') score += 1; // parcel fits all
+                else if (space === 'house' && (pet.idealSpace === 'house' || pet.idealSpace === 'apartment')) score += 1;
+                else if (space === 'apartment' && pet.idealSpace === 'apartment') score += 1;
+                else if (space === 'apartment' && pet.idealSpace === 'house') score -= 1; // not ideal
+
+                return score >= 3; // Threshold
+            }).sort((a, b) => 0.5 - Math.random()); // Shuffle slightly
+
+            displayMatches(matches);
+        }
+
+        function displayMatches(results) {
+            const list = document.getElementById('match-list');
+            list.innerHTML = '';
+            
+            if (results.length === 0) {
+                list.innerHTML = '<p class="text-gray-500">No encontramos un match exacto, ¡pero revisa nuestra galería completa!</p>';
+            } else {
+                results.slice(0, 2).forEach(pet => {
+                    const item = document.createElement('div');
+                    item.className = "flex items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-100 hover:border-brand-orange transition-colors cursor-pointer";
+                    item.onclick = () => { closeMatchModal(); openModal(pet.id); };
+                    item.innerHTML = `
+                        <img src="${pet.img}" class="w-12 h-12 rounded-full object-cover">
+                        <div class="text-left">
+                            <h5 class="font-bold text-gray-800">${pet.name}</h5>
+                            <p class="text-xs text-gray-500">${pet.breed}</p>
+                        </div>
+                        <i class="fas fa-chevron-right ml-auto text-gray-300"></i>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+
+            document.getElementById('match-form').classList.add('hidden');
+            document.getElementById('match-results').classList.remove('hidden');
+        }
+
+        function resetMatchForm() {
+            document.getElementById('match-form').reset();
+            document.getElementById('match-results').classList.add('hidden');
+            document.getElementById('match-form').classList.remove('hidden');
+        }
+
+        matchModal?.addEventListener('click', (e) => { if (e.target === matchModal) closeMatchModal(); });
 
         // --- Donation Modal Logic ---
         const donationModal = document.getElementById('donation-modal');
-        const donationContent = donationModal.querySelector('div');
+        const donationContent = donationModal?.querySelector('div');
 
         function openDonationModal() {
+            if (!donationModal) return;
             donationModal.classList.remove('hidden');
             setTimeout(() => {
                 donationModal.classList.remove('opacity-0');
-                donationContent.classList.remove('scale-95');
-                donationContent.classList.add('scale-100');
+                donationContent?.classList.remove('scale-95');
+                donationContent?.classList.add('scale-100');
             }, 10);
         }
 
         function closeDonationModal() {
+            if (!donationModal) return;
             donationModal.classList.add('opacity-0');
-            donationContent.classList.remove('scale-100');
-            donationContent.classList.add('scale-95');
+            donationContent?.classList.remove('scale-100');
+            donationContent?.classList.add('scale-95');
             setTimeout(() => { donationModal.classList.add('hidden'); }, 300);
         }
 
@@ -712,25 +1467,27 @@
             btn.classList.add('bg-brand-teal', 'text-white', 'border-brand-teal');
         }
 
-        donationModal.addEventListener('click', (e) => { if (e.target === donationModal) closeDonationModal(); });
+        donationModal?.addEventListener('click', (e) => { if (e.target === donationModal) closeDonationModal(); });
         
         // --- Foster Modal Logic ---
         const fosterModal = document.getElementById('foster-modal');
-        const fosterContent = fosterModal.querySelector('div');
+        const fosterContent = fosterModal?.querySelector('div');
 
         function openFosterModal() {
+            if (!fosterModal) return;
             fosterModal.classList.remove('hidden');
             setTimeout(() => {
                 fosterModal.classList.remove('opacity-0');
-                fosterContent.classList.remove('scale-95');
-                fosterContent.classList.add('scale-100');
+                fosterContent?.classList.remove('scale-95');
+                fosterContent?.classList.add('scale-100');
             }, 10);
         }
 
         function closeFosterModal() {
+            if (!fosterModal) return;
             fosterModal.classList.add('opacity-0');
-            fosterContent.classList.remove('scale-100');
-            fosterContent.classList.add('scale-95');
+            fosterContent?.classList.remove('scale-100');
+            fosterContent?.classList.add('scale-95');
             setTimeout(() => { fosterModal.classList.add('hidden'); }, 300);
         }
         
@@ -740,7 +1497,153 @@
             showToast();
         }
 
-        fosterModal.addEventListener('click', (e) => { if (e.target === fosterModal) closeFosterModal(); });
+        fosterModal?.addEventListener('click', (e) => { if (e.target === fosterModal) closeFosterModal(); });
+
+        // --- Payment Modal Logic ---
+        const paymentModal = document.getElementById('payment-modal');
+        const paymentContent = paymentModal?.querySelector('div');
+
+        function openPaymentModal() {
+            if (!paymentModal) return;
+            paymentModal.classList.remove('hidden');
+            setTimeout(() => {
+                paymentModal.classList.remove('opacity-0');
+                paymentContent?.classList.remove('scale-95');
+                paymentContent?.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closePaymentModal() {
+            if (!paymentModal) return;
+            paymentModal.classList.add('opacity-0');
+            paymentContent?.classList.remove('scale-100');
+            paymentContent?.classList.add('scale-95');
+            setTimeout(() => { paymentModal.classList.add('hidden'); }, 300);
+        }
+
+        function toggleTransferDetails() {
+            const details = document.getElementById('transfer-details');
+            const arrow = document.getElementById('transfer-arrow');
+            details?.classList.toggle('hidden');
+            arrow?.classList.toggle('rotate-180');
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            const icon = event.currentTarget.querySelector('i');
+            if(icon) {
+                icon.className = "fas fa-check text-green-500";
+                setTimeout(() => {
+                    icon.className = "far fa-copy text-gray-400 group-hover:text-brand-teal";
+                }, 1000);
+            }
+        }
+
+        function showToastPayment(msg) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            const toastText = toast.querySelector('h4');
+            const originalText = toastText.textContent;
+            const toastDesc = toast.querySelector('p');
+            const originalDesc = toastDesc.textContent;
+
+            toastText.textContent = "Procesando...";
+            toastDesc.textContent = msg;
+
+            closePaymentModal();
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => {
+                    toastText.textContent = originalText;
+                    toastDesc.textContent = originalDesc;
+                }, 300);
+            }, 3000);
+        }
+
+        paymentModal?.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
+
+
+        // --- Info Modal Logic ---
+        const infoModal = document.getElementById('info-modal');
+        const infoContentDiv = infoModal?.querySelector('div');
+        
+        const infoData = {
+            'mental': {
+                title: "Beneficios de Salud Mental",
+                icon: "fa-heartbeat",
+                colorClass: "bg-red-100 text-red-500",
+                content: `
+                    <p class="mb-2">Tener una mascota es una terapia de amor diaria:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Reduce el estrés:</strong> Acariciar a un perro o gato baja los niveles de cortisol.</li>
+                        <li><strong>Combate la soledad:</strong> Su compañía incondicional nos hace sentir queridos.</li>
+                        <li><strong>Fomenta la rutina:</strong> Te ayudan a estructurar tu día y mantenerte activo.</li>
+                        <li><strong>Aumenta la felicidad:</strong> Jugar con ellos libera oxitocina y serotonina.</li>
+                    </ul>
+                `
+            },
+            'care': {
+                title: "Tips de Cuidado",
+                icon: "fa-book-open",
+                colorClass: "bg-teal-100 text-brand-teal",
+                content: `
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2"><i class="fas fa-walking mt-1 text-brand-teal"></i> <span><strong>Paseos diarios:</strong> Vitales para su salud física y mental.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-hand-sparkles mt-1 text-brand-teal"></i> <span><strong>Rascar pancita:</strong> ¡La mejor forma de demostrar amor!</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-paw mt-1 text-brand-teal"></i> <span><strong>Patitas suaves:</strong> Echa un poco de aceite de coco en sus almohadillas si están secas.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-water mt-1 text-brand-teal"></i> <span><strong>Verano fresco:</strong> Moja su guatita con agua fresca en días de calor.</span></li>
+                    </ul>
+                `
+            },
+            'ownership': {
+                title: "Tenencia Responsable",
+                icon: "fa-shield-alt",
+                colorClass: "bg-yellow-100 text-yellow-600",
+                content: `
+                    <p class="mb-2">Ser dueño responsable significa:</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-yellow-500"></i> <span><strong>Esterilizar:</strong> Es un acto de amor que previene el abandono.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-syringe mt-1 text-yellow-500"></i> <span><strong>Vacunas al día:</strong> Protégelo de enfermedades mortales.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-cut mt-1 text-yellow-500"></i> <span><strong>Higiene:</strong> Llévalo a la peluquería o báñalo regularmente.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-id-card mt-1 text-yellow-500"></i> <span><strong>Registro:</strong> Chip e inscripción en el Registro Nacional.</span></li>
+                    </ul>
+                `
+            }
+        };
+
+        function openInfoModal(type) {
+            const data = infoData[type];
+            if(!data || !infoModal) return;
+
+            document.getElementById('info-title').textContent = data.title;
+            document.getElementById('info-content').innerHTML = data.content;
+            
+            const iconContainer = document.getElementById('info-icon-container');
+            const icon = document.getElementById('info-icon');
+            
+            // Reset classes
+            iconContainer.className = `inline-block p-4 rounded-full mb-4 shadow-sm ${data.colorClass}`;
+            icon.className = `fas ${data.icon} text-3xl`;
+
+            infoModal.classList.remove('hidden');
+            setTimeout(() => {
+                infoModal.classList.remove('opacity-0');
+                infoContentDiv?.classList.remove('scale-95');
+                infoContentDiv?.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeInfoModal() {
+            if (!infoModal) return;
+            infoModal.classList.add('opacity-0');
+            infoContentDiv?.classList.remove('scale-100');
+            infoContentDiv?.classList.add('scale-95');
+            setTimeout(() => { infoModal.classList.add('hidden'); }, 300);
+        }
+
+        infoModal?.addEventListener('click', (e) => { if (e.target === infoModal) closeInfoModal(); });
 
         // Init
         document.addEventListener('DOMContentLoaded', () => { renderPets(); });
