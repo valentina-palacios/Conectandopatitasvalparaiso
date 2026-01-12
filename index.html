@@ -78,12 +78,24 @@
             background: #FF9F1C;
             border-radius: 5px;
         }
+        .writing-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        /* Animación para el badge del carrito */
+        @keyframes bounce-short {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-bounce-short {
+            animation: bounce-short 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-700 flex flex-col min-h-screen relative overflow-x-hidden">
 
     <!-- Notification Toast -->
-    <div id="toast" class="fixed top-24 right-5 bg-white border-l-4 border-brand-teal shadow-2xl rounded-lg p-4 transform translate-x-full transition-transform duration-300 z-50 flex items-center">
+    <div id="toast" class="fixed top-24 right-5 bg-white border-l-4 border-brand-teal shadow-2xl rounded-lg p-4 transform translate-x-full transition-transform duration-300 z-[70] flex items-center">
         <div class="text-brand-teal mr-3 text-xl"><i class="fas fa-check-circle"></i></div>
         <div>
             <h4 class="font-bold text-gray-800">¡Mensaje Enviado!</h4>
@@ -91,22 +103,27 @@
         </div>
     </div>
 
-    <!-- Floating Info Sidebar -->
-    <div class="fixed right-0 top-1/2 transform -translate-y-1/2 z-40 transition-transform duration-300 translate-x-[17rem] hover:translate-x-0 group">
-        <div class="bg-white/95 backdrop-blur-md shadow-2xl rounded-l-3xl p-6 border-l-4 border-brand-orange w-80 relative h-auto">
-            
-            <!-- Visible Tab Handle -->
-            <div class="absolute left-0 top-8 -translate-x-full bg-brand-orange text-white py-3 px-2 rounded-l-xl shadow-lg cursor-pointer flex flex-col items-center justify-center gap-2 group-hover:opacity-0 transition-opacity">
-                <i class="fas fa-info-circle text-2xl animate-pulse"></i>
-            </div>
+    <!-- BOTÓN FLOTANTE "INFO" -->
+    <button id="info-btn" onclick="toggleInfoSidebar()" class="fixed right-0 top-1/3 z-[100] bg-brand-orange text-white py-4 px-2 rounded-l-xl shadow-2xl hover:bg-orange-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center gap-1 group">
+        <i class="fas fa-info-circle text-2xl animate-bounce"></i>
+        <span class="text-[10px] font-bold uppercase writing-vertical transform rotate-180">Info</span>
+    </button>
 
-            <div class="flex items-center gap-2 mb-4 border-b pb-2 border-gray-100">
-                <i class="fas fa-paw text-brand-orange"></i>
-                <h3 class="text-xl font-bold text-gray-800">Guía Patitas</h3>
+    <!-- PESTAÑA LATERAL (Sidebar oculto) -->
+    <div id="info-sidebar" class="fixed right-0 top-1/3 transform -translate-y-[10%] z-[90] transition-transform duration-300 translate-x-full">
+        <div class="bg-white/95 backdrop-blur-md shadow-2xl rounded-l-3xl p-6 border-l-4 border-brand-orange w-80 relative h-auto max-h-[90vh] overflow-y-auto mt-12">
+            
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-gray-100">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-paw text-brand-orange"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Guía Patitas</h3>
+                </div>
+                <button onclick="toggleInfoSidebar()" class="text-gray-400 hover:text-brand-orange">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
             <div class="space-y-3">
-                <!-- Item 1: Salud Mental -->
                 <button onclick="openInfoModal('mental')" class="w-full flex items-center gap-3 text-left hover:bg-red-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-red-100">
                     <div class="w-10 h-10 rounded-full bg-red-100 flex-shrink-0 flex items-center justify-center text-red-500 group-hover/item:scale-110 transition-transform">
                         <i class="fas fa-heartbeat"></i>
@@ -116,8 +133,6 @@
                         <p class="text-xs text-gray-500">Amor que sana</p>
                     </div>
                 </button>
-                
-                <!-- Item 2: Cuidado -->
                 <button onclick="openInfoModal('care')" class="w-full flex items-center gap-3 text-left hover:bg-teal-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-teal-100">
                     <div class="w-10 h-10 rounded-full bg-teal-100 flex-shrink-0 flex items-center justify-center text-brand-teal group-hover/item:scale-110 transition-transform">
                         <i class="fas fa-book-open"></i>
@@ -127,8 +142,6 @@
                         <p class="text-xs text-gray-500">Aprende a cuidar</p>
                     </div>
                 </button>
-                
-                <!-- Item 3: Tenencia -->
                 <button onclick="openInfoModal('ownership')" class="w-full flex items-center gap-3 text-left hover:bg-yellow-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-yellow-100">
                     <div class="w-10 h-10 rounded-full bg-yellow-100 flex-shrink-0 flex items-center justify-center text-yellow-600 group-hover/item:scale-110 transition-transform">
                         <i class="fas fa-shield-alt"></i>
@@ -153,23 +166,38 @@
                     <span class="text-2xl font-bold text-gray-800 tracking-tight">Conectando<span class="text-brand-orange">Patitas</span></span>
                 </a>
 
-                <div class="hidden md:flex items-center space-x-8 font-semibold">
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6 font-semibold">
                     <a href="#inicio" class="text-gray-600 hover:text-brand-orange transition-colors">Inicio</a>
                     <a href="#donar" class="text-gray-600 hover:text-brand-orange transition-colors">Ayudar</a>
                     <a href="#adoptar" class="text-gray-600 hover:text-brand-orange transition-colors">Adopta</a>
-                    <a href="#proceso" class="text-gray-600 hover:text-brand-orange transition-colors">Proceso</a>
+                    <a href="#tienda" class="text-gray-600 hover:text-brand-orange transition-colors">Tienda</a>
+                    
+                    <!-- CART BUTTON (Desktop) -->
+                    <button onclick="openCartModal()" class="relative bg-brand-teal text-white p-2 rounded-full hover:bg-teal-600 transition-colors">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count-desktop" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full hidden">0</span>
+                    </button>
                 </div>
 
-                <button class="md:hidden text-gray-600 focus:outline-none" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
+                <div class="flex items-center gap-4 md:hidden">
+                    <!-- CART BUTTON (Mobile) -->
+                    <button onclick="openCartModal()" class="relative text-gray-600 focus:outline-none">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cart-count-mobile" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full hidden">0</span>
+                    </button>
+
+                    <button class="text-gray-600 focus:outline-none" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
             </div>
             
             <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-2 border-t pt-4">
                 <a href="#inicio" class="block py-2 text-gray-600 hover:text-brand-orange">Inicio</a>
                 <a href="#donar" class="block py-2 text-brand-teal font-bold">Ayudar</a>
                 <a href="#adoptar" class="block py-2 text-gray-600 hover:text-brand-orange">Adopta</a>
-                <a href="#proceso" class="block py-2 text-gray-600 hover:text-brand-orange">Proceso</a>
+                <a href="#tienda" class="block py-2 text-gray-600 hover:text-brand-orange">Tienda</a>
             </div>
         </div>
     </nav>
@@ -201,9 +229,8 @@
                 <div class="relative w-80 h-80 md:w-[500px] md:h-[500px]">
                     <div class="absolute inset-0 bg-brand-yellow rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
                     
-                    <!-- !!! FOTO PORTADA (CAMBIAR AQUÍ) !!! -->
-                    <!-- Asegúrate de que tu foto se llame 'portada.jpg' y esté en la carpeta 'images' -->
-                    <img src="images/portada.jpg" 
+                    <!-- !!! FOTO PORTADA !!! -->
+                    <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                          onerror="this.src='https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
                          alt="Perro y Gato felices" 
                          class="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
@@ -305,6 +332,30 @@
         </div>
     </section>
 
+    <!-- Tienda Solidaria (CON CARRITO) -->
+    <section id="tienda" class="py-20 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="inline-block py-1 px-3 rounded-full bg-brand-teal/10 text-brand-teal font-bold text-xs mb-4 border border-brand-teal/20">
+                    <i class="fas fa-shopping-bag mr-1"></i> 100% A Beneficio
+                </span>
+                <h2 class="text-3xl md:text-5xl font-bold text-brand-dark mb-4">Tienda <span class="text-brand-orange">Solidaria</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Equipa a tu mascota con los mejores accesorios. <br>
+                    <strong>Cada compra financia alimento y tratamientos para nuestros rescatados.</strong>
+                </p>
+            </div>
+
+            <div id="shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Los productos se inyectan con JS -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-500 text-sm">¿Buscas algo específico? <a href="#contacto" class="text-brand-orange font-bold hover:underline">Pregúntanos por stock</a></p>
+            </div>
+        </div>
+    </section>
+
     <!-- Community & Education Section -->
     <section class="py-16 bg-white relative overflow-hidden">
         <div class="container mx-auto px-6 relative z-10">
@@ -379,6 +430,55 @@
         </div>
     </section>
 
+    <!-- Sponsors Section -->
+    <section class="py-12 bg-gray-50 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold text-gray-400 mb-8 uppercase tracking-widest text-sm">Empresas que nos apoyan</h3>
+            
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                <!-- Sponsor 1: Pedigree Style -->
+                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
+                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 group-hover:border-yellow-400">
+                        <i class="fas fa-award text-yellow-500 text-3xl"></i>
+                        <span class="font-black text-2xl text-blue-900 font-sans tracking-tighter">Pedigree</span>
+                    </div>
+                </div>
+
+                <!-- Sponsor 2: Dog Chow Style -->
+                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
+                    <div class="flex items-center gap-1 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 group-hover:border-green-600">
+                        <span class="font-black text-2xl text-green-700 italic">DOG</span>
+                        <span class="font-black text-2xl text-red-600 italic">CHOW</span>
+                    </div>
+                </div>
+
+                <!-- Sponsor 3: Tienda Local -->
+                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center gap-2 text-xl font-bold text-gray-600 group-hover:text-purple-600">
+                            <i class="fas fa-store-alt"></i>
+                            <span>PetShop Valpo</span>
+                        </div>
+                        <span class="text-[10px] text-gray-400">Collares y Accesorios</span>
+                    </div>
+                </div>
+
+                <!-- Sponsor 4: Farmacia -->
+                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center gap-2 text-xl font-bold text-gray-600 group-hover:text-green-500">
+                            <i class="fas fa-prescription-bottle-alt"></i>
+                            <span>FarmaVet</span>
+                        </div>
+                        <span class="text-[10px] text-gray-400">Desparasitarios y Salud</span>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-8 text-xs text-gray-400">¿Quieres ser patrocinador? <a href="#contacto" class="text-brand-orange hover:underline">Contáctanos aquí</a></p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-white pt-16 pb-8">
         <div class="container mx-auto px-6">
@@ -432,8 +532,8 @@
 
     <!-- Pet Modal -->
     <div id="pet-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors shadow-sm">
                 <i class="fas fa-times text-xl text-gray-600"></i>
             </button>
             <div class="flex flex-col md:flex-row h-full">
@@ -507,7 +607,7 @@
 
     <!-- Matchmaking Modal -->
     <div id="match-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeMatchModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
                 <i class="fas fa-times text-gray-600"></i>
             </button>
@@ -848,7 +948,7 @@
 
     <!-- Foster Modal -->
     <div id="foster-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+        <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeFosterModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
                 <i class="fas fa-times text-gray-600"></i>
             </button>
@@ -952,7 +1052,7 @@
 
     <!-- Info Modal (NEW) -->
     <div id="info-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+        <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeInfoModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
                 <i class="fas fa-times text-gray-600"></i>
             </button>
@@ -973,12 +1073,258 @@
         </div>
     </div>
 
+    <!-- Cart Modal (RESTAURADO) -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/60 z-[80] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeCartModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            
+            <div class="p-6 border-b border-gray-100 flex items-center gap-3">
+                <div class="bg-brand-teal/10 p-2 rounded-full text-brand-teal">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800">Tu Carrito Solidario</h3>
+            </div>
+
+            <div id="cart-items" class="p-6 overflow-y-auto flex-grow space-y-4">
+                <!-- Items injected here -->
+                <div class="text-center text-gray-400 py-8">
+                    <i class="fas fa-shopping-basket text-4xl mb-2 opacity-50"></i>
+                    <p>Tu carrito está vacío</p>
+                </div>
+            </div>
+
+            <div class="p-6 bg-gray-50 border-t border-gray-200">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold text-gray-600">Total a Pagar:</span>
+                    <span id="cart-total" class="font-extrabold text-2xl text-brand-teal">$0</span>
+                </div>
+                <button onclick="checkoutWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-colors flex justify-center items-center gap-2 shadow-lg shadow-green-200 transform active:scale-95">
+                    <i class="fab fa-whatsapp text-xl"></i> Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
-        // ==========================================
-        //      BASE DE DATOS DE MASCOTAS
-        // ==========================================
+        // --- Shopping Cart Logic ---
+        let cart = [];
+
+        // BASE DE DATOS DE PRODUCTOS (TIENDA) - FOTOS REALES DE UNSPLASH
+        const products = [
+            {
+                id: 1,
+                name: "Arnés de Seguridad",
+                priceInt: 8990,
+                price: "$8.990",
+                // FOTO: 'img/arnes.jpg'
+                img: "https://images.unsplash.com/photo-1615266895738-11f1371cd7e5?q=80&w=600&auto=format&fit=crop",
+                desc: "Arnés acolchado con bandas reflectantes. Ideal para paseos seguros."
+            },
+            {
+                id: 2,
+                name: "Collar con Pañuelo",
+                priceInt: 4500,
+                price: "$4.500",
+                // FOTO: 'img/collar.jpg'
+                img: "https://images.unsplash.com/photo-1605638890933-725350c33398?q=80&w=600&auto=format&fit=crop",
+                desc: "Diseño único. Ajustable y cómodo."
+            },
+            {
+                id: 3,
+                name: "Juguete Mordedor",
+                priceInt: 5990,
+                price: "$5.990",
+                // FOTO: 'img/juguete.jpg'
+                img: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=600&auto=format&fit=crop",
+                desc: "Cuerda resistente para jugar y limpiar sus dientes."
+            },
+            {
+                id: 4,
+                name: "Colonia Pet Fresh",
+                priceInt: 6990,
+                price: "$6.990",
+                // FOTO: 'img/colonia.jpg'
+                img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop",
+                desc: "Aroma suave y duradero, hipoalergénico."
+            },
+            {
+                id: 5,
+                name: "Cepillo Cardina",
+                priceInt: 5990,
+                price: "$5.990",
+                // FOTO: 'img/cepillo.jpg'
+                img: "https://images.unsplash.com/photo-1520038410233-7141dd7e6f97?q=80&w=600&auto=format&fit=crop",
+                desc: "Elimina el pelo muerto y masajea la piel."
+            },
+            {
+                id: 6,
+                name: "Correa Resistente",
+                priceInt: 7990,
+                price: "$7.990",
+                // FOTO: 'img/correa.jpg'
+                img: "https://images.unsplash.com/photo-1558237730-880c59828557?q=80&w=600&auto=format&fit=crop",
+                desc: "Correa de nylon reforzado, 1.5 metros."
+            }
+        ];
+
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            if(prod) {
+                cart.push(prod);
+                updateCartUI();
+                
+                // Show mini toast feedback specific to cart
+                const btn = event.currentTarget;
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Agregado';
+                btn.classList.add('bg-green-500', 'border-green-500', 'text-white');
+                btn.classList.remove('text-brand-teal', 'border-brand-teal');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.remove('bg-green-500', 'border-green-500', 'text-white');
+                    btn.classList.add('text-brand-teal', 'border-brand-teal');
+                }, 1500);
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            renderCartItems(); // Re-render list
+        }
+
+        function updateCartUI() {
+            // Update Badges
+            const desktopBadge = document.getElementById('cart-count-desktop');
+            const mobileBadge = document.getElementById('cart-count-mobile');
+            
+            if(cart.length > 0) {
+                desktopBadge.classList.remove('hidden');
+                mobileBadge.classList.remove('hidden');
+                desktopBadge.textContent = cart.length;
+                mobileBadge.textContent = cart.length;
+                
+                // Animate
+                desktopBadge.classList.add('animate-bounce-short');
+                setTimeout(() => desktopBadge.classList.remove('animate-bounce-short'), 300);
+            } else {
+                desktopBadge.classList.add('hidden');
+                mobileBadge.classList.add('hidden');
+            }
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            
+            if(cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fas fa-shopping-basket text-4xl mb-2 opacity-50"></i>
+                        <p>Tu carrito está vacío</p>
+                    </div>
+                `;
+                totalEl.textContent = "$0";
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.priceInt;
+                html += `
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                        <img src="${item.img}" class="w-16 h-16 rounded-lg object-cover">
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-800 text-sm">${item.name}</h5>
+                            <p class="text-brand-teal font-bold text-sm">${item.price}</p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 p-2">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalEl.textContent = "$" + total.toLocaleString('es-CL');
+        }
+
+        function openCartModal() {
+            const modal = document.getElementById('cart-modal');
+            renderCartItems();
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        function checkoutWhatsApp() {
+            if(cart.length === 0) return;
+            
+            let message = "Hola! Quiero comprar en la Tienda Solidaria:%0A";
+            let total = 0;
+            
+            cart.forEach(item => {
+                message += `- ${item.name} (${item.price})%0A`;
+                total += item.priceInt;
+            });
+            
+            message += `%0ATotal: $${total.toLocaleString('es-CL')}`;
+            
+            window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+            cart = []; // Clear cart? Or keep it. Let's clear for demo.
+            updateCartUI();
+            closeCartModal();
+        }
+
+        // Modifying renderProducts to use "Comprar" button logic
+        function renderProducts() {
+            const grid = document.getElementById('shop-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+
+            products.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 group';
+                card.innerHTML = `
+                    <div class="relative h-48 overflow-hidden bg-gray-100">
+                        <img src="${prod.img}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute bottom-3 right-3 bg-white text-brand-orange w-8 h-8 rounded-full shadow-lg flex items-center justify-center">
+                           <i class="fas fa-heart text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-gray-800 text-lg line-clamp-1">${prod.name}</h4>
+                            <span class="bg-teal-50 text-brand-teal px-2 py-1 rounded-md text-xs font-bold">${prod.price}</span>
+                        </div>
+                        <p class="text-gray-500 text-sm line-clamp-2 mb-4">${prod.desc}</p>
+                        <button onclick="addToCart(${prod.id})" class="w-full border border-brand-teal text-brand-teal font-bold py-2 rounded-lg hover:bg-brand-teal hover:text-white transition-colors text-sm flex items-center justify-center gap-2">
+                            Comprar <i class="fas fa-cart-plus"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
         
+        // ... (Existing Pets Data and Functions) ...
         const pets = [
             // --- MASCOTA 1: Lobito ---
             { 
@@ -995,8 +1341,8 @@
                 desc: "El clásico negrito fiel. Fue rescatado cerca de la Municipalidad de Valparaíso. Es extremadamente leal, guardián y bastante activo pero muy cariñoso con quienes conoce y le demuestran cariño.",
                 story: "Su tutor falleció y quedó en la calle, vagando por las calles enfermito y siempre tan cariñoso con sus vecinos",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'lobito.jpg' dentro de la carpeta 'images'
-                img: "images/lobito.jpeg" 
+                // PARA TU PC USA: img: "images/lobito.jpg"
+                img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
             },
 
             // --- MASCOTA 2: Michi ---
@@ -1009,13 +1355,13 @@
                 gender: "Hembra", 
                 size: "Pequeño", 
                 status: "Hogar Temporal", 
-                energyLevel: "medium",
-                idealSpace: "apartment",
+                energyLevel: "medium", 
+                idealSpace: "apartment", 
                 desc: "Michi es la reina de la casa. Rescatada de la calle. Es independiente, y un poquito caprichosa pero ronronea como motor cuando quiere cariño.",
                 story: "La encontramos maullando desesperada bajo la lluvia en el sector puerto. Estaba muy flaca y desconfiada. Le tomó semanas salir de debajo de la cama de su hogar temporal, pero una vez que descubrió los sobres de comida húmeda, se transformó en la reina que es hoy.",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'michi.jpg' dentro de la carpeta 'images'
-                img: "images/michi.jpg"
+                // PARA TU PC USA: img: "images/michi.jpg"
+                img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             },
 
             // --- MASCOTA 3: Doddy ---
@@ -1029,12 +1375,12 @@
                 size: "Pequeño", 
                 status: "Refugio", 
                 energyLevel: "low", 
-                idealSpace: "apartment",
+                idealSpace: "apartment", 
                 desc: "Un abuelito muy regalón. Le encanta dormir en la cama y estar calientito. Ideal para hacer compañía tranquila y dar mucho amor.",
                 story: "Doddy llegó a nosotros tras el fallecimiento de su dueña, una señora mayor que lo adoraba. Quedó muy triste y desorientado. No se acostumbra al frío del canil del refugio y busca desesperadamente unos brazos que lo acurruquen de nuevo.",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'doddy.jpg' dentro de la carpeta 'images'
-                img: "images/doddy.jpeg"
+                // PARA TU PC USA: img: "images/doddy.jpg"
+                img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             },
 
             // --- MASCOTA 4: Ragnar ---
@@ -1048,12 +1394,12 @@
                 size: "Pequeño", 
                 status: "Hogar Temporal", 
                 energyLevel: "high", 
-                idealSpace: "apartment",
+                idealSpace: "apartment", 
                 desc: "Ragnar es pura curiosidad. Le encanta mirar por la ventana aunque asustadizo. Te despierta mordiendo los pies.",
                 story: "Ragnar y Rolo fueron encontrados en una caja junto a sus otros 6 hermanitos. Estaban todos mojados, húmedos y con los ojitos pegados. Fue un rescate crítico, pero gracias a los cuidados intensivos lograron sobrevivir y ahora buscan un hogar definitivo.",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'ragnar.jpg' dentro de la carpeta 'images'
-                img: "images/ragnar.jpeg"
+                // PARA TU PC USA: img: "images/ragnar.jpg"
+                img: "https://images.unsplash.com/photo-1529778873920-4da4926a7071?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             },
 
             // --- MASCOTA 5: Rolo ---
@@ -1067,12 +1413,12 @@
                 size: "Pequeño", 
                 status: "En Recuperación", 
                 energyLevel: "low", 
-                idealSpace: "apartment",
+                idealSpace: "apartment", 
                 desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación. ¡Es un amor con patas!",
                 story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda donde estaba con sus otros 6 hermanitos, todos mojados y con los ojitos pegados por infección. Es un pequeño guerrero que superó el abandono más cruel.",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'rolo.jpg' dentro de la carpeta 'images'
-                img: "images/rolo.jpeg"
+                // PARA TU PC USA: img: "images/rolo.jpg"
+                img: "https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             },
 
             // --- MASCOTA 6: Pelusa ---
@@ -1085,13 +1431,13 @@
                 gender: "Hembra", 
                 size: "Pequeño", 
                 status: "Refugio", 
-                energyLevel: "medium",
-                idealSpace: "apartment",
+                energyLevel: "medium", 
+                idealSpace: "apartment", 
                 desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido, pero una vez que confía es la más dulce del mundo.",
                 story: "Nació en los cerros altos, en una camada que nadie quería. Sobrevivió gracias a la comida que le dejaban los vecinos. Es una perrita resiliente que está aprendiendo por primera vez lo que es una correa, un plato propio y una cama blanda.",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'pelusa.jpg' dentro de la carpeta 'images'
-                img: "images/pelusa.jpg"
+                // PARA TU PC USA: img: "images/pelusa.jpg"
+                img: "https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             },
 
             // --- MASCOTA 7: Garfield ---
@@ -1105,12 +1451,12 @@
                 size: "Grande", 
                 status: "Hogar Temporal", 
                 energyLevel: "low", 
-                idealSpace: "apartment",
+                idealSpace: "apartment", 
                 desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer. Perfecto para un hogar relajado.",
                 story: "Garfield hacía honor a su nombre visitando todas las carnicerías del barrio puerto. Pesaba 8 kilos cuando lo rescatamos. Hoy está a dieta estricta y busca una familia que lo ayude a mantenerse en forma con juegos y amor, no con lasaña.",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'garfield.jpg' dentro de la carpeta 'images'
-                img: "images/garfield.jpg"
+                // PARA TU PC USA: img: "images/garfield.jpg"
+                img: "https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             },
 
             // --- MASCOTA 8: Canela ---
@@ -1124,12 +1470,12 @@
                 size: "Mediano", 
                 status: "Caso Externo", 
                 energyLevel: "high", 
-                idealSpace: "house",
+                idealSpace: "house", 
                 desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde. Muy despierta, ágil y compañera.",
                 story: "Canela era la 'perrita comunitaria' de un paradero de micro. Todos la alimentaban, pero nadie se la llevaba a casa. Un día la atropellaron levemente y decidimos que no podía seguir en la calle. Es vivaz, entiende todo y está lista para ser tu copiloto.",
                 
-                // >>> FOTO: Tu archivo debe llamarse 'canela.jpg' dentro de la carpeta 'images'
-                img: "images/canela.jpg"
+                // PARA TU PC USA: img: "images/canela.jpg"
+                img: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             }
         ];
 
@@ -1212,7 +1558,6 @@
             
             const genderBadge = document.getElementById('modal-gender');
             if (genderBadge) {
-                genderBadge.innerHTML = ''; 
                 if (pet.gender === "Hembra") {
                     genderBadge.className = "bg-pink-100 text-pink-600 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide";
                     genderBadge.innerHTML = '<i class="fas fa-venus mr-1"></i> Hembra';
@@ -1295,6 +1640,13 @@
 
         function toggleMobileMenu() {
             document.getElementById('mobile-menu')?.classList.toggle('hidden');
+        }
+
+        // --- Toggle Info Sidebar Logic (MODIFICADO) ---
+        function toggleInfoSidebar() {
+            const sidebar = document.getElementById('info-sidebar');
+            // 'translate-x-full' hides it to the right. Removing it shows it.
+            sidebar.classList.toggle('translate-x-full');
         }
 
         // --- Adoption Form Modal Logic ---
@@ -1646,7 +1998,10 @@
         infoModal?.addEventListener('click', (e) => { if (e.target === infoModal) closeInfoModal(); });
 
         // Init
-        document.addEventListener('DOMContentLoaded', () => { renderPets(); });
+        document.addEventListener('DOMContentLoaded', () => { 
+            renderPets(); 
+            renderProducts(); 
+        });
 
     </script>
 </body>
