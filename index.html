@@ -90,6 +90,18 @@
         .animate-bounce-short {
             animation: bounce-short 0.3s ease-in-out;
         }
+        /* Animación para el carrusel de testimonios */
+        @keyframes scroll-testimonials {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll-testimonials {
+            animation: scroll-testimonials 35s linear infinite;
+            width: max-content;
+        }
+        .pause-on-hover:hover .animate-scroll-testimonials {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-700 flex flex-col min-h-screen relative overflow-x-hidden">
@@ -104,14 +116,14 @@
     </div>
 
     <!-- BOTÓN FLOTANTE "INFO" -->
-    <button id="info-btn" onclick="toggleInfoSidebar()" class="fixed right-0 top-[30%] z-[100] bg-brand-orange text-white w-12 h-36 rounded-l-xl shadow-2xl hover:bg-orange-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center justify-center gap-2 group">
-        <i class="fas fa-info-circle text-2xl animate-bounce"></i>
+    <button id="info-btn" onclick="toggleInfoSidebar()" class="fixed right-0 top-[30%] z-[100] bg-brand-orange text-white w-10 h-28 rounded-l-xl shadow-xl hover:bg-orange-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center justify-center gap-1 group">
+        <i class="fas fa-info-circle text-xl animate-bounce"></i>
         <span class="text-[10px] font-bold uppercase writing-vertical transform rotate-180">Info</span>
     </button>
 
     <!-- BOTÓN FLOTANTE "PROCESO" (NUEVO) -->
-    <button id="process-btn" onclick="openProcessModal()" class="fixed right-0 top-[48%] z-[100] bg-brand-teal text-white w-12 h-36 rounded-l-xl shadow-2xl hover:bg-teal-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center justify-center gap-2 group">
-        <i class="fas fa-clipboard-list text-2xl animate-bounce"></i>
+    <button id="process-btn" onclick="openProcessModal()" class="fixed right-0 top-[45%] z-[100] bg-brand-teal text-white w-10 h-28 rounded-l-xl shadow-xl hover:bg-teal-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center justify-center gap-1 group">
+        <i class="fas fa-clipboard-list text-xl animate-bounce"></i>
         <span class="text-[10px] font-bold uppercase writing-vertical transform rotate-180">Proceso</span>
     </button>
 
@@ -179,6 +191,11 @@
                     <a href="#adoptar" class="text-gray-600 hover:text-brand-orange transition-colors">Adopta</a>
                     <a href="#tienda" class="text-gray-600 hover:text-brand-orange transition-colors">Tienda</a>
                     
+                    <!-- USER BUTTON (Desktop) -->
+                    <button onclick="openAuthModal()" class="text-gray-600 hover:text-brand-orange transition-colors focus:outline-none" title="Acceso Refugios">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </button>
+
                     <!-- CART BUTTON (Desktop) -->
                     <button onclick="openCartModal()" class="relative bg-brand-teal text-white p-2 rounded-full hover:bg-teal-600 transition-colors">
                         <i class="fas fa-shopping-cart"></i>
@@ -187,6 +204,11 @@
                 </div>
 
                 <div class="flex items-center gap-4 md:hidden">
+                    <!-- USER BUTTON (Mobile) -->
+                    <button onclick="openAuthModal()" class="text-gray-600 focus:outline-none" title="Acceso Refugios">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </button>
+
                     <!-- CART BUTTON (Mobile) -->
                     <button onclick="openCartModal()" class="relative text-gray-600 focus:outline-none">
                         <i class="fas fa-shopping-cart text-2xl"></i>
@@ -311,19 +333,64 @@
         </div>
     </section>
 
-    <!-- (Sección "Proceso" eliminada y reemplazada por botón flotante) -->
+    <!-- Contact Banner -->
+    <section id="contacto" class="py-12 bg-white relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="bg-[#FDF6E4] rounded-3xl shadow-lg border border-orange-100 flex flex-col md:flex-row overflow-hidden">
+                <!-- Banner Text -->
+                <div class="md:w-1/3 bg-brand-orange p-8 md:p-10 text-white flex flex-col justify-center relative">
+                    <i class="fas fa-paw absolute -bottom-6 -right-6 text-8xl text-white/10 transform -rotate-12"></i>
+                    <h3 class="text-3xl font-bold mb-3 relative z-10">¡Contáctanos!</h3>
+                    <p class="text-sm text-white/90 leading-relaxed relative z-10">¿Quieres adoptar, ser voluntario o donar para la tienda solidaria? Escríbenos y únete a la manada.</p>
+                </div>
+                <!-- Banner Form -->
+                <div class="md:w-2/3 p-8 md:p-10">
+                    <form onsubmit="handleContactSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Nombre Completo</label>
+                            <input type="text" placeholder="Tu nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Email</label>
+                            <input type="email" placeholder="tu@email.com" required class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Asunto</label>
+                            <select class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all">
+                                 <option>Quiero Adoptar</option>
+                                 <option>Ser Voluntario</option>
+                                 <option>Donar comida o accesorios</option>
+                                 <option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2 flex flex-col sm:flex-row items-end gap-4">
+                            <div class="flex-grow w-full">
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Mensaje</label>
+                                <textarea rows="2" placeholder="Cuéntanos..." required class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full sm:w-auto bg-brand-orange text-white font-bold px-8 py-3 rounded-xl hover:bg-orange-600 transition-colors shadow-md text-sm sm:h-[60px] flex items-center justify-center whitespace-nowrap">
+                                Enviar <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Tienda Solidaria (CON CARRITO) -->
-    <section id="tienda" class="py-20 bg-white relative">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="inline-block py-1 px-3 rounded-full bg-brand-teal/10 text-brand-teal font-bold text-xs mb-4 border border-brand-teal/20">
+    <section id="tienda" class="py-24 bg-brand-teal relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="inline-block py-1 px-4 rounded-full bg-white text-brand-teal font-bold text-xs mb-4 shadow-lg">
                     <i class="fas fa-shopping-bag mr-1"></i> 100% A Beneficio
                 </span>
-                <h2 class="text-3xl md:text-5xl font-bold text-brand-dark mb-4">Tienda <span class="text-brand-orange">Solidaria</span></h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                    Tienda <span class="bg-white text-brand-teal px-4 py-1 rounded-2xl shadow-lg inline-block mt-2 md:mt-0">Solidaria</span>
+                </h2>
+                <p class="text-white/90 max-w-2xl mx-auto text-lg mt-4">
                     Equipa a tu mascota con los mejores accesorios. <br>
-                    <strong>Cada compra financia alimento y tratamientos para nuestros rescatados.</strong>
+                    <strong class="text-white">Cada compra financia alimento y tratamientos para nuestros rescatados.</strong>
                 </p>
             </div>
 
@@ -332,7 +399,9 @@
             </div>
             
             <div class="text-center mt-12">
-                <p class="text-gray-500 text-sm">¿Buscas algo específico? <a href="#contacto" class="text-brand-orange font-bold hover:underline">Pregúntanos por stock</a></p>
+                <p class="text-brand-dark text-sm font-medium bg-white inline-block px-6 py-2 rounded-full shadow-lg">
+                    ¿Buscas algo específico? <a href="#contacto" class="text-brand-orange font-bold hover:underline ml-1">Pregúntanos por stock</a>
+                </p>
             </div>
         </div>
     </section>
@@ -354,7 +423,7 @@
                         <h2 class="text-3xl md:text-4xl font-bold mb-4">Apoya en redes sociales</h2>
                         <p class="text-lg opacity-90 leading-relaxed mb-6">
                             Nuestra misión es vincular y dar voz a los rescatistas y refugios independientes de Valparaíso que luchan solos en su proyecto.
-                            <br><strong>¡Tu "Compartir" salva vidas!</strong> Síguenos y ayúdanos a difundir sus historias para encontrarles un hogar.
+                            <br><strong>Funcionamos gracias a personas como tú <i class="fas fa-heart"></i></strong>
                         </p>
                         <div class="flex flex-wrap gap-4">
                             <a href="#" class="bg-white text-brand-orange hover:bg-gray-100 font-bold py-2 px-6 rounded-full transition-all shadow-md flex items-center gap-2 transform hover:-translate-y-1">
@@ -409,6 +478,178 @@
             </div>
 
         </div>
+    </section>
+
+    <!-- Testimonios / Slider Section -->
+    <section class="py-12 bg-[#FDF8F5] relative border-t border-orange-100 overflow-hidden pause-on-hover">
+        <div class="container mx-auto px-6 mb-8 text-center relative z-10">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-800">Familias <span class="text-brand-orange">Conectadas</span></h3>
+            <p class="text-gray-500 text-sm mt-2">Conoce las experiencias de quienes ya le abrieron las puertas de su hogar a un rescatado.</p>
+        </div>
+        
+        <!-- Contenedor del Slider Infinito -->
+        <div class="flex animate-scroll-testimonials">
+            
+            <!-- GRUPO 1 DE TARJETAS -->
+            <div class="flex gap-6 px-3">
+                <!-- Testimonio 1 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">María Paz</h5>
+                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Manchitas</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Me cambió la vida. El proceso fue súper transparente y me orientaron en todo. ¡Llegó muy sanita!"</p>
+                </div>
+
+                <!-- Testimonio 2 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Diego Soto</h5>
+                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Roco</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Roco llenó la casa de energía. Estaba súper temeroso al principio, pero con paciencia ahora es el rey."</p>
+                </div>
+
+                <!-- Testimonio 3 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Valentina M.</h5>
+                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Luna</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Pensé que mi departamento era muy chico, pero hicieron el match perfecto. Luna es dormilona y feliz."</p>
+                </div>
+
+                <!-- Testimonio 4 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Don Carlos</h5>
+                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Viejito</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Decidí adoptar un perro senior y ha sido maravilloso. No hace destrozos y me acompaña viendo tele."</p>
+                </div>
+
+                <!-- Testimonio 5 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Familia Rojas</h5>
+                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptaron a Pelusa</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Los niños aman a Pelusa. Apreciamos mucho la charla de tenencia responsable que nos dieron."</p>
+                </div>
+            </div>
+
+            <!-- GRUPO 2 DE TARJETAS (Duplicado exacto para efecto infinito sin cortes) -->
+            <div class="flex gap-6 px-3">
+                <!-- Testimonio 1 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">María Paz</h5>
+                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Manchitas</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Me cambió la vida. El proceso fue súper transparente y me orientaron en todo. ¡Llegó muy sanita!"</p>
+                </div>
+
+                <!-- Testimonio 2 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Diego Soto</h5>
+                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Roco</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Roco llenó la casa de energía. Estaba súper temeroso al principio, pero con paciencia ahora es el rey."</p>
+                </div>
+
+                <!-- Testimonio 3 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Valentina M.</h5>
+                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Luna</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Pensé que mi departamento era muy chico, pero hicieron el match perfecto. Luna es dormilona y feliz."</p>
+                </div>
+
+                <!-- Testimonio 4 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Don Carlos</h5>
+                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Viejito</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Decidí adoptar un perro senior y ha sido maravilloso. No hace destrozos y me acompaña viendo tele."</p>
+                </div>
+
+                <!-- Testimonio 5 -->
+                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <div>
+                            <h5 class="font-bold text-gray-800 text-sm">Familia Rojas</h5>
+                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptaron a Pelusa</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"Los niños aman a Pelusa. Apreciamos mucho la charla de tenencia responsable que nos dieron."</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gradientes para difuminar los bordes laterales del carrusel -->
+        <div class="absolute top-0 left-0 h-full w-12 bg-gradient-to-r from-[#FDF8F5] to-transparent z-20 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-[#FDF8F5] to-transparent z-20 pointer-events-none"></div>
     </section>
 
     <!-- Sponsors Section -->
@@ -944,6 +1185,190 @@
         </div>
     </div>
 
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/60 z-[90] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            <div class="p-8">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-brand-orange/10 rounded-full text-brand-orange text-3xl shadow-sm mb-2">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800">Acceso Refugios</h3>
+                    <p class="text-gray-500 text-sm mt-1">Administra tu base de datos de rescatados.</p>
+                </div>
+                <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Correo Electrónico</label>
+                        <input type="email" value="refugio@valpo.cl" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-orange bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Contraseña</label>
+                        <input type="password" value="123456" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-orange bg-gray-50">
+                    </div>
+                    <button type="submit" class="w-full bg-brand-dark text-white font-bold py-3 rounded-xl mt-2 hover:bg-gray-800 shadow-lg transition-all transform active:scale-95">
+                        Ingresar a la Base de Datos
+                    </button>
+                    <p class="text-xs text-center text-gray-400 mt-4">¿Eres un refugio nuevo? <a href="#" onclick="openRegisterModal(); return false;" class="text-brand-orange font-bold hover:underline">Crea tu cuenta aquí</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal (NUEVO) -->
+    <div id="register-modal" class="fixed inset-0 bg-black/60 z-[95] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeRegisterModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+            <div class="p-8">
+                <div class="text-center mb-6">
+                    <div class="inline-block p-3 bg-brand-teal/10 rounded-full text-brand-teal text-3xl shadow-sm mb-2">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800">Registro de Rescatistas</h3>
+                    <p class="text-gray-500 text-sm mt-1">Por la seguridad de los peludos, verificamos cada cuenta.</p>
+                </div>
+                <form onsubmit="handleRegisterSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Nombre del Refugio</label>
+                            <input type="text" placeholder="Ej: Patitas Puerto" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Tu Nombre (Encargado)</label>
+                            <input type="text" placeholder="Juan Pérez" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Correo Electrónico</label>
+                            <input type="email" placeholder="contacto@..." required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Contraseña</label>
+                            <input type="password" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-100 pt-4 mt-2">
+                        <h4 class="font-bold text-gray-700 text-sm mb-3"><i class="fas fa-shield-alt text-brand-orange mr-1"></i> Verificación de Labor</h4>
+                        
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Link de Red Social (Instagram/Facebook)</label>
+                                <input type="url" placeholder="https://instagram.com/tu_refugio" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-orange bg-gray-50">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Comprobante, Personalidad Jurídica o Fotos (Opcional)</label>
+                                <input type="file" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-50 file:text-brand-orange hover:file:bg-orange-100 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Cuéntanos sobre tu labor en Valparaíso</label>
+                                <textarea rows="2" placeholder="¿Dónde operas? ¿Cuántos rescatados tienes actualmente?" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-orange bg-gray-50 resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-teal text-white font-bold py-3 rounded-xl mt-4 hover:bg-teal-600 shadow-lg transition-all transform active:scale-95">
+                        Enviar Solicitud de Registro
+                    </button>
+                    <p class="text-[10px] text-center text-gray-400 mt-2 leading-tight">Revisaremos tu solicitud manualmente para proteger a los animales. Te enviaremos un correo de activación en 24-48 hrs.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Modal -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/60 z-[90] hidden flex items-center justify-center p-2 sm:p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-gray-50 rounded-3xl max-w-6xl w-full h-[95vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden">
+            
+            <!-- Header -->
+            <div class="bg-white p-4 sm:p-6 border-b border-gray-200 flex justify-between items-center z-10 shadow-sm shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="bg-brand-dark text-white p-2 rounded-lg"><i class="fas fa-database"></i></div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Panel de Administración</h3>
+                        <p class="text-xs text-gray-500">Refugio Valparaíso</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="closeAdminModal()" class="text-sm font-bold text-gray-500 hover:text-red-500 bg-gray-100 hover:bg-red-50 px-4 py-2 rounded-lg transition-colors">
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="flex-grow overflow-hidden flex flex-col md:flex-row">
+                
+                <!-- Left Col: List of Pets -->
+                <div class="w-full md:w-2/3 h-1/2 md:h-full overflow-y-auto p-4 sm:p-6 border-b md:border-b-0 md:border-r border-gray-200">
+                    <h4 class="font-bold text-gray-700 mb-4 flex items-center justify-between">
+                        <span>Base de Datos: Tus Rescatados</span>
+                        <span class="bg-brand-teal text-white text-xs px-2 py-1 rounded-full" id="admin-pet-count">0</span>
+                    </h4>
+                    <div class="space-y-3" id="admin-pet-list">
+                        <!-- Pets injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Right Col: Add New Pet Form -->
+                <div class="w-full md:w-1/3 h-1/2 md:h-full overflow-y-auto p-4 sm:p-6 bg-white">
+                    <h4 class="font-bold text-gray-700 mb-4"><i class="fas fa-plus-circle text-brand-orange mr-1"></i> Ingresar Nuevo Rescatado</h4>
+                    <form onsubmit="handleNewPet(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Nombre</label>
+                            <input type="text" id="new-pet-name" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Especie</label>
+                                <select id="new-pet-type" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option value="dog">Perro</option>
+                                    <option value="cat">Gato</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Sexo</label>
+                                <select id="new-pet-gender" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option value="Macho">Macho</option>
+                                    <option value="Hembra">Hembra</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Edad (Ej: 2 meses)</label>
+                                <input type="text" id="new-pet-age" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Tamaño</label>
+                                <select id="new-pet-size" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option value="Pequeño">Pequeño</option>
+                                    <option value="Mediano">Mediano</option>
+                                    <option value="Grande">Grande</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">URL de Imagen</label>
+                            <input type="url" id="new-pet-img" placeholder="https://..." required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Breve Descripción</label>
+                            <textarea id="new-pet-desc" rows="2" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-orange text-white font-bold py-3 rounded-xl mt-2 hover:bg-orange-600 shadow-md transition-all active:scale-95 text-sm">
+                            <i class="fas fa-save mr-1"></i> Guardar en Base de Datos
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
         // --- Shopping Cart Logic ---
@@ -1114,22 +1539,27 @@
             grid.innerHTML = '';
             products.forEach(prod => {
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 group';
+                card.className = 'bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)] transition-all duration-300 group hover:-translate-y-2 border-2 border-transparent hover:border-brand-orange/20 flex flex-col';
                 card.innerHTML = `
-                    <div class="relative h-48 overflow-hidden bg-gray-100">
-                        <img src="${prod.img}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute bottom-3 right-3 bg-white text-brand-orange w-8 h-8 rounded-full shadow-lg flex items-center justify-center">
-                           <i class="fas fa-heart text-xs"></i>
+                    <div class="relative h-56 overflow-hidden p-3 bg-white">
+                        <img src="${prod.img}" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute top-5 right-5 bg-white/90 backdrop-blur text-brand-orange w-8 h-8 rounded-full shadow-md flex items-center justify-center">
+                           <i class="fas fa-heart text-[10px]"></i>
+                        </div>
+                        <div class="absolute bottom-6 left-6 bg-brand-teal text-white px-3 py-1 rounded-lg text-sm font-black shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            ${prod.price}
                         </div>
                     </div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-gray-800 text-lg line-clamp-1">${prod.name}</h4>
-                            <span class="bg-teal-50 text-brand-teal px-2 py-1 rounded-md text-xs font-bold">${prod.price}</span>
+                    <div class="p-6 pt-2 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2 gap-2">
+                                <h4 class="font-bold text-gray-800 text-lg leading-tight">${prod.name}</h4>
+                                <span class="bg-orange-50 text-brand-orange px-2 py-1 rounded-md text-sm font-bold group-hover:opacity-0 transition-opacity duration-300">${prod.price}</span>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-5 leading-relaxed">${prod.desc}</p>
                         </div>
-                        <p class="text-gray-500 text-sm line-clamp-2 mb-4">${prod.desc}</p>
-                        <button onclick="addToCart(${prod.id})" class="w-full border border-brand-teal text-brand-teal font-bold py-2 rounded-lg hover:bg-brand-teal hover:text-white transition-colors text-sm flex items-center justify-center gap-2">
-                            Comprar <i class="fas fa-cart-plus"></i>
+                        <button onclick="addToCart(${prod.id})" class="w-full border-2 border-brand-teal text-brand-teal font-bold py-3 rounded-xl hover:bg-brand-teal hover:text-white transition-all duration-300 text-sm flex items-center justify-center gap-2 group/btn">
+                            Añadir al Carrito <i class="fas fa-cart-plus group-hover/btn:scale-110 transition-transform"></i>
                         </button>
                     </div>
                 `;
@@ -1137,7 +1567,7 @@
             });
         }
         
-        const pets = [
+        let pets = [
             { id: 1, name: "Lobito", type: "dog", breed: "Mestizo Chileno", age: "9 años", gender: "Macho", size: "Grande", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "El clásico negrito fiel. Fue rescatado cerca de la Municipalidad de Valparaíso.", story: "Su tutor falleció y quedó en la calle, vagando por las calles enfermito y siempre tan cariñoso con sus vecinos", img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
             { id: 2, name: "Michi", type: "cat", breed: "Común Europeo", age: "2 años", gender: "Hembra", size: "Pequeño", status: "Hogar Temporal", energyLevel: "medium", idealSpace: "apartment", desc: "Michi es la reina de la casa. Rescatada de la calle. Es independiente, y un poquito caprichosa pero ronronea como motor cuando quiere cariño.", story: "La encontramos maullando desesperada bajo la lluvia en el sector puerto. Estaba muy flaca y desconfiada.", img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
             { id: 3, name: "Doddy", type: "dog", breed: "Poodle Toy", age: "12 años", gender: "Macho", size: "Pequeño", status: "Refugio", energyLevel: "low", idealSpace: "apartment", desc: "Un abuelito muy regalón. Le encanta dormir en la cama y estar calientito.", story: "Doddy llegó a nosotros tras el fallecimiento de su dueña, una señora mayor que lo adoraba.", img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
@@ -1145,7 +1575,8 @@
             { id: 5, name: "Rolo", type: "cat", breed: "Felis silvestris catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "En Recuperación", energyLevel: "low", idealSpace: "apartment", desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación.", story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda.", img: "https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
             { id: 6, name: "Pelusa", type: "dog", breed: "Mestiza Pelo Largo", age: "2 años", gender: "Hembra", size: "Pequeño", status: "Refugio", energyLevel: "medium", idealSpace: "apartment", desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido.", story: "Nació en los cerros altos, en una camada que nadie quería.", img: "https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
             { id: 7, name: "Garfield", type: "cat", breed: "Mestizo Naranjo", age: "4 años", gender: "Macho", size: "Grande", status: "Hogar Temporal", energyLevel: "low", idealSpace: "apartment", desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer.", story: "Garfield hacía honor a su nombre visitando todas las carnicerías del barrio puerto.", img: "https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 8, name: "Canela", type: "dog", breed: "Mestiza Chilena", age: "1.5 años", gender: "Hembra", size: "Mediano", status: "Caso Externo", energyLevel: "high", idealSpace: "house", desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde.", story: "Canela era la 'perrita comunitaria' de un paradero de micro.", img: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
+            { id: 8, name: "Canela", type: "dog", breed: "Mestiza Chilena", age: "1.5 años", gender: "Hembra", size: "Mediano", status: "Caso Externo", energyLevel: "high", idealSpace: "house", desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde.", story: "Canela era la 'perrita comunitaria' de un paradero de micro.", img: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+            { id: 9, name: "Benito", type: "dog", breed: "Mestizo", age: "3 años", gender: "Macho", size: "Mediano", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "Benito es muy juguetón y cariñoso. Le encanta buscar la pelota y dar abrazos.", story: "Fue rescatado en Playa Ancha. A pesar de su pasado, ha vuelto a confiar plenamente en las personas.", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
         ];
 
         function renderPets(filter = 'all') {
@@ -1159,9 +1590,24 @@
                 const card = document.createElement('div');
                 let genderColorClass = (pet.gender === "Hembra") ? "bg-pink-100 text-pink-600" : "bg-blue-100 text-blue-600";
                 let genderIconClass = (pet.gender === "Hembra") ? "fa-venus" : "fa-mars";
+                
+                // Si está adoptado, creamos un letrero especial por encima
+                let adoptedOverlay = pet.status === 'Adoptado' ? `
+                    <div class="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-20 flex items-center justify-center pointer-events-none rounded-2xl">
+                        <div class="bg-green-500 text-white font-black px-6 py-3 rounded-2xl transform -rotate-12 shadow-2xl border-4 border-white text-xl md:text-2xl tracking-widest uppercase">
+                            ¡Adoptado!
+                        </div>
+                    </div>
+                ` : '';
 
-                card.className = 'bg-white rounded-2xl overflow-hidden shadow-md card-hover group h-full flex flex-col';
+                // El botón cambia si ya fue adoptado
+                let actionButton = pet.status === 'Adoptado' ? 
+                    `<button class="w-full py-2 border-2 border-gray-300 text-gray-400 font-bold rounded-lg bg-gray-50 cursor-default">Familia Encontrada <i class="fas fa-heart text-red-400"></i></button>` :
+                    `<button onclick="openModal(${pet.id})" class="w-full py-2 border-2 border-brand-teal text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-white transition-colors">Conóceme</button>`;
+
+                card.className = 'bg-white rounded-2xl overflow-hidden shadow-md card-hover group h-full flex flex-col relative';
                 card.innerHTML = `
+                    ${adoptedOverlay}
                     <div class="relative h-64 overflow-hidden">
                         <img src="${pet.img}" alt="${pet.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
@@ -1176,50 +1622,11 @@
                             <span class="${genderColorClass} px-2 py-1 rounded-md font-bold"><i class="fas ${genderIconClass} mr-1"></i> ${pet.gender}</span>
                         </div>
                         <p class="text-gray-600 line-clamp-2 mb-4 text-sm">${pet.desc}</p>
-                        <button onclick="openModal(${pet.id})" class="w-full py-2 border-2 border-brand-teal text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-white transition-colors">Conóceme</button>
+                        ${actionButton}
                     </div>
                 `;
                 grid.appendChild(card);
             });
-
-            // --- AÑADIR FORMULARIO DE CONTACTO COMO TARJETA FINAL ---
-            const formCard = document.createElement('div');
-            formCard.className = 'bg-[#FDF6E4] rounded-2xl shadow-md p-6 border border-orange-100 flex flex-col justify-center h-full relative overflow-hidden group';
-            formCard.innerHTML = `
-               <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/10 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
-               <div class="relative z-10 h-full flex flex-col">
-                   <h3 class="text-2xl font-bold text-gray-800 mb-2 text-center font-heading">Contáctanos</h3>
-                   <p class="text-xs text-gray-500 text-center mb-4">¿Quieres adoptar o ser voluntario? ¡Escríbenos!</p>
-                   
-                   <form onsubmit="handleContactSubmit(event)" class="space-y-3 flex-grow flex flex-col justify-center">
-                       <div>
-                           <label class="block text-[10px] font-bold text-gray-600 mb-1 uppercase">Nombre Completo</label>
-                           <input type="text" placeholder="Tu nombre" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-brand-orange bg-white transition-all">
-                       </div>
-                       <div>
-                           <label class="block text-[10px] font-bold text-gray-600 mb-1 uppercase">Email</label>
-                           <input type="email" placeholder="tu@email.com" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-brand-orange bg-white transition-all">
-                       </div>
-                       <div>
-                           <label class="block text-[10px] font-bold text-gray-600 mb-1 uppercase">Asunto</label>
-                           <select class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-brand-orange bg-white transition-all">
-                                <option>Quiero Adoptar</option>
-                                <option>Ser Voluntario</option>
-                                <option>Donar comida o accesorios</option>
-                                <option>Otro</option>
-                           </select>
-                       </div>
-                       <div>
-                           <label class="block text-[10px] font-bold text-gray-600 mb-1 uppercase">Mensaje</label>
-                           <textarea rows="3" placeholder="Cuéntanos..." class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-brand-orange bg-white transition-all resize-none"></textarea>
-                       </div>
-                       <button type="submit" class="w-full bg-brand-orange text-white font-bold py-2 rounded-lg hover:bg-orange-600 transition-colors shadow-md mt-auto text-sm">
-                           Enviar Mensaje <i class="fas fa-paper-plane ml-1"></i>
-                       </button>
-                   </form>
-               </div>
-            `;
-            grid.appendChild(formCard);
         }
 
         function filterPets(type) {
@@ -1452,9 +1859,10 @@
 
             // Algorithm
             const matches = pets.filter(pet => {
+                // FILTRO ESTRICTO: Si se elige un tipo específico y no coincide, se descarta inmediatamente.
+                if (type !== 'any' && pet.type !== type) return false;
+
                 let score = 0;
-                // Type match
-                if (type === 'any' || pet.type === type) score += 2;
                 
                 // Energy match
                 if (pet.energyLevel === energy) score += 2;
@@ -1470,7 +1878,9 @@
                 else if (space === 'apartment' && pet.idealSpace === 'apartment') score += 1;
                 else if (space === 'apartment' && pet.idealSpace === 'house') score -= 1; // not ideal
 
-                return score >= 3; // Threshold
+                // Threshold: Al haber filtrado estrictamente por tipo, bajamos el umbral
+                // para mostrar resultados compatibles en energía/espacio.
+                return score >= 1; 
             }).sort((a, b) => 0.5 - Math.random()); // Shuffle slightly
 
             displayMatches(matches);
@@ -1741,6 +2151,208 @@
             renderProducts(); 
         });
 
+        // ==========================================
+        // --- AUTH & ADMIN DASHBOARD LOGIC ---
+        // ==========================================
+        
+        const authModal = document.getElementById('auth-modal');
+        const adminModal = document.getElementById('admin-modal');
+        const registerModal = document.getElementById('register-modal');
+
+        function openAuthModal() {
+            authModal.classList.remove('hidden');
+            setTimeout(() => {
+                authModal.classList.remove('opacity-0');
+                authModal.querySelector('div').classList.remove('scale-95');
+                authModal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeAuthModal() {
+            authModal.classList.add('opacity-0');
+            authModal.querySelector('div').classList.remove('scale-100');
+            authModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => { authModal.classList.add('hidden'); }, 300);
+        }
+
+        function openRegisterModal() {
+            closeAuthModal();
+            registerModal.classList.remove('hidden');
+            setTimeout(() => {
+                registerModal.classList.remove('opacity-0');
+                registerModal.querySelector('div').classList.remove('scale-95');
+                registerModal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeRegisterModal() {
+            registerModal.classList.add('opacity-0');
+            registerModal.querySelector('div').classList.remove('scale-100');
+            registerModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => { registerModal.classList.add('hidden'); }, 300);
+        }
+
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            closeRegisterModal();
+            
+            // Mostrar notificación de éxito personalizada
+            const toast = document.getElementById('toast');
+            const toastTitle = toast.querySelector('h4');
+            const toastDesc = toast.querySelector('p');
+            const originalTitle = toastTitle.textContent;
+            const originalDesc = toastDesc.textContent;
+            
+            toastTitle.textContent = "¡Solicitud Recibida!";
+            toastDesc.textContent = "Revisaremos tus datos y te contactaremos pronto.";
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => { 
+                toast.classList.add('translate-x-full'); 
+                setTimeout(() => {
+                    toastTitle.textContent = originalTitle;
+                    toastDesc.textContent = originalDesc;
+                }, 300);
+            }, 4000);
+        }
+
+        registerModal?.addEventListener('click', (e) => { if (e.target === registerModal) closeRegisterModal(); });
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            closeAuthModal();
+            // Simulamos el inicio de sesión abriendo el panel de control
+            setTimeout(() => {
+                openAdminModal();
+            }, 300);
+        }
+
+        function openAdminModal() {
+            adminModal.classList.remove('hidden');
+            renderAdminPets();
+            setTimeout(() => {
+                adminModal.classList.remove('opacity-0');
+                adminModal.querySelector('div').classList.remove('scale-95');
+                adminModal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeAdminModal() {
+            adminModal.classList.add('opacity-0');
+            adminModal.querySelector('div').classList.remove('scale-100');
+            adminModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => { adminModal.classList.add('hidden'); }, 300);
+        }
+
+        function renderAdminPets() {
+            const list = document.getElementById('admin-pet-list');
+            const count = document.getElementById('admin-pet-count');
+            list.innerHTML = '';
+            count.textContent = pets.length;
+
+            // Mostramos los animales desde el último ingresado al primero
+            [...pets].reverse().forEach(pet => {
+                const item = document.createElement('div');
+                item.className = "flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm";
+                
+                const isAdopted = pet.status === 'Adoptado';
+                const statusColor = isAdopted ? 'text-green-600 bg-green-50 border-green-200' : 'text-brand-orange bg-orange-50 border-orange-200';
+
+                item.innerHTML = `
+                    <img src="${pet.img}" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="flex-grow">
+                        <h5 class="font-bold text-gray-800 text-sm leading-tight">${pet.name}</h5>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-wide">${pet.type === 'dog' ? 'Perro' : 'Gato'} - ${pet.gender}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select onchange="updatePetStatus(${pet.id}, this.value)" class="text-xs font-bold px-2 py-1.5 rounded-lg border focus:outline-none ${statusColor} cursor-pointer">
+                            <option value="Refugio" ${pet.status === 'Refugio' ? 'selected' : ''}>Refugio</option>
+                            <option value="Hogar Temporal" ${pet.status === 'Hogar Temporal' ? 'selected' : ''}>Hogar Temporal</option>
+                            <option value="En Recuperación" ${pet.status === 'En Recuperación' ? 'selected' : ''}>En Recuperación</option>
+                            <option value="Adoptado" ${isAdopted ? 'selected' : ''}>¡Adoptado!</option>
+                        </select>
+                        <button onclick="deletePetAdmin(${pet.id})" class="text-gray-400 hover:text-red-500 p-2 transition-colors bg-gray-50 hover:bg-red-50 rounded-lg">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function updatePetStatus(id, newStatus) {
+            const index = pets.findIndex(p => p.id === id);
+            if (index !== -1) {
+                pets[index].status = newStatus;
+                renderAdminPets(); // Actualizar lista de admin
+                
+                // Re-renderizar galería principal para mostrar el cambio (ej: Letrero ¡Adoptado!)
+                const activeFilterBtn = document.querySelector('.filter-btn.bg-brand-orange');
+                const currentFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
+                renderPets(currentFilter);
+            }
+        }
+
+        function deletePetAdmin(id) {
+            // Eliminación directa en la BD simulada
+            pets = pets.filter(p => p.id !== id);
+            renderAdminPets();
+            
+            // Re-renderizar galería principal
+            const activeFilterBtn = document.querySelector('.filter-btn.bg-brand-orange');
+            const currentFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
+            renderPets(currentFilter);
+        }
+
+        function handleNewPet(e) {
+            e.preventDefault();
+            
+            const newId = pets.length > 0 ? Math.max(...pets.map(p => p.id)) + 1 : 1;
+            const newPet = {
+                id: newId,
+                name: document.getElementById('new-pet-name').value,
+                type: document.getElementById('new-pet-type').value,
+                breed: "Mestizo(a)", 
+                age: document.getElementById('new-pet-age').value,
+                gender: document.getElementById('new-pet-gender').value,
+                size: document.getElementById('new-pet-size').value,
+                status: "Refugio",
+                energyLevel: "medium", 
+                idealSpace: "apartment", 
+                desc: document.getElementById('new-pet-desc').value,
+                story: "Recién ingresado a la base de datos. ¡Buscamos cambiar su destino pronto!",
+                img: document.getElementById('new-pet-img').value
+            };
+
+            pets.push(newPet);
+            e.target.reset(); // Limpiar formulario
+            
+            // Mostrar notificación visual
+            const toast = document.getElementById('toast');
+            const toastTitle = toast.querySelector('h4');
+            const toastDesc = toast.querySelector('p');
+            const originalTitle = toastTitle.textContent;
+            const originalDesc = toastDesc.textContent;
+            
+            toastTitle.textContent = "¡Registrado!";
+            toastDesc.textContent = "Mascota añadida a la base de datos.";
+            toast.classList.remove('translate-x-full');
+            
+            setTimeout(() => { 
+                toast.classList.add('translate-x-full'); 
+                setTimeout(() => {
+                    toastTitle.textContent = originalTitle;
+                    toastDesc.textContent = originalDesc;
+                }, 300);
+            }, 3000);
+
+            renderAdminPets();
+            
+            // Re-renderizar galería principal para mostrar el nuevo animal
+            const activeFilterBtn = document.querySelector('.filter-btn.bg-brand-orange');
+            const currentFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
+            renderPets(currentFilter);
+        }
     </script>
 </body>
 </html>
