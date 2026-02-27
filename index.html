@@ -1382,43 +1382,46 @@
     <!-- Scripts -->
     <script>
         // ==========================================
-        // 📁 AQUI CAMBIO LAS FOTICOS PERO NO SE CAMBIA
-        // CambiaR los enlaces aquí para actualizar las foticos
+        // 📁 CONFIGURACIÓN CENTRAL DE IMÁGENES
+        // Cambia los enlaces aquí para actualizar las fotos de todo el sitio
         // ==========================================
         const SITE_IMAGES = {
             // 1. Portada Principal (Sección "Inicio")
-            hero: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            hero: "imágenes/portada_principal.jpeg", 
             
             // 2. Mascotas en Adopción (Sección "Nuestros Rescatados")
             pets: {
-                lobito: "images/lobito.jpeg",
-                liah: "images/liah.jpeg",
+                lobito: "imágenes/lobito.jpeg",
+                liah: "imágenes/liah.jpeg",
                 doddy: "imágenes/doddy.jpeg",
-                ragnar: "../imagenes/ragnar.jpeg",
+                ragnar: "imágenes/ragnar.jpeg",
                 rolo: "imágenes/rolo.jpeg",
                 amanda: "imágenes/amanda.jpeg",
-                grumo: "images/Grumo.jpeg",
+                grumo: "imágenes/Grumo.jpeg",
                 rocky: "imágenes/Rocky.jpeg"
             },
 
             // 3. Productos de la Tienda
             shop: {
-                packPedigree: "https://images.unsplash.com/photo-1589924691195-41432c84c161?q=80&w=600&auto=format&fit=crop",
-                arnes: "https://images.unsplash.com/photo-1615266895738-11f1371cd7e5?q=80&w=600&auto=format&fit=crop",
-                plato: "https://images.unsplash.com/photo-1585846416120-3a7354ed7d39?q=80&w=600&auto=format&fit=crop",
-                packDogChow: "https://images.unsplash.com/photo-1608408843596-b311965e0469?q=80&w=600&auto=format&fit=crop",
-                kitSalud: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?q=80&w=600&auto=format&fit=crop",
-                cama: "https://images.unsplash.com/photo-1591946614720-90a587da4a36?q=80&w=600&auto=format&fit=crop"
+                packPedigree: "imágenes/tienda_pedigree.jpeg",
+                arnes: "imágenes/tienda_arnes.jpeg",
+                plato: "imágenes/tienda_plato.jpeg",
+                packDogChow: "imágenes/tienda_dogchow.jpeg",
+                kitSalud: "imágenes/tienda_kitsalud.jpeg",
+                cama: "imágenes/tienda_cama.jpeg"
             },
 
             // 4. Testimonios (Familias Conectadas)
             testimonials: {
-                carlaAraya: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
-                diegoSoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
-                valentinaM: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
-                donCarlos: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
-                johannaEspinoza: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
-            }
+                carlaAraya: "imágenes/testimonio_carla.jpeg",
+                diegoSoto: "imágenes/testimonio_diego.jpeg",
+                valentinaM: "imágenes/testimonio_valentina.jpeg",
+                donCarlos: "imágenes/testimonio_doncarlos.jpeg",
+                johannaEspinoza: "imágenes/testimonio_johanna.jpeg"
+            },
+
+            // 5. Imagen de respaldo (Si el navegador no encuentra tu foto, usará esta)
+            fallback: "imágenes/placeholder.jpeg"
         };
 
         // --- Carga Inicial de Imágenes Estáticas ---
@@ -1563,7 +1566,7 @@
                 card.className = 'bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)] transition-all duration-300 group hover:-translate-y-2 border-2 border-transparent hover:border-brand-orange/20 flex flex-col';
                 card.innerHTML = `
                     <div class="relative h-56 overflow-hidden p-3 bg-white">
-                        <img src="${prod.img}" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105">
+                        <img src="${prod.img}" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105" onerror="this.src=SITE_IMAGES.fallback">
                         <div class="absolute top-5 right-5 bg-white/90 backdrop-blur text-brand-orange w-8 h-8 rounded-full shadow-md flex items-center justify-center">
                            <i class="fas fa-heart text-[10px]"></i>
                         </div>
@@ -1590,7 +1593,7 @@
         
         let pets = [
             { id: 1, name: "Lobito", type: "dog", breed: "Mestizo Chileno", age: "9 años", gender: "Macho", size: "Grande", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "El clásico negrito fiel. Fue rescatado cerca de la Municipalidad de Valparaíso.", story: "Su tutor falleció y quedó en la calle, vagando por las calles enfermito y siempre tan cariñoso con sus vecinos", img: SITE_IMAGES.pets.lobito },
-            { id: 2, name: "Liah", type: "dog", breed: "Mestiza", age: "2 años", gender: "Hembra", size: "Mediano", status: "Hogar Temporal", energyLevel: "low", idealSpace: "apartment", desc: "Es miedosa, nerviosa pero muy amorosa. Su vida fue difícil porque la tenían de incubadora, pero ahora está hermosa y solo necesita pollito.", story: "Su vida fue difícil porque la tenían de incubadora, pero ahora está hermosa y solo necesita pollito.", img:images/liah.jpeg },
+            { id: 2, name: "Liah", type: "dog", breed: "Mestiza", age: "2 años", gender: "Hembra", size: "Mediano", status: "Hogar Temporal", energyLevel: "low", idealSpace: "apartment", desc: "Es miedosa, nerviosa pero muy amorosa. Su vida fue difícil porque la tenían de incubadora, pero ahora está hermosa y solo necesita pollito.", story: "Su vida fue difícil porque la tenían de incubadora, pero ahora está hermosa y solo necesita pollito.", img: SITE_IMAGES.pets.liah },
             { id: 3, name: "Doddy", type: "dog", breed: "Poodle Toy", age: "12 años", gender: "Macho", size: "Pequeño", status: "Refugio", energyLevel: "low", idealSpace: "apartment", desc: "Un abuelito muy regalón. Le encanta dormir en la cama y estar calientito.", story: "Doddy llegó a nosotros tras el fallecimiento de su dueña, una señora mayor que lo adoraba.", img: SITE_IMAGES.pets.doddy },
             { id: 4, name: "Ragnar", type: "cat", breed: "Felis Silvestris Catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "Hogar Temporal", energyLevel: "high", idealSpace: "apartment", desc: "Ragnar es pura curiosidad. Le encanta mirar por la ventana aunque asustadizo.", story: "Ragnar y Rolo fueron encontrados en una caja junto a sus otros 6 hermanitos.", img: SITE_IMAGES.pets.ragnar },
             { id: 5, name: "Rolo", type: "cat", breed: "Felis silvestris catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "En Recuperación", energyLevel: "low", idealSpace: "apartment", desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación.", story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda.", img: SITE_IMAGES.pets.rolo },
@@ -1640,7 +1643,7 @@
                 card.innerHTML = `
                     ${adoptedOverlay}
                     <div class="relative h-64 overflow-hidden">
-                        <img src="${pet.img}" alt="${pet.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+                        <img src="${pet.img}" alt="${pet.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src=SITE_IMAGES.fallback">
                         <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
                             <h3 class="text-white text-2xl font-bold">${pet.name}</h3>
                             <p class="text-white/90 text-sm"><i class="fas fa-${pet.type === 'dog' ? 'dog' : 'cat'} mr-1"></i> ${pet.breed}</p>
@@ -2381,5 +2384,3 @@
     </script>
 </body>
 </html>
-
-
