@@ -1397,8 +1397,8 @@
                 rolo: "https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                 pelusa: "https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                 garfield: "https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                canela: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                benito: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                grumo: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rocky: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
             },
 
             // 3. Productos de la Tienda Solidaria
@@ -1417,7 +1417,7 @@
                 diegoSoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
                 valentinaM: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
                 donCarlos: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
-                familiaRojas: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+                JohannaEspinoza: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
             }
         };
 
@@ -1445,10 +1445,10 @@
 
         // BASE DE DATOS DE PRODUCTOS (TIENDA) - Usando el diccionario central
         const products = [
-            { id: 1, name: "Pack Padrino Pedigree", priceInt: 15990, price: "$15.990", img: SITE_IMAGES.shop.packPedigree, desc: "Saco de 10kg donado por Pedigree. Alimenta a un perrito del refugio por 2 semanas." },
+            { id: 1, name: "Pack Pedigree", priceInt: 15990, price: "$15.990", img: SITE_IMAGES.shop.packPedigree, desc: "Saco de 10kg donado por Pedigree. Alimenta a un perrito del refugio por 2 semanas." },
             { id: 2, name: "Arnés PetShop Valpo", priceInt: 8990, price: "$8.990", img: SITE_IMAGES.shop.arnes, desc: "Arnés de seguridad reflectante gentileza de PetShop Valpo. Ideal para paseos de rescate." },
-            { id: 3, name: "Platito Solidario", priceInt: 3990, price: "$3.990", img: SITE_IMAGES.shop.plato, desc: "Plato de acero inoxidable cortesía de PetShop Valpo. Duradero y fácil de limpiar." },
-            { id: 4, name: "Pack Padrino Dog Chow", priceInt: 18990, price: "$18.990", img: SITE_IMAGES.shop.packDogChow, desc: "Saco de 15kg donado por Dog Chow. Nutrición completa para nuestros viejitos del refugio." },
+            { id: 3, name: "Agenda Veterinaria", priceInt: 3990, price: "$3.990", img: SITE_IMAGES.shop.plato, desc: "Plato de acero inoxidable cortesía de PetShop Valpo. Duradero y fácil de limpiar." },
+            { id: 4, name: "Pack  Dog Chow", priceInt: 18990, price: "$18.990", img: SITE_IMAGES.shop.packDogChow, desc: "Saco de 15kg donado por Dog Chow. Nutrición completa para nuestros viejitos del refugio." },
             { id: 5, name: "Kit Salud FarmaVet", priceInt: 12990, price: "$12.990", img: SITE_IMAGES.shop.kitSalud, desc: "Incluye desparasitario interno y externo donado por FarmaVet. Protege a un rescatado." },
             { id: 6, name: "Cama Acolchada", priceInt: 22990, price: "$22.990", img: SITE_IMAGES.shop.cama, desc: "Cama suave para el frío porteño. Gestión solidaria de PetShop Valpo." }
         ];
@@ -1596,8 +1596,8 @@
             { id: 5, name: "Rolo", type: "cat", breed: "Felis silvestris catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "En Recuperación", energyLevel: "low", idealSpace: "apartment", desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación.", story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda.", img: SITE_IMAGES.pets.rolo },
             { id: 6, name: "Pelusa", type: "dog", breed: "Mestiza Pelo Largo", age: "2 años", gender: "Hembra", size: "Pequeño", status: "Refugio", energyLevel: "medium", idealSpace: "apartment", desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido.", story: "Nació en los cerros altos, en una camada que nadie quería.", img: SITE_IMAGES.pets.pelusa },
             { id: 7, name: "Garfield", type: "cat", breed: "Mestizo Naranjo", age: "4 años", gender: "Macho", size: "Grande", status: "Hogar Temporal", energyLevel: "low", idealSpace: "apartment", desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer.", story: "Garfield hacía honor a su nombre visitando todas las carnicerías del barrio puerto.", img: SITE_IMAGES.pets.garfield },
-            { id: 8, name: "Canela", type: "dog", breed: "Mestiza Chilena", age: "1.5 años", gender: "Hembra", size: "Mediano", status: "Caso Externo", energyLevel: "high", idealSpace: "house", desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde.", story: "Canela era la 'perrita comunitaria' de un paradero de micro.", img: SITE_IMAGES.pets.canela },
-            { id: 9, name: "Benito", type: "dog", breed: "Mestizo", age: "3 años", gender: "Macho", size: "Mediano", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "Benito es muy juguetón y cariñoso. Le encanta buscar la pelota y dar abrazos.", story: "Fue rescatado en Playa Ancha. A pesar de su pasado, ha vuelto a confiar plenamente en las personas.", img: SITE_IMAGES.pets.benito }
+            { id: 8, name: "Grumo", type: "dog", breed: "Mestiza", age: "4 meses", gender: "Hembra", size: "Pequeña", status: "Caso Externo", energyLevel: "high", idealSpace: "apartment", desc: "Grumo es muy pequeña, pero muy traviesa! Ama jugar y dormir en la cama.", story: "Grumo era una perrita que tenían en el patio sin cuidados, pero con fortaleza para salir adelante y dispuesta a crecer sanita.", img: SITE_IMAGES.pets.canela },
+            { id: 9, name: "Rocky", type: "dog", breed: "Mestizo", age: "5 años", gender: "Macho", size: "Grande", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "Rocky es muy juguetón y cariñoso. Le encanta buscar la pelota y dar abrazos.", story: "Necesita adopción urgente por cambio laboral.", img: SITE_IMAGES.pets.benito }
         ];
 
         function renderPets(filter = 'all') {
@@ -2382,3 +2382,4 @@
     </script>
 </body>
 </html>
+
