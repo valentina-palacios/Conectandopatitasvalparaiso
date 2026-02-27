@@ -121,7 +121,7 @@
         <span class="text-[10px] font-bold uppercase writing-vertical transform rotate-180">Info</span>
     </button>
 
-    <!-- BOTÓN FLOTANTE "PROCESO" (NUEVO) -->
+    <!-- BOTÓN FLOTANTE "PROCESO" -->
     <button id="process-btn" onclick="openProcessModal()" class="fixed right-0 top-[45%] z-[100] bg-brand-teal text-white w-10 h-28 rounded-l-xl shadow-xl hover:bg-teal-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center justify-center gap-1 group">
         <i class="fas fa-clipboard-list text-xl animate-bounce"></i>
         <span class="text-[10px] font-bold uppercase writing-vertical transform rotate-180">Proceso</span>
@@ -248,20 +248,17 @@
                     <a href="#adoptar" class="px-8 py-3 bg-brand-orange text-white rounded-full font-bold shadow-lg hover:bg-orange-600 transition-all transform hover:-translate-y-1">
                         Ver Rescatados
                     </a>
-                    <a href="#contacto" class="px-8 py-3 bg-white text-brand-orange border-2 border-brand-orange rounded-full font-bold hover:bg-brand-orange/5 transition-all">
+                    <button onclick="document.getElementById('contacto').scrollIntoView()" class="px-8 py-3 bg-white text-brand-orange border-2 border-brand-orange rounded-full font-bold hover:bg-brand-orange/5 transition-all">
                         Contáctanos
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class="w-full md:w-1/2 flex justify-center relative">
                 <div class="relative w-80 h-80 md:w-[500px] md:h-[500px]">
                     <div class="absolute inset-0 bg-brand-yellow rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
                     
-                    <!-- !!! FOTO PORTADA !!! -->
-                    <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                         onerror="this.src='https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
-                         alt="Perro y Gato felices" 
-                         class="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
+                    <!-- IMAGEN PORTADA PRINCIPAL -->
+                    <img id="hero-main-img" alt="Perro y Gato felices" class="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
                     
                     <div class="absolute -bottom-5 -left-5 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
                         <div class="bg-green-100 p-2 rounded-full text-green-600">
@@ -301,7 +298,7 @@
         </div>
     </section>
 
-    <!-- Adoption Gallery (CON FORMULARIO INTEGRADO) -->
+    <!-- Adoption Gallery -->
     <section id="adoptar" class="py-20 paw-pattern">
         <div class="container mx-auto px-6">
             <div class="text-center mb-8">
@@ -328,7 +325,7 @@
             </div>
 
             <div id="pets-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Pets injected via JS + Contact Form at the end -->
+                <!-- Pets injected via JS -->
             </div>
         </div>
     </section>
@@ -495,7 +492,7 @@
                 <!-- Testimonio 1 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="mariaPaz" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">María Paz</h5>
                             <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Manchitas</p>
@@ -510,7 +507,7 @@
                 <!-- Testimonio 2 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="diegoSoto" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Diego Soto</h5>
                             <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Roco</p>
@@ -525,7 +522,7 @@
                 <!-- Testimonio 3 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="valentinaM" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Valentina M.</h5>
                             <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Luna</p>
@@ -540,7 +537,7 @@
                 <!-- Testimonio 4 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="donCarlos" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Don Carlos</h5>
                             <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Viejito</p>
@@ -555,7 +552,7 @@
                 <!-- Testimonio 5 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="familiaRojas" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Familia Rojas</h5>
                             <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptaron a Pelusa</p>
@@ -573,7 +570,7 @@
                 <!-- Testimonio 1 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="mariaPaz" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">María Paz</h5>
                             <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Manchitas</p>
@@ -588,7 +585,7 @@
                 <!-- Testimonio 2 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="diegoSoto" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Diego Soto</h5>
                             <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Roco</p>
@@ -603,7 +600,7 @@
                 <!-- Testimonio 3 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="valentinaM" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Valentina M.</h5>
                             <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Luna</p>
@@ -618,7 +615,7 @@
                 <!-- Testimonio 4 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="donCarlos" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Don Carlos</h5>
                             <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Viejito</p>
@@ -633,7 +630,7 @@
                 <!-- Testimonio 5 -->
                 <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
                     <div class="flex items-center gap-3 mb-3">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        <img data-testimonio="familiaRojas" class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         <div>
                             <h5 class="font-bold text-gray-800 text-sm">Familia Rojas</h5>
                             <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptaron a Pelusa</p>
@@ -728,8 +725,8 @@
                         <li><a href="#" class="hover:text-white transition-colors">Transparencia</a></li>
                     </ul>
                 </div>
-                <div id="contacto">
-                    <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Contáctanos</h4>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Contacto</h4>
                     <ul class="space-y-3 text-gray-400">
                         <li class="flex items-start gap-3">
                             <i class="fas fa-map-marker-alt mt-1 text-brand-orange"></i>
@@ -792,19 +789,19 @@
                     
                     <p id="modal-desc" class="text-gray-600 mb-4 leading-relaxed">Descripción...</p>
                     
-                    <!-- BOTÓN CONOCER HISTORIA (NUEVO) -->
+                    <!-- BOTÓN CONOCER HISTORIA -->
                     <button onclick="toggleStory()" id="btn-story" class="text-brand-orange font-bold text-sm mb-6 flex items-center gap-2 hover:underline focus:outline-none transition-all">
                         <i class="fas fa-book-reader"></i> Conocer historia de rescate
                     </button>
 
-                    <!-- HISTORIA DESPLEGABLE (NUEVO) -->
+                    <!-- HISTORIA DESPLEGABLE -->
                     <div id="modal-story" class="hidden bg-orange-50 p-4 rounded-xl mb-6 text-sm text-gray-700 italic border-l-4 border-brand-orange transition-all duration-300">
                         <!-- Se llena con JS -->
                     </div>
 
                     <div class="mt-auto">
-                        <!-- SECCIÓN DE ADOPCIÓN ACTUALIZADA -->
-                        <div class="space-y-3">
+                        <!-- SECCIÓN DE ADOPCIÓN -->
+                        <div class="space-y-3" id="modal-adoption-section">
                             <h4 class="font-bold text-gray-800 border-t pt-4">¿Te interesa adoptarme?</h4>
                             <p class="text-sm text-gray-600">Para asegurar que somos la familia perfecta el uno para el otro, necesitamos conocerte un poco más.</p>
                             
@@ -827,7 +824,7 @@
         </div>
     </div>
 
-    <!-- Process Modal (NUEVO) -->
+    <!-- Process Modal -->
     <div id="process-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeProcessModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
@@ -962,7 +959,6 @@
                 </div>
 
                 <form onsubmit="handleFullAdoptionSubmit(event)" class="space-y-6">
-                    <!-- ... (Same adoption form content) ... -->
                     <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
                         <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-user"></i> Datos Personales</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -984,7 +980,28 @@
                             </div>
                         </div>
                     </div>
-                    <!-- (Shortened for brevity, full form logic remains in memory/concept but code structure shown above) -->
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-home"></i> Vivienda y Seguridad</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Tipo de Vivienda</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option>Casa con patio cerrado</option>
+                                    <option>Casa con patio abierto</option>
+                                    <option>Departamento</option>
+                                    <option>Parcela</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Tenencia</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
+                                    <option>Propia</option>
+                                    <option>Arrendada (Con permiso escrito)</option>
+                                    <option>Arrendada (Sin permiso explícito)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" class="w-full bg-brand-orange text-white font-bold py-4 rounded-xl shadow-xl hover:bg-orange-600 transition-all transform active:scale-95 text-lg">
                         Enviar Postulación
                     </button>
@@ -1068,7 +1085,7 @@
                         </div>
                         <i class="fas fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
                     </button>
-                    <!-- Transferencia Details (Same as before) -->
+                    <!-- Transferencia Details -->
                     <div class="border-2 border-gray-100 rounded-xl overflow-hidden">
                         <button onclick="toggleTransferDetails()" class="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
                             <div class="flex items-center gap-3">
@@ -1090,7 +1107,6 @@
                                 <span>Cuenta: 12345678</span>
                                 <i class="far fa-copy text-gray-400 group-hover:text-brand-teal"></i>
                             </div>
-                            <!-- ... More details ... -->
                         </div>
                     </div>
                 </div>
@@ -1113,7 +1129,6 @@
                      <p class="text-gray-500 text-sm">¡Gracias por querer abrir las puertas de tu casa!</p>
                 </div>
                 <form onsubmit="handleFosterSubmit(event)" class="space-y-4">
-                    <!-- ... Foster form fields ... -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">¿Tienes patio o espacio cerrado?</label>
                         <select class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brand-orange transition-colors">
@@ -1122,7 +1137,6 @@
                             <option>No tengo patio</option>
                         </select>
                     </div>
-                    <!-- (Shortened for brevity) -->
                     <button type="submit" class="w-full bg-brand-orange text-white font-bold py-3 rounded-xl mt-4 hover:bg-orange-600 shadow-lg transition-all transform active:scale-95">
                         Enviar Postulación
                     </button>
@@ -1131,7 +1145,7 @@
         </div>
     </div>
 
-    <!-- Info Modal (NEW) -->
+    <!-- Info Modal -->
     <div id="info-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeInfoModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
@@ -1154,7 +1168,7 @@
         </div>
     </div>
 
-    <!-- Cart Modal (RESTAURADO) -->
+    <!-- Cart Modal -->
     <div id="cart-modal" class="fixed inset-0 bg-black/60 z-[80] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeCartModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
@@ -1167,7 +1181,6 @@
                 <h3 class="text-2xl font-bold text-gray-800">Tu Carrito Solidario</h3>
             </div>
             <div id="cart-items" class="p-6 overflow-y-auto flex-grow space-y-4">
-                <!-- Items injected here -->
                 <div class="text-center text-gray-400 py-8">
                     <i class="fas fa-shopping-basket text-4xl mb-2 opacity-50"></i>
                     <p>Tu carrito está vacío</p>
@@ -1217,7 +1230,7 @@
         </div>
     </div>
 
-    <!-- Register Modal (NUEVO) -->
+    <!-- Register Modal -->
     <div id="register-modal" class="fixed inset-0 bg-black/60 z-[95] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
             <button onclick="closeRegisterModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
@@ -1238,7 +1251,7 @@
                             <input type="text" placeholder="Ej: Patitas Puerto" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Tu Nombre (Encargado)</label>
+                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Tu Nombre</label>
                             <input type="text" placeholder="Juan Pérez" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
                         </div>
                         <div>
@@ -1258,10 +1271,6 @@
                             <div>
                                 <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Link de Red Social (Instagram/Facebook)</label>
                                 <input type="url" placeholder="https://instagram.com/tu_refugio" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-orange bg-gray-50">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Comprobante, Personalidad Jurídica o Fotos (Opcional)</label>
-                                <input type="file" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-50 file:text-brand-orange hover:file:bg-orange-100 cursor-pointer">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Cuéntanos sobre tu labor en Valparaíso</label>
@@ -1371,65 +1380,77 @@
 
     <!-- Scripts -->
     <script>
+        // ==========================================
+        // 📁 CONFIGURACIÓN CENTRAL DE IMÁGENES
+        // Cambia los enlaces aquí para actualizar las fotos de todo el sitio
+        // ==========================================
+        const SITE_IMAGES = {
+            // 1. Portada Principal (Sección "Inicio")
+            hero: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            
+            // 2. Mascotas en Adopción (Sección "Nuestros Rescatados")
+            pets: {
+                lobito: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                michi: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                doddy: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                ragnar: "https://images.unsplash.com/photo-1529778873920-4da4926a7071?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                rolo: "https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                pelusa: "https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                garfield: "https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                canela: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                benito: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+
+            // 3. Productos de la Tienda Solidaria
+            shop: {
+                packPedigree: "https://images.unsplash.com/photo-1589924691195-41432c84c161?q=80&w=600&auto=format&fit=crop",
+                arnes: "https://images.unsplash.com/photo-1615266895738-11f1371cd7e5?q=80&w=600&auto=format&fit=crop",
+                plato: "https://images.unsplash.com/photo-1585846416120-3a7354ed7d39?q=80&w=600&auto=format&fit=crop",
+                packDogChow: "https://images.unsplash.com/photo-1608408843596-b311965e0469?q=80&w=600&auto=format&fit=crop",
+                kitSalud: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?q=80&w=600&auto=format&fit=crop",
+                cama: "https://images.unsplash.com/photo-1591946614720-90a587da4a36?q=80&w=600&auto=format&fit=crop"
+            },
+
+            // 4. Testimonios (Familias Conectadas)
+            testimonials: {
+                mariaPaz: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+                diegoSoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
+                valentinaM: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
+                donCarlos: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+                familiaRojas: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+            }
+        };
+
+        // --- Carga Inicial de Imágenes Estáticas ---
+        document.addEventListener('DOMContentLoaded', () => { 
+            // Cargar imagen de portada
+            const heroImg = document.getElementById('hero-main-img');
+            if(heroImg) heroImg.src = SITE_IMAGES.hero;
+
+            // Cargar imágenes de testimonios
+            document.querySelectorAll('[data-testimonio]').forEach(img => {
+                const key = img.dataset.testimonio;
+                if(SITE_IMAGES.testimonials[key]) {
+                    img.src = SITE_IMAGES.testimonials[key];
+                }
+            });
+
+            // Inicializar grillas
+            renderPets(); 
+            renderProducts(); 
+        });
+
         // --- Shopping Cart Logic ---
         let cart = [];
 
-        // BASE DE DATOS DE PRODUCTOS (TIENDA) - ACTUALIZADO CON PATROCINADORES
+        // BASE DE DATOS DE PRODUCTOS (TIENDA) - Usando el diccionario central
         const products = [
-            {
-                id: 1,
-                name: "Pack Padrino Pedigree",
-                priceInt: 15990,
-                price: "$15.990",
-                // FOTO: Saco de alimento
-                img: "https://images.unsplash.com/photo-1589924691195-41432c84c161?q=80&w=600&auto=format&fit=crop",
-                desc: "Saco de 10kg donado por Pedigree. Alimenta a un perrito del refugio por 2 semanas."
-            },
-            {
-                id: 2,
-                name: "Arnés PetShop Valpo",
-                priceInt: 8990,
-                price: "$8.990",
-                // FOTO: Arnés
-                img: "https://images.unsplash.com/photo-1615266895738-11f1371cd7e5?q=80&w=600&auto=format&fit=crop",
-                desc: "Arnés de seguridad reflectante gentileza de PetShop Valpo. Ideal para paseos de rescate."
-            },
-            {
-                id: 3,
-                name: "Platito Solidario",
-                priceInt: 3990,
-                price: "$3.990",
-                // FOTO: Plato comida
-                img: "https://images.unsplash.com/photo-1585846416120-3a7354ed7d39?q=80&w=600&auto=format&fit=crop",
-                desc: "Plato de acero inoxidable cortesía de PetShop Valpo. Duradero y fácil de limpiar."
-            },
-            {
-                id: 4,
-                name: "Pack Padrino Dog Chow",
-                priceInt: 18990,
-                price: "$18.990",
-                // FOTO: Alimento perro
-                img: "https://images.unsplash.com/photo-1608408843596-b311965e0469?q=80&w=600&auto=format&fit=crop",
-                desc: "Saco de 15kg donado por Dog Chow. Nutrición completa para nuestros viejitos del refugio."
-            },
-            {
-                id: 5,
-                name: "Kit Salud FarmaVet",
-                priceInt: 12990,
-                price: "$12.990",
-                // FOTO: Medicamentos / Pipeta
-                img: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?q=80&w=600&auto=format&fit=crop",
-                desc: "Incluye desparasitario interno y externo donado por FarmaVet. Protege a un rescatado."
-            },
-            {
-                id: 6,
-                name: "Cama Acolchada",
-                priceInt: 22990,
-                price: "$22.990",
-                // FOTO: Cama mascota
-                img: "https://images.unsplash.com/photo-1591946614720-90a587da4a36?q=80&w=600&auto=format&fit=crop",
-                desc: "Cama suave para el frío porteño. Gestión solidaria de PetShop Valpo."
-            }
+            { id: 1, name: "Pack Padrino Pedigree", priceInt: 15990, price: "$15.990", img: SITE_IMAGES.shop.packPedigree, desc: "Saco de 10kg donado por Pedigree. Alimenta a un perrito del refugio por 2 semanas." },
+            { id: 2, name: "Arnés PetShop Valpo", priceInt: 8990, price: "$8.990", img: SITE_IMAGES.shop.arnes, desc: "Arnés de seguridad reflectante gentileza de PetShop Valpo. Ideal para paseos de rescate." },
+            { id: 3, name: "Platito Solidario", priceInt: 3990, price: "$3.990", img: SITE_IMAGES.shop.plato, desc: "Plato de acero inoxidable cortesía de PetShop Valpo. Duradero y fácil de limpiar." },
+            { id: 4, name: "Pack Padrino Dog Chow", priceInt: 18990, price: "$18.990", img: SITE_IMAGES.shop.packDogChow, desc: "Saco de 15kg donado por Dog Chow. Nutrición completa para nuestros viejitos del refugio." },
+            { id: 5, name: "Kit Salud FarmaVet", priceInt: 12990, price: "$12.990", img: SITE_IMAGES.shop.kitSalud, desc: "Incluye desparasitario interno y externo donado por FarmaVet. Protege a un rescatado." },
+            { id: 6, name: "Cama Acolchada", priceInt: 22990, price: "$22.990", img: SITE_IMAGES.shop.cama, desc: "Cama suave para el frío porteño. Gestión solidaria de PetShop Valpo." }
         ];
 
         function addToCart(id) {
@@ -1568,22 +1589,33 @@
         }
         
         let pets = [
-            { id: 1, name: "Lobito", type: "dog", breed: "Mestizo Chileno", age: "9 años", gender: "Macho", size: "Grande", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "El clásico negrito fiel. Fue rescatado cerca de la Municipalidad de Valparaíso.", story: "Su tutor falleció y quedó en la calle, vagando por las calles enfermito y siempre tan cariñoso con sus vecinos", img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 2, name: "Michi", type: "cat", breed: "Común Europeo", age: "2 años", gender: "Hembra", size: "Pequeño", status: "Hogar Temporal", energyLevel: "medium", idealSpace: "apartment", desc: "Michi es la reina de la casa. Rescatada de la calle. Es independiente, y un poquito caprichosa pero ronronea como motor cuando quiere cariño.", story: "La encontramos maullando desesperada bajo la lluvia en el sector puerto. Estaba muy flaca y desconfiada.", img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 3, name: "Doddy", type: "dog", breed: "Poodle Toy", age: "12 años", gender: "Macho", size: "Pequeño", status: "Refugio", energyLevel: "low", idealSpace: "apartment", desc: "Un abuelito muy regalón. Le encanta dormir en la cama y estar calientito.", story: "Doddy llegó a nosotros tras el fallecimiento de su dueña, una señora mayor que lo adoraba.", img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 4, name: "Ragnar", type: "cat", breed: "Felis Silvestris Catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "Hogar Temporal", energyLevel: "high", idealSpace: "apartment", desc: "Ragnar es pura curiosidad. Le encanta mirar por la ventana aunque asustadizo.", story: "Ragnar y Rolo fueron encontrados en una caja junto a sus otros 6 hermanitos.", img: "https://images.unsplash.com/photo-1529778873920-4da4926a7071?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 5, name: "Rolo", type: "cat", breed: "Felis silvestris catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "En Recuperación", energyLevel: "low", idealSpace: "apartment", desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación.", story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda.", img: "https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 6, name: "Pelusa", type: "dog", breed: "Mestiza Pelo Largo", age: "2 años", gender: "Hembra", size: "Pequeño", status: "Refugio", energyLevel: "medium", idealSpace: "apartment", desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido.", story: "Nació en los cerros altos, en una camada que nadie quería.", img: "https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 7, name: "Garfield", type: "cat", breed: "Mestizo Naranjo", age: "4 años", gender: "Macho", size: "Grande", status: "Hogar Temporal", energyLevel: "low", idealSpace: "apartment", desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer.", story: "Garfield hacía honor a su nombre visitando todas las carnicerías del barrio puerto.", img: "https://images.unsplash.com/photo-1574158622682-e40e69881006?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 8, name: "Canela", type: "dog", breed: "Mestiza Chilena", age: "1.5 años", gender: "Hembra", size: "Mediano", status: "Caso Externo", energyLevel: "high", idealSpace: "house", desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde.", story: "Canela era la 'perrita comunitaria' de un paradero de micro.", img: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
-            { id: 9, name: "Benito", type: "dog", breed: "Mestizo", age: "3 años", gender: "Macho", size: "Mediano", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "Benito es muy juguetón y cariñoso. Le encanta buscar la pelota y dar abrazos.", story: "Fue rescatado en Playa Ancha. A pesar de su pasado, ha vuelto a confiar plenamente en las personas.", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
+            { id: 1, name: "Lobito", type: "dog", breed: "Mestizo Chileno", age: "9 años", gender: "Macho", size: "Grande", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "El clásico negrito fiel. Fue rescatado cerca de la Municipalidad de Valparaíso.", story: "Su tutor falleció y quedó en la calle, vagando por las calles enfermito y siempre tan cariñoso con sus vecinos", img: SITE_IMAGES.pets.lobito },
+            { id: 2, name: "Michi", type: "cat", breed: "Común Europeo", age: "2 años", gender: "Hembra", size: "Pequeño", status: "Hogar Temporal", energyLevel: "medium", idealSpace: "apartment", desc: "Michi es la reina de la casa. Rescatada de la calle. Es independiente, y un poquito caprichosa pero ronronea como motor cuando quiere cariño.", story: "La encontramos maullando desesperada bajo la lluvia en el sector puerto. Estaba muy flaca y desconfiada.", img: SITE_IMAGES.pets.michi },
+            { id: 3, name: "Doddy", type: "dog", breed: "Poodle Toy", age: "12 años", gender: "Macho", size: "Pequeño", status: "Refugio", energyLevel: "low", idealSpace: "apartment", desc: "Un abuelito muy regalón. Le encanta dormir en la cama y estar calientito.", story: "Doddy llegó a nosotros tras el fallecimiento de su dueña, una señora mayor que lo adoraba.", img: SITE_IMAGES.pets.doddy },
+            { id: 4, name: "Ragnar", type: "cat", breed: "Felis Silvestris Catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "Hogar Temporal", energyLevel: "high", idealSpace: "apartment", desc: "Ragnar es pura curiosidad. Le encanta mirar por la ventana aunque asustadizo.", story: "Ragnar y Rolo fueron encontrados en una caja junto a sus otros 6 hermanitos.", img: SITE_IMAGES.pets.ragnar },
+            { id: 5, name: "Rolo", type: "cat", breed: "Felis silvestris catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "En Recuperación", energyLevel: "low", idealSpace: "apartment", desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación.", story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda.", img: SITE_IMAGES.pets.rolo },
+            { id: 6, name: "Pelusa", type: "dog", breed: "Mestiza Pelo Largo", age: "2 años", gender: "Hembra", size: "Pequeño", status: "Refugio", energyLevel: "medium", idealSpace: "apartment", desc: "Pelusa es un poco tímida al principio, típico de perrita de calle que ha sufrido.", story: "Nació en los cerros altos, en una camada que nadie quería.", img: SITE_IMAGES.pets.pelusa },
+            { id: 7, name: "Garfield", type: "cat", breed: "Mestizo Naranjo", age: "4 años", gender: "Macho", size: "Grande", status: "Hogar Temporal", energyLevel: "low", idealSpace: "apartment", desc: "Un gato grandote y tranquilo. Lo suyo es dormir siestas largas y comer.", story: "Garfield hacía honor a su nombre visitando todas las carnicerías del barrio puerto.", img: SITE_IMAGES.pets.garfield },
+            { id: 8, name: "Canela", type: "dog", breed: "Mestiza Chilena", age: "1.5 años", gender: "Hembra", size: "Mediano", status: "Caso Externo", energyLevel: "high", idealSpace: "house", desc: "Canela tiene esa mirada inteligente de los perros de calle que saben cruzar con luz verde.", story: "Canela era la 'perrita comunitaria' de un paradero de micro.", img: SITE_IMAGES.pets.canela },
+            { id: 9, name: "Benito", type: "dog", breed: "Mestizo", age: "3 años", gender: "Macho", size: "Mediano", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "Benito es muy juguetón y cariñoso. Le encanta buscar la pelota y dar abrazos.", story: "Fue rescatado en Playa Ancha. A pesar de su pasado, ha vuelto a confiar plenamente en las personas.", img: SITE_IMAGES.pets.benito }
         ];
 
         function renderPets(filter = 'all') {
             const grid = document.getElementById('pets-grid');
             if (!grid) return;
             grid.innerHTML = '';
-            const filteredPets = filter === 'all' ? pets : pets.filter(pet => pet.type === filter);
+            
+            // Copiamos el array para no mutarlo al hacer sort
+            let filteredPets = filter === 'all' ? [...pets] : pets.filter(pet => pet.type === filter);
+            
+            // ORDENAR: Animales NO adoptados van primero, Adoptados al final
+            filteredPets.sort((a, b) => {
+                const aAdoptado = a.status === 'Adoptado';
+                const bAdoptado = b.status === 'Adoptado';
+                if (aAdoptado && !bAdoptado) return 1;
+                if (!aAdoptado && bAdoptado) return -1;
+                return 0;
+            });
             
             // Render Pets
             filteredPets.forEach(pet => {
@@ -2144,12 +2176,6 @@
         }
 
         infoModal?.addEventListener('click', (e) => { if (e.target === infoModal) closeInfoModal(); });
-
-        // Init
-        document.addEventListener('DOMContentLoaded', () => { 
-            renderPets(); 
-            renderProducts(); 
-        });
 
         // ==========================================
         // --- AUTH & ADMIN DASHBOARD LOGIC ---
