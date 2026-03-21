@@ -9,7 +9,7 @@
     <!-- Favicon: Corazón Cherry -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2370011B'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Quicksand -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS CDN -->
@@ -38,33 +38,26 @@
         body {
             background-color: #FDFBF7;
             color: #1A202C;
-            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
         }
         
         .title-ultra {
             font-weight: 700;
             letter-spacing: -0.03em;
-            line-height: 1;
+            line-height: 1.1;
         }
 
-        .btn-solid-cherry {
-            background-color: #70011B;
-            color: white;
-            box-shadow: 0 10px 20px rgba(112, 1, 27, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .btn-solid-cherry:hover {
-            background-color: #F472B6;
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 30px rgba(244, 114, 182, 0.4);
-        }
-
+        /* Estilo de categorías (image_e19e05.png) */
         .category-btn {
             background: #fff;
-            border: 2px solid #1A202C;
-            color: #1A202C;
-            font-weight: 700;
+            border: 1px solid #e5e7eb;
+            color: #4b5563;
+            font-weight: 600;
+            padding: 0.7rem 1.8rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
             transition: all 0.3s ease;
         }
 
@@ -72,239 +65,320 @@
             background-color: #70011B;
             color: white !important;
             border-color: #70011B;
-            box-shadow: 0 10px 25px rgba(112, 1, 27, 0.4);
+            box-shadow: 0 8px 20px rgba(112, 1, 27, 0.2);
         }
 
+        /* Estilo de tarjetas de proyecto (image_e36f61.jpg) */
         .reveal-color-img {
-            filter: grayscale(100%) contrast(110%);
-            transition: all 0.7s ease;
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
         }
 
         .project-card:hover .reveal-color-img {
-            filter: grayscale(0%) contrast(100%);
-            transform: scale(1.08);
+            filter: grayscale(0%);
         }
 
+        .project-card {
+            border-radius: 3.5rem;
+            overflow: hidden;
+            background: white;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid #f3f4f6;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Barra de navegación agrupada */
+        .grouped-bar {
+            display: flex;
+            align-items: center;
+            border: 2px solid white;
+            border-radius: 9999px;
+            padding: 0.5rem 2rem;
+            gap: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Contenedor de servicios derecha (image_e37a28.png) */
+        .services-card-right {
+            background: #1e242f;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2.5rem;
+        }
+
+        /* Corte inclinado */
         .slant-border {
             clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
         }
 
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: #0F1115; }
-        ::-webkit-scrollbar-thumb { background: #70011B; border-radius: 6px; border: 3px solid #0F1115; }
+        /* Tarjetas de especialidades (image_e38281.png) */
+        .spec-card {
+            background: #1A202C;
+            border-left: 6px solid #70011B;
+            border-radius: 0 1.5rem 1.5rem 0;
+            transition: all 0.4s ease;
+        }
+        
+        .spec-card:hover {
+            background: #70011B;
+            transform: translateX(5px);
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #FDFBF7; }
+        ::-webkit-scrollbar-thumb { background: #70011B; border-radius: 10px; }
     </style>
 </head>
-<body class="font-sans antialiased">
+<body class="antialiased">
 
     <!-- Navegación -->
-    <nav class="fixed top-0 w-full bg-negroGoth text-white z-50 border-b border-cherry/30 py-4 shadow-2xl">
-        <div class="max-w-7xl mx-auto px-8 flex items-center justify-between">
+    <nav class="fixed top-0 w-full bg-negroGoth/95 text-white z-50 border-b border-cherry/20 py-5 shadow-2xl backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-10 flex items-center justify-between">
             <div class="flex items-center gap-4 group cursor-pointer">
-                <div class="w-12 h-12 bg-cherry rounded-full flex items-center justify-center text-white shadow-[0_0_15px_rgba(112,1,27,0.8)] group-hover:bg-rosado transition-all duration-500">
+                <div class="w-12 h-12 bg-cherry rounded-full flex items-center justify-center text-white shadow-lg group-hover:bg-rosado transition-all">
                     <i data-lucide="heart" fill="currentColor" size="24"></i>
                 </div>
-                <span class="text-2xl font-bold tracking-tighter">VALENTINA CREA</span>
+                <span class="text-2xl font-bold tracking-tighter uppercase">VALENTINA CREA</span>
             </div>
-            <div class="hidden md:flex gap-10 font-bold uppercase text-[13px] tracking-widest">
-                <a href="#proyectos" class="hover:text-cherry transition-colors">Portafolio</a>
-                <a href="#servicios" class="hover:text-cherry transition-colors">Servicios</a>
-                <a href="#cotizar" class="bg-cherry px-6 py-2 rounded-full hover:bg-rosado transition-all shadow-lg">Contacto</a>
+            
+            <div class="hidden md:flex grouped-bar">
+                <a href="#proyectos" class="text-xs font-bold uppercase tracking-widest hover:text-cherry transition-colors">Portafolio</a>
+                <a href="#servicios" class="text-xs font-bold uppercase tracking-widest hover:text-cherry transition-colors">Servicios</a>
+                <a href="#cotizar" class="text-xs font-bold uppercase tracking-widest hover:text-cherry transition-colors">Contacto</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="pt-60 pb-32 px-8 bg-crema relative overflow-hidden">
-        <div class="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10">
-            <span class="bg-negroGoth text-crema px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.4em] mb-10 shadow-xl">
+    <header class="pt-64 pb-44 px-10 bg-crema relative overflow-hidden text-center">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <span class="bg-negroGoth text-crema px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-12 inline-block shadow-xl">
                 Diseño y papelería personalizada
             </span>
-            <h1 class="text-7xl md:text-[10rem] font-black text-negroGoth leading-[0.85] mb-12 title-ultra">
-                Cada detalle <br> <span class="text-cherry drop-shadow-2xl italic">cuenta.</span>
+            <h1 class="text-7xl md:text-9xl font-black text-negroGoth mb-12 title-ultra">
+                Cada detalle <br> <span class="text-cherry italic">cuenta.</span>
             </h1>
-            <p class="text-3xl text-plomoOscuro max-w-3xl mx-auto mb-16 font-medium leading-tight">
+            <p class="text-2xl md:text-3xl text-plomoOscuro max-w-4xl mx-auto mb-20 font-medium opacity-80 leading-snug">
                 Piezas gráficas y papelería personalizada con una propuesta visual <span class="border-b-4 border-cherry">única</span> y adaptable.
             </p>
-            <div class="flex flex-col sm:flex-row gap-8">
-                <a href="#cotizar" class="btn-solid-cherry px-16 py-8 rounded-full font-black text-xl uppercase tracking-tighter">
-                    Iniciemos tu idea
+            <div class="flex flex-col sm:flex-row gap-8 justify-center items-center">
+                <a href="#cotizar" class="bg-cherry text-white px-16 py-8 rounded-full font-black text-xl uppercase tracking-tighter shadow-2xl hover:bg-rosado transition-all transform hover:scale-105">
+                    Cuéntame tu idea
                 </a>
-                <a href="#proyectos" class="border-4 border-negroGoth text-negroGoth px-16 py-8 rounded-full font-black text-xl uppercase tracking-tighter hover:bg-negroGoth hover:text-white transition-all shadow-xl">
+                <a href="#proyectos" class="border-4 border-negroGoth text-negroGoth px-16 py-8 rounded-full font-black text-xl uppercase tracking-tighter hover:bg-negroGoth hover:text-white transition-all shadow-md">
                     Ver Portafolio
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Especialidades -->
-    <section id="servicios" class="py-40 bg-negroGoth text-crema slant-border relative z-20 shadow-2xl">
+    <!-- Sección Especialidades (Actualizada según image_e38281.png) -->
+    <section id="servicios" class="py-48 bg-negroGoth text-white slant-border relative z-20 shadow-2xl">
         <div class="max-w-7xl mx-auto px-10">
-            <h2 class="text-center text-5xl md:text-7xl font-black mb-24 uppercase tracking-tighter text-cherry">¿Cómo puedo ayudarte?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                <div class="p-12 bg-plomoOscuro border-l-8 border-cherry rounded-r-3xl flex flex-col items-center text-center gap-6 hover:bg-cherry transition-all duration-500 cursor-default group shadow-2xl">
-                    <i data-lucide="scissors" size="48" class="text-cherry group-hover:text-white"></i>
-                    <span class="text-xl font-black uppercase leading-none">Papelería Creativa</span>
+            <h2 class="text-center text-5xl md:text-7xl font-black mb-24 uppercase tracking-tighter text-white">¿CÓMO PUEDO AYUDARTE?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <!-- Tarjeta 1 -->
+                <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
+                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="scissors" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Papelería <br> Creativa</span>
                 </div>
-                <div class="p-12 bg-plomoOscuro border-l-8 border-cherry rounded-r-3xl flex flex-col items-center text-center gap-6 hover:bg-cherry transition-all duration-500 cursor-default group shadow-2xl">
-                    <i data-lucide="monitor" size="48" class="text-cherry group-hover:text-white"></i>
-                    <span class="text-xl font-black uppercase leading-none">Diseño Digital</span>
+                <!-- Tarjeta 2 -->
+                <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
+                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="monitor" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Diseño <br> Digital</span>
                 </div>
-                <div class="p-12 bg-plomoOscuro border-l-8 border-cherry rounded-r-3xl flex flex-col items-center text-center gap-6 hover:bg-cherry transition-all duration-500 cursor-default group shadow-2xl">
-                    <i data-lucide="graduation-cap" size="48" class="text-cherry group-hover:text-white"></i>
-                    <span class="text-xl font-black uppercase leading-none text-sm">Apoyo Gráfico Académico</span>
+                <!-- Tarjeta 3 -->
+                <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
+                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="graduation-cap" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Apoyo <br> Académico</span>
                 </div>
-                <div class="p-12 bg-plomoOscuro border-l-8 border-cherry rounded-r-3xl flex flex-col items-center text-center gap-6 hover:bg-cherry transition-all duration-500 cursor-default group shadow-2xl">
-                    <i data-lucide="music" size="48" class="text-cherry group-hover:text-white"></i>
-                    <span class="text-xl font-black uppercase leading-none">Diseño Musical</span>
+                <!-- Tarjeta 4 -->
+                <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
+                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="music" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Diseño <br> Musical</span>
                 </div>
-                <div class="p-12 bg-plomoOscuro border-l-8 border-cherry rounded-r-3xl flex flex-col items-center text-center gap-6 hover:bg-cherry transition-all duration-500 cursor-default group shadow-2xl">
-                    <i data-lucide="video" size="48" class="text-cherry group-hover:text-white"></i>
-                    <span class="text-xl font-black uppercase leading-none">Diseño Videos y Reels</span>
+                <!-- Tarjeta 5 -->
+                <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
+                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="video" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Videos <br> y Reels</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portafolio -->
-    <section id="proyectos" class="py-40 bg-white">
+    <!-- Portafolio (Inspirado en image_e19e05.png y image_e36f61.jpg) -->
+    <section id="proyectos" class="py-40 bg-crema">
         <div class="max-w-7xl mx-auto px-10">
-            <div class="flex flex-col lg:flex-row items-center justify-between mb-32 gap-16">
-                <div class="text-center lg:text-left">
-                    <h3 class="text-7xl md:text-8xl font-black text-negroGoth mb-6 tracking-tighter">Mis Creaciones</h3>
-                    <p class="text-2xl text-plomoOscuro font-bold italic opacity-60">Una selección de trabajos donde aplico mi propuesta visual.</p>
+            <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-24 gap-12 text-center lg:text-left">
+                <div class="max-w-2xl">
+                    <h3 class="text-7xl md:text-8xl font-black text-negroGoth mb-6 tracking-tighter uppercase">Mis Creaciones</h3>
+                    <p class="text-2xl text-plomoOscuro font-medium opacity-60 leading-relaxed">Una selección de trabajos donde aplico mi propuesta visual.</p>
                 </div>
                 
-                <div class="flex flex-wrap justify-center gap-4" id="filter-container">
-                    <button onclick="filterProjects('Todos')" class="category-btn active px-8 py-4 rounded-full text-xs uppercase transition-all">Todos</button>
-                    <button onclick="filterProjects('Papelería Creativa')" class="category-btn px-8 py-4 rounded-full text-xs uppercase transition-all">Papelería</button>
-                    <button onclick="filterProjects('Diseño Digital')" class="category-btn px-8 py-4 rounded-full text-xs uppercase transition-all">Digital</button>
-                    <button onclick="filterProjects('Apoyo Gráfico Académico')" class="category-btn px-8 py-4 rounded-full text-xs uppercase transition-all">Académico</button>
-                    <button onclick="filterProjects('Diseño Musical')" class="category-btn px-8 py-4 rounded-full text-xs uppercase transition-all">Musical</button>
-                    <button onclick="filterProjects('Diseño Videos y Reels')" class="category-btn px-8 py-4 rounded-full text-xs uppercase transition-all">Videos</button>
+                <div class="flex flex-wrap justify-center lg:justify-end gap-3" id="filter-container">
+                    <button onclick="filterProjects('Todos')" class="category-btn active">Todos</button>
+                    <button onclick="filterProjects('Papelería Creativa')" class="category-btn">Papelería Creativa</button>
+                    <button onclick="filterProjects('Diseño Digital')" class="category-btn">Diseño Digital</button>
+                    <button onclick="filterProjects('Apoyo Gráfico Académico')" class="category-btn">Apoyo Académico</button>
+                    <button onclick="filterProjects('Diseño Musical')" class="category-btn">Diseño Musical</button>
+                    <button onclick="filterProjects('Diseño Videos y Reels')" class="category-btn">Videos y Reels</button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16" id="projects-grid">
-                <!-- Proyectos vía JS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14" id="projects-grid">
+                <!-- Proyectos vía JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Servicios Extendidos (Lista de Antes) -->
-    <section class="py-40 bg-cherry text-white slant-border shadow-2xl relative z-10">
-        <div class="max-w-6xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
-            <div>
-                <h3 class="text-6xl md:text-8xl font-black mb-16 leading-none title-ultra">¿Qué hago <br> <span class="text-rosado">por ti?</span></h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Stickers y Etiquetas
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Agendas y Cuadernos
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Impresiones y Anillados
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Invitaciones Interactivas
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Contenido para Redes
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Flyers y Promoción
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Cover Art y Dossier
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Booking Musical
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Encargos Académicos
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Edición de Reels
-                    </div>
-                    <div class="flex items-center gap-4 font-black text-lg uppercase italic group cursor-default">
-                        <div class="w-6 h-2 bg-white group-hover:w-10 transition-all"></div>
-                        Identidad Visual
+    <!-- ¿Qué puedo hacer por ti? (image_e37a28.png) -->
+    <section class="py-40 bg-plomoOscuro text-white relative z-10 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <!-- Lista de servicios (Izquierda) -->
+                <div class="lg:col-span-7">
+                    <h3 class="text-6xl md:text-8xl font-black mb-20 leading-none tracking-tighter">¿Qué puedo hacer <br> <span class="text-cherry italic">por ti?</span></h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Stickers y Etiquetas
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Anillados y Agendas
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Invitaciones Interactivas
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Contenido para Redes
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Flyers y Promoción
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Cover Art y Dossier
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Booking Musical
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Presentaciones de Tesis
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Láminas Académicas
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Edición de Reels
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Video Corporativo
+                        </div>
+                        <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
+                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            Logotipos e Identidad Visual
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="bg-negroGoth p-16 rounded-[4rem] shadow-2xl border-4 border-white transform rotate-2">
-                <h4 class="text-4xl font-black mb-10 text-cherry">Versatilidad Sin Límites</h4>
-                <p class="text-xl leading-relaxed mb-12 font-medium">
-                    Me especializo en adaptar mi lenguaje gráfico a diferentes soportes. Ya sea físico o digital, cuido que la propuesta sea impactante y coherente con tu visión.
-                </p>
-                <div class="flex items-center gap-6 text-2xl font-black uppercase">
-                    <i data-lucide="zap" class="text-rosado animate-pulse"></i>
-                    Creatividad de Autor
+
+                <!-- Tarjeta informativa (Derecha) -->
+                <div class="lg:col-span-5 services-card-right p-16 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-cherry/10 blur-3xl rounded-full translate-x-10 -translate-y-10"></div>
+                    <h4 class="text-3xl font-bold mb-10 text-cherry uppercase tracking-tight">Versatilidad visual</h4>
+                    <p class="text-xl leading-relaxed mb-16 text-gray-300 font-light">
+                        Me especializo en adaptar mi lenguaje gráfico a diferentes soportes. Ya sea que necesites algo físico como una agenda o algo digital como un reel, cuido que la propuesta sea profesional y coherente.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-6 bg-white/5 p-6 rounded-2xl border border-white/5 group-hover:border-cherry/50 transition-all cursor-default">
+                            <i data-lucide="layout" size="28" class="text-cherry"></i>
+                            <span class="text-xl font-bold uppercase tracking-widest text-sm">Diseño Multiformato</span>
+                        </div>
+                        <div class="flex items-center gap-6 bg-white/5 p-6 rounded-2xl border border-white/5 group-hover:border-cherry/50 transition-all cursor-default">
+                            <i data-lucide="sparkles" size="28" class="text-cherry"></i>
+                            <span class="text-xl font-bold uppercase tracking-widest text-sm">Detalle y Precisión</span>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
 
     <!-- Cotizar -->
     <section id="cotizar" class="py-40 bg-crema">
-        <div class="max-w-6xl mx-auto bg-white border-8 border-negroGoth rounded-[4rem] overflow-hidden flex flex-col md:flex-row shadow-[30px_30px_0_0_#70011B]">
-            <div class="md:w-1/3 bg-negroGoth p-16 text-white flex flex-col justify-between">
+        <div class="max-w-6xl mx-auto bg-white border-8 border-negroGoth rounded-[4.5rem] overflow-hidden flex flex-col md:flex-row shadow-[40px_40px_0_0_#70011B]">
+            <div class="md:w-2/5 bg-negroGoth p-20 text-white flex flex-col justify-between">
                 <div>
-                    <h3 class="text-5xl font-black mb-10 uppercase tracking-tighter">Hablemos</h3>
-                    <p class="text-xl font-bold opacity-70 mb-12 leading-tight">
-                        Cuéntame los detalles de tu idea y te responderé de forma personalizada con una propuesta clara y un presupuesto acorde a tu pedido.
+                    <h3 class="text-6xl font-black mb-10 uppercase tracking-tighter">Hablemos</h3>
+                    <p class="text-xl font-bold opacity-60 mb-16 leading-tight">
+                        Cuéntame los detalles de tu idea y te responderé con una propuesta personalizada.
                     </p>
                 </div>
-                <div class="space-y-8">
-                    <div class="flex items-center gap-6 font-black uppercase text-sm hover:text-rosado transition-all group cursor-pointer">
-                        <i data-lucide="instagram" class="text-cherry group-hover:text-rosado"></i> @valentina.crea
-                    </div>
-                    <div class="flex items-center gap-6 font-black uppercase text-sm hover:text-rosado transition-all group cursor-pointer">
-                        <i data-lucide="mail" class="text-cherry group-hover:text-rosado"></i> hola@valentina.com
-                    </div>
+                
+                <div class="flex items-center border-2 border-white/20 rounded-3xl p-6 gap-8 bg-white/5 backdrop-blur shadow-inner">
+                    <a href="https://www.instagram.com/valentina.crea" target="_blank" class="text-cherry hover:text-rosado transition-all transform hover:scale-125">
+                        <i data-lucide="instagram" size="32"></i>
+                    </a>
+                    <a href="mailto:valentinacrea@gmail.com" class="text-cherry hover:text-rosado transition-all transform hover:scale-125">
+                        <i data-lucide="mail" size="32"></i>
+                    </a>
+                    <a href="https://wa.me/56989166216" target="_blank" class="text-cherry hover:text-rosado transition-all transform hover:scale-125">
+                        <i data-lucide="phone" size="32"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="md:w-2/3 p-16 lg:p-24 bg-white">
+            <div class="md:w-3/5 p-20 lg:p-24 bg-white relative">
                 <div id="success-message" class="hidden text-center py-20">
-                    <i data-lucide="check-circle" size="100" class="text-cherry mx-auto mb-10"></i>
-                    <h4 class="text-5xl font-black text-negroGoth mb-8">RECIBIDO</h4>
-                    <button onclick="resetForm()" class="btn-solid-cherry px-12 py-5 rounded-full text-lg font-black uppercase">Nueva Consulta</button>
+                    <i data-lucide="check-circle" size="120" class="text-cherry mx-auto mb-10 animate-bounce"></i>
+                    <h4 class="text-6xl font-black text-negroGoth mb-8 uppercase tracking-tighter">¡Listo!</h4>
+                    <p class="text-2xl font-bold mb-12 italic opacity-50">Abriendo WhatsApp para concretar tu idea...</p>
+                    <button onclick="resetForm()" class="bg-cherry text-white px-12 py-5 rounded-full text-lg font-black uppercase shadow-xl hover:bg-rosado transition-all">Nueva Consulta</button>
                 </div>
 
                 <form id="quote-form" class="space-y-12" onsubmit="handleForm(event)">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div class="space-y-4">
-                            <label class="text-xs font-black uppercase tracking-widest text-negroGoth">Nombre</label>
-                            <input required type="text" placeholder="..." class="w-full border-b-4 border-negroGoth py-4 focus:border-cherry outline-none font-bold text-2xl placeholder:text-gray-200">
+                            <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Nombre</label>
+                            <input id="form-name" required type="text" placeholder="..." class="w-full border-b-4 border-gray-100 py-5 focus:border-cherry outline-none font-bold text-3xl placeholder:text-gray-100 bg-transparent transition-all">
                         </div>
                         <div class="space-y-4">
-                            <label class="text-xs font-black uppercase tracking-widest text-negroGoth">Contacto</label>
-                            <input required type="text" placeholder="..." class="w-full border-b-4 border-negroGoth py-4 focus:border-cherry outline-none font-bold text-2xl placeholder:text-gray-200">
+                            <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Contacto</label>
+                            <input id="form-contact" required type="text" placeholder="..." class="w-full border-b-4 border-gray-100 py-5 focus:border-cherry outline-none font-bold text-3xl placeholder:text-gray-100 bg-transparent transition-all">
                         </div>
                     </div>
                     <div class="space-y-4">
-                        <label class="text-xs font-black uppercase tracking-widest text-negroGoth">Categoría</label>
-                        <select class="w-full bg-gray-50 border-4 border-negroGoth rounded-2xl px-8 py-6 outline-none font-black text-xl appearance-none cursor-pointer">
+                        <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Categoría del Proyecto</label>
+                        <select id="form-category" class="w-full bg-gray-50 border-4 border-gray-100 rounded-3xl px-8 py-6 outline-none font-black text-xl appearance-none cursor-pointer focus:border-cherry transition-all">
                             <option>Papelería Creativa</option>
                             <option>Diseño Digital</option>
                             <option>Apoyo Gráfico Académico</option>
                             <option>Diseño Musical</option>
                             <option>Diseño Videos y Reels</option>
+                            <option>Otro proyecto...</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn-solid-cherry w-full py-8 rounded-full font-black text-2xl uppercase tracking-tighter shadow-2xl">
-                        Enviar Propuesta
+                    <div class="space-y-4">
+                        <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Detalles de la idea</label>
+                        <textarea id="form-details" rows="3" placeholder="Tu visión aquí..." class="w-full border-b-4 border-gray-100 py-5 focus:border-cherry outline-none font-bold text-xl placeholder:text-gray-100 bg-transparent transition-all"></textarea>
+                    </div>
+                    <button type="submit" class="bg-cherry w-full text-white py-8 rounded-full font-black text-2xl uppercase tracking-tighter shadow-2xl hover:bg-rosado transition-all transform hover:scale-102">
+                        Solicitar Cotización
                     </button>
                 </form>
             </div>
@@ -312,16 +386,17 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-24 bg-negroGoth text-white text-center">
+    <footer class="py-32 bg-negroGoth text-white text-center">
         <div class="max-w-7xl mx-auto px-10 flex flex-col items-center">
-            <div class="w-20 h-20 bg-cherry rounded-full flex items-center justify-center mb-10 shadow-2xl">
-                <i data-lucide="sparkles" size="32"></i>
+            <div class="w-20 h-20 bg-cherry rounded-3xl rotate-12 flex items-center justify-center mb-16 shadow-2xl">
+                <i data-lucide="sparkles" size="32" class="-rotate-12"></i>
             </div>
-            <p class="text-3xl font-black uppercase italic mb-10 max-w-2xl leading-none">
+            <p class="text-4xl font-black uppercase italic mb-12 max-w-2xl leading-none text-cherry">
                 Diseño visual y papelería.
             </p>
-            <div class="text-gray-600 font-black text-xs uppercase tracking-[0.8em] mt-20">
-                © 2026 VALENTINA PALACIOS
+            <div class="w-32 h-1 bg-cherry/20 mb-16"></div>
+            <div class="text-gray-600 font-black text-[10px] uppercase tracking-[1em]">
+                © 2026 VALENTINA PALACIOS — VALPARAÍSO
             </div>
         </div>
     </footer>
@@ -329,13 +404,15 @@
     <script>
         lucide.createIcons();
 
+        const WHATSAPP_NUMBER = "56989166216"; 
+
         const projects = [
-            { id: 1, title: 'Stickers Noir', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=600', description: 'Piezas físicas con acabados mate y alto contraste.' },
-            { id: 2, title: 'Ethereal Feed', category: 'Diseño Digital', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', description: 'Diseño para marcas con estética profunda y oscura.' },
-            { id: 3, title: 'Tesis de Arte', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Maquetación académica de alta precisión visual.' },
-            { id: 4, title: 'Requiem Visual', category: 'Diseño Musical', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=600', description: 'Arte de tapa conceptual para lanzamientos independientes.' },
-            { id: 5, title: 'Cinematic Reel', category: 'Diseño Videos y Reels', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', description: 'Edición dinámica con ritmo y estética Noir.' },
-            { id: 6, title: 'Grimorio', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&q=80&w=600', description: 'Agendas hechas a mano con detalles grabados.' },
+            { id: 1, title: 'Stickers y Etiquetas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=600', description: 'Diseño y troquelado de piezas físicas personalizadas.' },
+            { id: 2, title: 'Feed de Instagram', category: 'Diseño Digital', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', description: 'Propuesta visual para redes sociales y marcas digitales.' },
+            { id: 3, title: 'Apoyo Académico', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
+            { id: 4, title: 'Cover Art Single', category: 'Diseño Musical', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=600', description: 'Arte de tapa conceptual para lanzamientos musicales.' },
+            { id: 5, title: 'Edición de Reels', category: 'Diseño Videos y Reels', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', description: 'Edición dinámica con ritmo y estética visual impactante.' },
+            { id: 6, title: 'Agendas Personalizadas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&q=80&w=600', description: 'Encuadernación y diseño de interiores a medida.' },
         ];
 
         function renderProjects(filter = 'Todos') {
@@ -345,19 +422,21 @@
 
             filtered.forEach(project => {
                 const card = `
-                    <div class="project-card group bg-crema overflow-hidden rounded-[3rem] shadow-[15px_15px_0_0_#0F1115] border-4 border-negroGoth transition-all duration-500">
-                        <div class="aspect-[4/5] overflow-hidden relative">
-                            <img src="${project.img}" alt="${project.title}" class="reveal-color-img w-full h-full object-cover">
+                    <div class="project-card group">
+                        <div class="aspect-[4/3] overflow-hidden relative">
+                            <img src="${project.img}" alt="${project.title}" class="reveal-color-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute top-8 left-8">
-                                <span class="bg-cherry text-white px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-2xl">
+                                <span class="bg-white/95 text-gray-500 px-5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg">
                                     ${project.category}
                                 </span>
                             </div>
                         </div>
                         <div class="p-12">
-                            <h4 class="text-4xl font-black text-negroGoth mb-6 uppercase tracking-tighter group-hover:text-cherry transition-colors">${project.title}</h4>
-                            <p class="text-xl text-plomoOscuro font-bold italic opacity-60 mb-8 leading-tight">${project.description}</p>
-                            <div class="w-full h-2 bg-negroGoth group-hover:bg-cherry transition-all"></div>
+                            <h4 class="text-4xl font-black text-plomoOscuro mb-6 uppercase tracking-tighter group-hover:text-cherry transition-colors leading-none">${project.title}</h4>
+                            <p class="text-xl text-plomoOscuro font-medium opacity-50 mb-10 leading-tight">${project.description}</p>
+                            <div class="flex items-center gap-3 text-cherry font-black text-sm uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-all -translate-x-6 group-hover:translate-x-0 cursor-pointer">
+                                VER PROYECTO <i data-lucide="chevron-right" size="18"></i>
+                            </div>
                         </div>
                     </div>`;
                 grid.insertAdjacentHTML('beforeend', card);
@@ -368,7 +447,7 @@
         function filterProjects(category) {
             renderProjects(category);
             document.querySelectorAll('.category-btn').forEach(btn => {
-                if (btn.textContent.trim() === category || (btn.textContent.trim() === 'Portafolio' && category === 'Todos') || (btn.textContent.trim() === 'Papelería' && category === 'Papelería Creativa') || (btn.textContent.trim() === 'Digital' && category === 'Diseño Digital') || (btn.textContent.trim() === 'Académico' && category === 'Apoyo Gráfico Académico') || (btn.textContent.trim() === 'Musical' && category === 'Diseño Musical') || (btn.textContent.trim() === 'Videos' && category === 'Diseño Videos y Reels')) {
+                if (btn.textContent.trim() === category || (category === 'Todos' && btn.textContent.trim() === 'TODOS')) {
                     btn.classList.add('active');
                 } else {
                     btn.classList.remove('active');
@@ -378,9 +457,18 @@
 
         function handleForm(e) {
             e.preventDefault();
+            const name = document.getElementById('form-name').value;
+            const contact = document.getElementById('form-contact').value;
+            const cat = document.getElementById('form-category').value;
+            const details = document.getElementById('form-details').value;
+
+            const message = `Hola Valentina! 🖤 Me gustaría una cotización.\n\n*Nombre:* ${name}\n*Contacto:* ${contact}\n*Categoría:* ${cat}\n*Detalles:* ${details}`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
             document.getElementById('quote-form').classList.add('hidden');
             document.getElementById('success-message').classList.remove('hidden');
-            lucide.createIcons();
+            window.open(whatsappLink, '_blank');
         }
 
         function resetForm() {
