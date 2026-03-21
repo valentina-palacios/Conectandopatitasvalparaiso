@@ -1,336 +1,410 @@
-import React, { useState } from 'react';
-import { 
-  Palette, 
-  Send, 
-  Instagram, 
-  Mail, 
-  CheckCircle, 
-  ChevronRight, 
-  Star,
-  Sparkles,
-  Scissors,
-  Monitor,
-  Music,
-  BookOpen,
-  Layout,
-  Heart,
-  Video,
-  FileText,
-  GraduationCap,
-  Brush
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Taller Creativo | Diseño y Papelería</title>
+    <!-- Google Fonts: Quicksand -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons (via Development build) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                    },
+                    colors: {
+                        crema: '#FDFBF7',
+                        turquesa: '#40E0D0',
+                        turquesaOscuro: '#0D9488',
+                        rosado: '#F472B6',
+                        grisOscuro: '#374151',
+                        carbon: '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FDFBF7;
+            color: #374151;
+        }
+        .btn-turquesa {
+            background-color: #40E0D0;
+            transition: all 0.3s ease;
+        }
+        .btn-turquesa:hover {
+            background-color: #F472B6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(244, 114, 182, 0.3);
+        }
+        .nav-link:hover {
+            color: #F472B6;
+        }
+        .category-btn.active {
+            background-color: #40E0D0;
+            color: white;
+            box-shadow: 0 8px 20px -5px rgba(64, 224, 208, 0.6);
+            transform: scale(1.05);
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+        }
+        .project-card:hover h4 {
+            color: #F472B6;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
 
-const App = () => {
-  const [activeCategory, setActiveCategory] = useState('Todos');
-  const [showQuoteSuccess, setShowQuoteSuccess] = useState(false);
-  
-  // Categorías de portafolio
-  const categories = [
-    'Todos', 
-    'Papelería Creativa', 
-    'Diseño Digital', 
-    'Apoyo Gráfico Académico', 
-    'Diseño Musical', 
-    'Diseño Videos y Reels'
-  ];
-
-  // Proyectos representativos
-  const projects = [
-    { id: 1, title: 'Stickers y Etiquetas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=600', description: 'Diseño y troquelado de piezas físicas personalizadas.' },
-    { id: 2, title: 'Feed de Instagram', category: 'Diseño Digital', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', description: 'Propuesta visual para redes sociales y marcas digitales.' },
-    { id: 3, title: 'Apoyo Académico', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
-    { id: 4, title: 'Cover Art Single', category: 'Diseño Musical', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=600', description: 'Arte de tapa y concepto visual para lanzamientos musicales.' },
-    { id: 5, title: 'Edición de Reels', category: 'Diseño Videos y Reels', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', description: 'Montaje y edición de contenido dinámico para plataformas de video.' },
-    { id: 6, title: 'Agendas Personalizadas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&q=80&w=600', description: 'Encuadernación y diseño de interiores a medida.' },
-  ];
-
-  const filteredProjects = activeCategory === 'Todos' 
-    ? projects 
-    : projects.filter(p => p.category === activeCategory);
-
-  const handleSubmitQuote = (e) => {
-    e.preventDefault();
-    setShowQuoteSuccess(true);
-    setTimeout(() => setShowQuoteSuccess(false), 5000);
-  };
-
-  return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#374151] font-['Quicksand',_sans-serif]">
-      <style>
-        {`@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');`}
-      </style>
-
-      {/* Navegación */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-[#E5E1DA]">
-        <div className="max-w-6xl mx-auto px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#40E0D0] rounded-xl flex items-center justify-center text-white shadow-sm">
-              <Sparkles size={22} />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-[#1F2937]">MI TALLER CREATIVO</span>
-          </div>
-          <div className="hidden md:flex gap-10 text-sm font-semibold tracking-wide text-[#4B5563]">
-            <a href="#proyectos" className="hover:text-[#F472B6] transition-colors uppercase">Mi Trabajo</a>
-            <a href="#servicios" className="hover:text-[#F472B6] transition-colors uppercase">Lo que hago</a>
-            <a href="#cotizar" className="text-[#0D9488] hover:text-[#F472B6] font-bold uppercase tracking-widest transition-colors">Contacto</a>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <header className="pt-44 pb-24 px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-[#E0F2F1] text-[#00897B] text-[10px] font-bold px-4 py-1.5 rounded-full mb-8 uppercase tracking-[0.2em]">
-            Diseño y papelería personalizada
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-[#1F2937] leading-tight mb-8">
-            Cada detalle cuenta, y yo <span className="text-[#40E0D0]">lo diseño para ti</span>.
-          </h1>
-          <p className="text-xl text-[#6B7280] max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
-            Piezas gráficas y papelería personalizada con una propuesta visual cuidada, adaptable a distintos formatos y necesidades.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <a href="#cotizar" className="bg-[#40E0D0] text-white px-10 py-4 rounded-2xl font-bold hover:bg-[#F472B6] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0">
-              Cuéntame tu idea
-            </a>
-            <a href="#proyectos" className="bg-white border-2 border-[#E5E1DA] px-10 py-4 rounded-2xl font-bold text-[#4B5563] hover:border-[#F472B6] hover:text-[#F472B6] transition-all">
-              Mira mis trabajos
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* Sección Especialidades */}
-      <section id="servicios" className="py-20 bg-white border-y border-[#E5E1DA]">
-        <div className="max-w-7xl mx-auto px-8">
-          <h3 className="text-center text-sm font-bold tracking-[0.3em] text-[#9CA3AF] mb-12 uppercase">En qué puedo ayudarte</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
-              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Scissors size={32}/></div>
-              <span className="font-bold text-sm text-[#1F2937]">Papelería Creativa</span>
-            </div>
-            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#40E0D0] transition-all">
-              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Monitor size={32}/></div>
-              <span className="font-bold text-sm text-[#1F2937]">Diseño Digital</span>
-            </div>
-            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
-              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><GraduationCap size={32}/></div>
-              <span className="font-bold text-sm text-[#1F2937]">Apoyo Académico</span>
-            </div>
-            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
-              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Music size={32}/></div>
-              <span className="font-bold text-sm text-[#1F2937]">Diseño Musical</span>
-            </div>
-            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
-              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Video size={32}/></div>
-              <span className="font-bold text-sm text-[#1F2937]">Videos y Reels</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Portafolio Llamativo */}
-      <section id="proyectos" className="py-28 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-8">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-16 gap-10">
-            <div className="max-w-md relative">
-              <div className="absolute -top-6 -left-6 text-[#40E0D0]/20 -rotate-12">
-                <Brush size={64} />
-              </div>
-              <h3 className="text-4xl md:text-5xl font-bold mb-4 text-[#1F2937] relative z-10">Mis Creaciones</h3>
-              <p className="text-[#6B7280] font-medium text-lg leading-relaxed">Una selección de trabajos donde aplico mi propuesta visual.</p>
-            </div>
-            
-            {/* Contenedor de filtros mejorado */}
-            <div className="flex flex-wrap gap-3 bg-white/50 p-2 rounded-[2rem] border border-[#E5E1DA] backdrop-blur-sm">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform ${
-                    activeCategory === cat 
-                    ? 'bg-[#40E0D0] text-white shadow-[0_8px_20px_-5px_rgba(64,224,208,0.6)] scale-105' 
-                    : 'bg-transparent text-[#6B7280] hover:text-[#F472B6] hover:bg-[#F472B6]/5'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredProjects.map(project => (
-              <div key={project.id} className="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-[#F3F0E9] hover:-translate-y-2">
-                <div className="aspect-[4/3] overflow-hidden relative">
-                  <img 
-                    src={project.img} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover grayscale-[5%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute top-6 left-6">
-                    <span className="bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-[#0D9488] shadow-sm">
-                      {project.category}
-                    </span>
-                  </div>
-                  {/* Overlay sutil al hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1F2937]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <!-- Navegación -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-turquesa rounded-xl flex items-center justify-center text-white shadow-sm">
+                    <i data-lucide="sparkles"></i>
                 </div>
-                <div className="p-10">
-                  <h4 className="text-2xl font-bold mb-3 text-[#1F2937] transition-colors group-hover:text-[#F472B6]">{project.title}</h4>
-                  <p className="text-sm text-[#6B7280] leading-relaxed font-medium">{project.description}</p>
-                  <div className="mt-6 flex items-center gap-2 text-[#40E0D0] font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
-                    Ver proyecto <ChevronRight size={14} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Sección "¿Qué puedo hacer por ti?" */}
-      <section className="py-28 bg-[#1F2937] text-white rounded-[4rem] mx-4 md:mx-8 mb-28 shadow-2xl relative overflow-hidden">
-        {/* Decoración de fondo */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#40E0D0]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#F472B6]/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
-
-        <div className="max-w-6xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
-          <div>
-            <h3 className="text-4xl md:text-5xl font-bold mb-10 leading-tight">
-              ¿Qué puedo hacer <span className="text-[#40E0D0]">por ti?</span>
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 text-neutral-300">
-              {[
-                "Stickers y Etiquetas", 
-                "Agendas y Cuadernos", 
-                "Impresiones y Anillados", 
-                "Invitaciones Interactivas", 
-                "Contenido para Redes Sociales", 
-                "Flyers y Promoción", 
-                "Cover Art y Dossier", 
-                "Booking Musical", 
-                "Presentaciones y Encargos Académicos", 
-                "Edición de Reels",
-                "Logotipos e Identidad Visual"
-              ].map((service, idx) => (
-                <div key={idx} className="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
-                  <CheckCircle size={18} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors flex-shrink-0" />
-                  <span className="text-sm font-medium group-hover:text-white transition-colors">{service}</span>
-                </div>
-              ))}
+                <span class="text-xl font-bold tracking-tight text-carbon">MI TALLER CREATIVO</span>
             </div>
-          </div>
-          <div className="bg-[#2D3748] p-12 rounded-[3rem] border border-white/5 relative shadow-inner group hover:border-[#F472B6]/20 transition-all duration-500">
-            <h4 className="text-2xl font-bold mb-6 text-[#40E0D0] group-hover:text-[#F472B6] transition-colors">Versatilidad visual</h4>
-            <p className="text-neutral-300 leading-relaxed mb-10 font-medium text-lg">
-              Me especializo en adaptar mi lenguaje gráfico a diferentes soportes. Ya sea que necesites algo físico como una agenda o algo digital como un reel, cuido que la propuesta sea profesional y coherente.
+            <div class="hidden md:flex gap-10 text-sm font-semibold tracking-wide text-gray-600">
+                <a href="#proyectos" class="nav-link transition-colors uppercase">Mi Trabajo</a>
+                <a href="#servicios" class="nav-link transition-colors uppercase">Lo que hago</a>
+                <a href="#cotizar" class="text-turquesaOscuro hover:text-rosado font-bold uppercase tracking-widest transition-colors">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-44 pb-24 px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block bg-teal-50 text-teal-700 text-[10px] font-bold px-4 py-1.5 rounded-full mb-8 uppercase tracking-[0.2em]">
+                Diseño y papelería personalizada
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-carbon leading-tight mb-8">
+                Cada detalle cuenta, y yo <span class="text-turquesa">lo diseño para ti</span>.
+            </h1>
+            <p class="text-xl text-gray-500 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+                Piezas gráficas y papelería personalizada con una propuesta visual cuidada, adaptable a distintos formatos y necesidades.
             </p>
-            <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-5 text-sm bg-white/5 p-5 rounded-2xl border border-white/5 group-hover:bg-white/10 transition-all">
-                <Layout size={24} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors"/>
-                <span className="font-bold">Diseño Multiformato</span>
-              </div>
-              <div className="flex items-center gap-5 text-sm bg-white/5 p-5 rounded-2xl border border-white/5 group-hover:bg-white/10 transition-all">
-                <Sparkles size={24} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors"/>
-                <span className="font-bold">Detalle y Precisión</span>
-              </div>
+            <div class="flex flex-col sm:flex-row gap-5 justify-center">
+                <a href="#cotizar" class="btn-turquesa text-white px-10 py-4 rounded-2xl font-bold shadow-md">
+                    Cuéntame tu idea
+                </a>
+                <a href="#proyectos" class="bg-white border-2 border-gray-100 px-10 py-4 rounded-2xl font-bold text-gray-600 hover:border-rosado hover:text-rosado transition-all">
+                    Mira mis trabajos
+                </a>
             </div>
-          </div>
         </div>
-      </section>
+    </header>
 
-      {/* Formulario de Cotización Actualizado */}
-      <section id="cotizar" className="py-24 px-8">
-        <div className="max-w-5xl mx-auto bg-white rounded-[3.5rem] shadow-2xl border border-[#F3F0E9] overflow-hidden flex flex-col md:flex-row">
-          <div className="md:w-1/3 bg-[#FDFBF7] p-12 flex flex-col justify-between border-r border-[#F3F0E9]">
+    <!-- Sección Especialidades -->
+    <section id="servicios" class="py-20 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-8">
+            <h3 class="text-center text-sm font-bold tracking-[0.3em] text-gray-400 mb-12 uppercase">En qué puedo ayudarte</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="p-8 rounded-3xl bg-crema border border-gray-50 flex flex-col items-center text-center gap-4 group hover:border-rosado transition-all duration-300">
+                    <div class="text-turquesa group-hover:text-rosado group-hover:scale-110 transition-all duration-300"><i data-lucide="scissors" size="32"></i></div>
+                    <span class="font-bold text-sm text-carbon">Papelería Creativa</span>
+                </div>
+                <div class="p-8 rounded-3xl bg-crema border border-gray-50 flex flex-col items-center text-center gap-4 group hover:border-rosado transition-all duration-300">
+                    <div class="text-turquesa group-hover:text-rosado group-hover:scale-110 transition-all duration-300"><i data-lucide="monitor" size="32"></i></div>
+                    <span class="font-bold text-sm text-carbon">Diseño Digital</span>
+                </div>
+                <div class="p-8 rounded-3xl bg-crema border border-gray-50 flex flex-col items-center text-center gap-4 group hover:border-rosado transition-all duration-300">
+                    <div class="text-turquesa group-hover:text-rosado group-hover:scale-110 transition-all duration-300"><i data-lucide="graduation-cap" size="32"></i></div>
+                    <span class="font-bold text-sm text-carbon">Apoyo Académico</span>
+                </div>
+                <div class="p-8 rounded-3xl bg-crema border border-gray-50 flex flex-col items-center text-center gap-4 group hover:border-rosado transition-all duration-300">
+                    <div class="text-turquesa group-hover:text-rosado group-hover:scale-110 transition-all duration-300"><i data-lucide="music" size="32"></i></div>
+                    <span class="font-bold text-sm text-carbon">Diseño Musical</span>
+                </div>
+                <div class="p-8 rounded-3xl bg-crema border border-gray-50 flex flex-col items-center text-center gap-4 group hover:border-rosado transition-all duration-300">
+                    <div class="text-turquesa group-hover:text-rosado group-hover:scale-110 transition-all duration-300"><i data-lucide="video" size="32"></i></div>
+                    <span class="font-bold text-sm text-carbon">Videos y Reels</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portafolio -->
+    <section id="proyectos" class="py-28 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-8">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-16 gap-10">
+                <div class="max-w-md relative">
+                    <div class="absolute -top-6 -left-6 text-turquesa/10 -rotate-12">
+                        <i data-lucide="brush" size="64"></i>
+                    </div>
+                    <h3 class="text-4xl md:text-5xl font-bold mb-4 text-carbon relative z-10">Mis Creaciones</h3>
+                    <p class="text-gray-500 font-medium text-lg leading-relaxed">Una selección de trabajos donde aplico mi propuesta visual.</p>
+                </div>
+                
+                <div class="flex flex-wrap gap-3 bg-white/50 p-2 rounded-[2rem] border border-gray-100 backdrop-blur-sm shadow-sm" id="filter-container">
+                    <button onclick="filterProjects('Todos')" class="category-btn active px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform">Todos</button>
+                    <button onclick="filterProjects('Papelería Creativa')" class="category-btn px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform text-gray-500 hover:text-rosado">Papelería Creativa</button>
+                    <button onclick="filterProjects('Diseño Digital')" class="category-btn px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform text-gray-500 hover:text-rosado">Diseño Digital</button>
+                    <button onclick="filterProjects('Apoyo Gráfico Académico')" class="category-btn px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform text-gray-500 hover:text-rosado">Apoyo Gráfico Académico</button>
+                    <button onclick="filterProjects('Diseño Musical')" class="category-btn px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform text-gray-500 hover:text-rosado">Diseño Musical</button>
+                    <button onclick="filterProjects('Diseño Videos y Reels')" class="category-btn px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform text-gray-500 hover:text-rosado">Diseño Videos y Reels</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" id="projects-grid">
+                <!-- Los proyectos se cargan via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección "¿Qué puedo hacer por ti?" -->
+    <section class="py-28 bg-carbon text-white rounded-[4rem] mx-4 md:mx-8 mb-28 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-turquesa/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-rosado/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
+
+        <div class="max-w-6xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
             <div>
-              <h3 className="text-3xl font-bold mb-6 text-[#1F2937]">Iniciemos tu proyecto</h3>
-              <p className="text-[#6B7280] text-sm leading-relaxed mb-10 font-medium">
-                Cuéntame los detalles de tu idea y te responderé de forma personalizada con una propuesta clara y un presupuesto acorde a tu pedido.
-              </p>
+                <h3 class="text-4xl md:text-5xl font-bold mb-10 leading-tight">
+                    ¿Qué puedo hacer <span class="text-turquesa">por ti?</span>
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 text-gray-400">
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Stickers y Etiquetas</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Agendas y Cuadernos</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Impresiones y Anillados</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Invitaciones Interactivas</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Contenido para Redes Sociales</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Flyers y Promoción</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Cover Art y Dossier</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Booking Musical</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Presentaciones Académicas</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Edición de Reels</span>
+                    </div>
+                    <div class="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                        <i data-lucide="check-circle" size="18" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="text-sm font-medium group-hover:text-white transition-colors">Logotipos e Identidad Visual</span>
+                    </div>
+                </div>
             </div>
-            <div className="space-y-6">
-              <div className="flex items-center gap-4 text-sm text-[#4B5563] font-bold group cursor-pointer hover:text-[#F472B6] transition-all">
-                <Instagram size={20} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors" /> @mi_taller_creativo
-              </div>
-              <div className="flex items-center gap-4 text-sm text-[#4B5563] font-bold group cursor-pointer hover:text-[#F472B6] transition-all">
-                <Mail size={20} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors" /> hola@mitaller.com
-              </div>
+            <div class="bg-gray-800 p-12 rounded-[3rem] border border-white/5 relative shadow-inner group hover:border-rosado/20 transition-all duration-500">
+                <h4 class="text-2xl font-bold mb-6 text-turquesa group-hover:text-rosado transition-colors">Versatilidad visual</h4>
+                <p class="text-gray-300 leading-relaxed mb-10 font-medium text-lg">
+                    Me especializo en adaptar mi lenguaje gráfico a diferentes soportes. Ya sea que necesites algo físico como una agenda o algo digital como un reel, cuido que la propuesta sea profesional y coherente.
+                </p>
+                <div class="flex flex-col gap-5">
+                    <div class="flex items-center gap-5 text-sm bg-white/5 p-5 rounded-2xl border border-white/5 group-hover:bg-white/10 transition-all">
+                        <i data-lucide="layout" size="24" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="font-bold">Diseño Multiformato</span>
+                    </div>
+                    <div class="flex items-center gap-5 text-sm bg-white/5 p-5 rounded-2xl border border-white/5 group-hover:bg-white/10 transition-all">
+                        <i data-lucide="sparkles" size="24" class="text-turquesa group-hover:text-rosado transition-colors"></i>
+                        <span class="font-bold">Detalle y Precisión</span>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div className="md:w-2/3 p-12 lg:p-16">
-            {showQuoteSuccess ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-10">
-                <div className="w-24 h-24 bg-[#FDF2F8] text-[#DB2777] rounded-full flex items-center justify-center mb-8 shadow-inner animate-bounce">
-                  <CheckCircle size={48} />
-                </div>
-                <h4 className="text-3xl font-bold text-[#1F2937] mb-3">¡Recibido!</h4>
-                <p className="text-[#6B7280] font-medium text-lg">Revisaré tu idea con detalle y te contactaré muy pronto.</p>
-                <button onClick={() => setShowQuoteSuccess(false)} className="mt-10 px-8 py-3 bg-[#F472B6] text-white rounded-full font-bold shadow-lg shadow-[#F472B6]/20 hover:scale-105 transition-all">
-                  Enviar otra consulta
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmitQuote} className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">Nombre completo</label>
-                    <input required type="text" placeholder="¿Cómo te llamas?" className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#F472B6] focus:ring-4 focus:ring-[#F472B6]/10 outline-none transition-all font-medium" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">Contacto</label>
-                    <input required type="text" placeholder="WhatsApp o Email" className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#40E0D0] focus:ring-4 focus:ring-[#40E0D0]/10 outline-none transition-all font-medium" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">¿Qué categoría buscas?</label>
-                  <select className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#40E0D0] focus:ring-4 focus:ring-[#40E0D0]/10 outline-none transition-all appearance-none cursor-pointer font-bold text-[#4B5563]">
-                    <option>Papelería Creativa</option>
-                    <option>Diseño Digital</option>
-                    <option>Apoyo Gráfico Académico</option>
-                    <option>Diseño Musical</option>
-                    <option>Diseño Videos y Reels</option>
-                    <option>Otro proyecto especial</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">Detalles de tu idea</label>
-                  <textarea rows="4" placeholder="Háblame de formatos, estilos y necesidades específicas..." className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#40E0D0] focus:ring-4 focus:ring-[#40E0D0]/10 outline-none transition-all resize-none font-medium text-sm leading-relaxed"></textarea>
-                </div>
-                <button type="submit" className="w-full bg-[#40E0D0] text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-3 hover:bg-[#F472B6] shadow-lg shadow-[#40E0D0]/10 hover:shadow-[#F472B6]/20 active:scale-[0.98] transition-all text-lg tracking-wide">
-                  Solicitar presupuesto <Send size={20} />
-                </button>
-              </form>
-            )}
-          </div>
         </div>
-      </section>
+    </section>
 
-      {/* Footer */}
-      <footer className="py-20 border-t border-[#E5E1DA]">
-        <div className="max-w-6xl mx-auto px-8 flex flex-col items-center text-center">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 bg-[#40E0D0] rounded-xl flex items-center justify-center text-white transition-all hover:bg-[#F472B6] hover:rotate-6">
-              <Palette size={20} />
+    <!-- Formulario de Cotización -->
+    <section id="cotizar" class="py-24 px-8">
+        <div class="max-w-5xl mx-auto bg-white rounded-[3.5rem] shadow-2xl border border-gray-100 overflow-hidden flex flex-col md:flex-row">
+            <div class="md:w-1/3 bg-crema p-12 flex flex-col justify-between border-r border-gray-100">
+                <div>
+                    <h3 class="text-3xl font-bold mb-6 text-carbon">Iniciemos tu proyecto</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-10 font-medium">
+                        Cuéntame los detalles de tu idea y te responderé de forma personalizada con una propuesta clara y un presupuesto acorde a tu pedido.
+                    </p>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4 text-sm text-gray-600 font-bold group cursor-pointer hover:text-rosado transition-all">
+                        <i data-lucide="instagram" size="20" class="text-turquesa group-hover:text-rosado transition-colors"></i> @mi_taller_creativo
+                    </div>
+                    <div class="flex items-center gap-4 text-sm text-gray-600 font-bold group cursor-pointer hover:text-rosado transition-all">
+                        <i data-lucide="mail" size="20" class="text-turquesa group-hover:text-rosado transition-colors"></i> hola@mitaller.com
+                    </div>
+                </div>
             </div>
-            <span className="text-xl font-bold tracking-tight text-[#1F2937]">MI TALLER</span>
-          </div>
-          <p className="text-[#9CA3AF] text-sm max-w-md mb-10 font-medium leading-relaxed">
-            Diseño gráfico y papelería personalizada adaptable a tus necesidades. <br/> Piezas cuidadas y creadas con atención al detalle.
-          </p>
-          <div className="flex gap-10">
-            <a href="#" className="text-[#6B7280] hover:text-[#F472B6] transition-colors scale-125"><Instagram size={24} /></a>
-            <a href="#" className="text-[#6B7280] hover:text-[#40E0D0] transition-colors scale-125"><Mail size={24} /></a>
-          </div>
-          <div className="mt-16 text-[#D1D5DB] text-[10px] uppercase tracking-[0.4em] font-bold">
-            © 2024 MI TALLER CREATIVO · DISEÑO DE AUTOR
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
 
-export default App;
+            <div class="md:w-2/3 p-12 lg:p-16">
+                <div id="success-message" class="hidden h-full flex flex-col items-center justify-center text-center py-10">
+                    <div class="w-24 h-24 bg-pink-50 text-rosado rounded-full flex items-center justify-center mb-8 shadow-inner animate-bounce">
+                        <i data-lucide="check-circle" size="48"></i>
+                    </div>
+                    <h4 class="text-3xl font-bold text-carbon mb-3">¡Recibido!</h4>
+                    <p class="text-gray-500 font-medium text-lg">Revisaré tu idea con detalle y te contactaré muy pronto.</p>
+                    <button onclick="resetForm()" class="mt-10 px-8 py-3 bg-rosado text-white rounded-full font-bold shadow-lg shadow-pink-100 hover:scale-105 transition-all">
+                        Enviar otra consulta
+                    </button>
+                </div>
+
+                <form id="quote-form" class="space-y-8" onsubmit="handleForm(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <label class="text-[11px] uppercase tracking-widest font-bold text-gray-400">Nombre completo</label>
+                            <input required type="text" placeholder="¿Cómo te llamas?" class="w-full bg-crema border border-gray-200 rounded-2xl px-5 py-4 focus:border-rosado focus:ring-4 focus:ring-rosado/10 outline-none transition-all font-medium">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[11px] uppercase tracking-widest font-bold text-gray-400">Contacto</label>
+                            <input required type="text" placeholder="WhatsApp o Email" class="w-full bg-crema border border-gray-200 rounded-2xl px-5 py-4 focus:border-rosado focus:ring-4 focus:ring-rosado/10 outline-none transition-all font-medium">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[11px] uppercase tracking-widest font-bold text-gray-400">¿Qué categoría buscas?</label>
+                        <select class="w-full bg-crema border border-gray-200 rounded-2xl px-5 py-4 focus:border-rosado focus:ring-4 focus:ring-rosado/10 outline-none transition-all appearance-none cursor-pointer font-bold text-gray-600">
+                            <option>Papelería Creativa</option>
+                            <option>Diseño Digital</option>
+                            <option>Apoyo Gráfico Académico</option>
+                            <option>Diseño Musical</option>
+                            <option>Diseño Videos y Reels</option>
+                            <option>Otro proyecto especial</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[11px] uppercase tracking-widest font-bold text-gray-400">Detalles de tu idea</label>
+                        <textarea rows="4" placeholder="Háblame de formatos, estilos y necesidades específicas..." class="w-full bg-crema border border-gray-200 rounded-2xl px-5 py-4 focus:border-rosado focus:ring-4 focus:ring-rosado/10 outline-none transition-all resize-none font-medium text-sm leading-relaxed"></textarea>
+                    </div>
+                    <button type="submit" class="btn-turquesa w-full text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-3 active:scale-[0.98] text-lg tracking-wide">
+                        Solicitar presupuesto <i data-lucide="send" size="20"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-8 flex flex-col items-center text-center">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-turquesa rounded-xl flex items-center justify-center text-white transition-all hover:bg-rosado hover:rotate-6">
+                    <i data-lucide="palette" size="20"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-carbon uppercase">MI TALLER</span>
+            </div>
+            <p class="text-gray-400 text-sm max-w-md mb-10 font-medium leading-relaxed">
+                Diseño gráfico y papelería personalizada adaptable a tus necesidades. <br> Piezas cuidadas y creadas con atención al detalle.
+            </p>
+            <div class="flex gap-10">
+                <a href="#" class="text-gray-400 hover:text-rosado transition-colors scale-125"><i data-lucide="instagram" size="24"></i></a>
+                <a href="#" class="text-gray-400 hover:text-turquesa transition-colors scale-125"><i data-lucide="mail" size="24"></i></a>
+            </div>
+            <div class="mt-16 text-gray-300 text-[10px] uppercase tracking-[0.4em] font-bold">
+                © 2024 MI TALLER CREATIVO · DISEÑO DE AUTOR
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // Datos del Portafolio
+        const projects = [
+            { id: 1, title: 'Stickers y Etiquetas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=600', description: 'Diseño y troquelado de piezas físicas personalizadas.' },
+            { id: 2, title: 'Feed de Instagram', category: 'Diseño Digital', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', description: 'Propuesta visual para redes sociales y marcas digitales.' },
+            { id: 3, title: 'Apoyo Académico', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
+            { id: 4, title: 'Cover Art Single', category: 'Diseño Musical', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=600', description: 'Arte de tapa y concepto visual para lanzamientos musicales.' },
+            { id: 5, title: 'Edición de Reels', category: 'Diseño Videos y Reels', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', description: 'Montaje y edición de contenido dinámico para plataformas de video.' },
+            { id: 6, title: 'Agendas Personalizadas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&q=80&w=600', description: 'Encuadernación y diseño de interiores a medida.' },
+        ];
+
+        // Función para renderizar proyectos
+        function renderProjects(filter = 'Todos') {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'Todos' 
+                ? projects 
+                : projects.filter(p => p.category === filter);
+
+            filtered.forEach(project => {
+                const card = `
+                    <div class="project-card group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50">
+                        <div class="aspect-[4/3] overflow-hidden relative">
+                            <img src="${project.img}" alt="${project.title}" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
+                            <div class="absolute top-6 left-6">
+                                <span class="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest text-turquesaOscuro shadow-sm">
+                                    ${project.category}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-10">
+                            <h4 class="text-2xl font-bold mb-3 text-carbon transition-colors duration-300">${project.title}</h4>
+                            <p class="text-sm text-gray-500 leading-relaxed font-medium">${project.description}</p>
+                            <div class="mt-6 flex items-center gap-2 text-turquesa font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
+                                Ver proyecto <i data-lucide="chevron-right" size="14"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', card);
+            });
+            lucide.createIcons();
+        }
+
+        // Función de filtrado
+        function filterProjects(category) {
+            renderProjects(category);
+            
+            // Actualizar estado de botones
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === category) {
+                    btn.classList.add('active');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('active');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+        }
+
+        // Lógica del Formulario
+        function handleForm(e) {
+            e.preventDefault();
+            document.getElementById('quote-form').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        }
+
+        function resetForm() {
+            document.getElementById('quote-form').reset();
+            document.getElementById('quote-form').classList.remove('hidden');
+            document.getElementById('success-message').classList.add('hidden');
+        }
+
+        // Carga inicial
+        window.onload = () => {
+            renderProjects();
+        };
+    </script>
+</body>
+</html>
