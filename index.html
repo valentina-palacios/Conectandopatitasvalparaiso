@@ -1,2402 +1,336 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conectando Patitas | Valparaíso</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
+import React, { useState } from 'react';
+import { 
+  Palette, 
+  Send, 
+  Instagram, 
+  Mail, 
+  CheckCircle, 
+  ChevronRight, 
+  Star,
+  Sparkles,
+  Scissors,
+  Monitor,
+  Music,
+  BookOpen,
+  Layout,
+  Heart,
+  Video,
+  FileText,
+  GraduationCap,
+  Brush
+} from 'lucide-react';
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Quicksand', 'sans-serif'],
-                        display: ['Nunito', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            orange: '#FF9F1C', // Naranja cálido y vibrante original
-                            yellow: '#FFBF69',
-                            cream: '#F9F5EC', // Ajustado al fondo cremita de tu captura
-                            teal: '#2EC4B6',
-                            dark: '#2C3E50'   // Azul oscuro de tu captura
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+const App = () => {
+  const [activeCategory, setActiveCategory] = useState('Todos');
+  const [showQuoteSuccess, setShowQuoteSuccess] = useState(false);
+  
+  // Categorías de portafolio
+  const categories = [
+    'Todos', 
+    'Papelería Creativa', 
+    'Diseño Digital', 
+    'Apoyo Gráfico Académico', 
+    'Diseño Musical', 
+    'Diseño Videos y Reels'
+  ];
 
-    <style>
-        body {
-            font-family: 'Quicksand', sans-serif;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Nunito', sans-serif;
-        }
-        .paw-pattern {
-            background-color: #ffffff;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff9f1c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .hero-curve {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            line-height: 0;
-        }
-        .hero-curve svg {
-            position: relative;
-            display: block;
-            width: calc(100% + 1.3px);
-            height: 80px;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #FF9F1C;
-            border-radius: 5px;
-        }
-        .writing-vertical {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-        }
-        /* Animación para el badge del carrito */
-        @keyframes bounce-short {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        .animate-bounce-short {
-            animation: bounce-short 0.3s ease-in-out;
-        }
-        /* Animación para el carrusel de testimonios */
-        @keyframes scroll-testimonials {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-scroll-testimonials {
-            animation: scroll-testimonials 35s linear infinite;
-            width: max-content;
-        }
-        .pause-on-hover:hover .animate-scroll-testimonials {
-            animation-play-state: paused;
-        }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-700 flex flex-col min-h-screen relative overflow-x-hidden">
+  // Proyectos representativos
+  const projects = [
+    { id: 1, title: 'Stickers y Etiquetas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=600', description: 'Diseño y troquelado de piezas físicas personalizadas.' },
+    { id: 2, title: 'Feed de Instagram', category: 'Diseño Digital', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', description: 'Propuesta visual para redes sociales y marcas digitales.' },
+    { id: 3, title: 'Apoyo Académico', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
+    { id: 4, title: 'Cover Art Single', category: 'Diseño Musical', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=600', description: 'Arte de tapa y concepto visual para lanzamientos musicales.' },
+    { id: 5, title: 'Edición de Reels', category: 'Diseño Videos y Reels', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', description: 'Montaje y edición de contenido dinámico para plataformas de video.' },
+    { id: 6, title: 'Agendas Personalizadas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&q=80&w=600', description: 'Encuadernación y diseño de interiores a medida.' },
+  ];
 
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed top-24 right-5 bg-white border-l-4 border-brand-teal shadow-2xl rounded-lg p-4 transform translate-x-full transition-transform duration-300 z-[70] flex items-center">
-        <div class="text-brand-teal mr-3 text-xl"><i class="fas fa-check-circle"></i></div>
-        <div>
-            <h4 class="font-bold text-gray-800">¡Mensaje Enviado!</h4>
-            <p class="text-sm text-gray-600">Te contactaremos pronto.</p>
-        </div>
-    </div>
+  const filteredProjects = activeCategory === 'Todos' 
+    ? projects 
+    : projects.filter(p => p.category === activeCategory);
 
-    <!-- BOTÓN FLOTANTE "INFO" -->
-    <button id="info-btn" onclick="toggleInfoSidebar()" class="fixed right-0 top-[30%] z-[100] bg-brand-orange text-white w-10 h-28 rounded-l-xl shadow-xl hover:bg-orange-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center justify-center gap-1 group">
-        <i class="fas fa-info-circle text-xl animate-bounce"></i>
-        <span class="text-[10px] font-bold uppercase writing-vertical transform rotate-180">Info</span>
-    </button>
+  const handleSubmitQuote = (e) => {
+    e.preventDefault();
+    setShowQuoteSuccess(true);
+    setTimeout(() => setShowQuoteSuccess(false), 5000);
+  };
 
-    <!-- BOTÓN FLOTANTE "PROCESO" -->
-    <button id="process-btn" onclick="openProcessModal()" class="fixed right-0 top-[45%] z-[100] bg-brand-teal text-white w-10 h-28 rounded-l-xl shadow-xl hover:bg-teal-600 transition-all border-l-2 border-y-2 border-white flex flex-col items-center justify-center gap-1 group">
-        <i class="fas fa-clipboard-list text-xl animate-bounce"></i>
-        <span class="text-[10px] font-bold uppercase writing-vertical transform rotate-180">Proceso</span>
-    </button>
+  return (
+    <div className="min-h-screen bg-[#FDFBF7] text-[#374151] font-['Quicksand',_sans-serif]">
+      <style>
+        {`@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');`}
+      </style>
 
-    <!-- PESTAÑA LATERAL (Sidebar oculto) -->
-    <div id="info-sidebar" class="fixed right-0 top-1/3 transform -translate-y-[10%] z-[90] transition-transform duration-300 translate-x-full">
-        <div class="bg-white/95 backdrop-blur-md shadow-2xl rounded-l-3xl p-6 border-l-4 border-brand-orange w-80 relative h-auto max-h-[90vh] overflow-y-auto mt-12">
-            
-            <div class="flex items-center justify-between mb-4 border-b pb-2 border-gray-100">
-                <div class="flex items-center gap-2">
-                    <i class="fas fa-paw text-brand-orange"></i>
-                    <h3 class="text-xl font-bold text-gray-800">Guía Patitas</h3>
-                </div>
-                <button onclick="toggleInfoSidebar()" class="text-gray-400 hover:text-brand-orange">
-                    <i class="fas fa-times"></i>
-                </button>
+      {/* Navegación */}
+      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-[#E5E1DA]">
+        <div className="max-w-6xl mx-auto px-8 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#40E0D0] rounded-xl flex items-center justify-center text-white shadow-sm">
+              <Sparkles size={22} />
             </div>
-            
-            <div class="space-y-3">
-                <button onclick="openInfoModal('mental')" class="w-full flex items-center gap-3 text-left hover:bg-red-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-red-100">
-                    <div class="w-10 h-10 rounded-full bg-red-100 flex-shrink-0 flex items-center justify-center text-red-500 group-hover/item:scale-110 transition-transform">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <div>
-                        <h6 class="font-bold text-gray-800 text-sm">Salud Mental</h6>
-                        <p class="text-xs text-gray-500">Amor que sana</p>
-                    </div>
-                </button>
-                <button onclick="openInfoModal('care')" class="w-full flex items-center gap-3 text-left hover:bg-teal-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-teal-100">
-                    <div class="w-10 h-10 rounded-full bg-teal-100 flex-shrink-0 flex items-center justify-center text-brand-teal group-hover/item:scale-110 transition-transform">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <div>
-                        <h6 class="font-bold text-gray-800 text-sm">Tips de Cuidado</h6>
-                        <p class="text-xs text-gray-500">Aprende a cuidar</p>
-                    </div>
-                </button>
-                <button onclick="openInfoModal('ownership')" class="w-full flex items-center gap-3 text-left hover:bg-yellow-50 p-2 rounded-xl transition-all group/item border border-transparent hover:border-yellow-100">
-                    <div class="w-10 h-10 rounded-full bg-yellow-100 flex-shrink-0 flex items-center justify-center text-yellow-600 group-hover/item:scale-110 transition-transform">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div>
-                        <h6 class="font-bold text-gray-800 text-sm">Tenencia</h6>
-                        <p class="text-xs text-gray-500">Sé responsable</p>
-                    </div>
-                </button>
-            </div>
+            <span className="text-xl font-bold tracking-tight text-[#1F2937]">MI TALLER CREATIVO</span>
+          </div>
+          <div className="hidden md:flex gap-10 text-sm font-semibold tracking-wide text-[#4B5563]">
+            <a href="#proyectos" className="hover:text-[#F472B6] transition-colors uppercase">Mi Trabajo</a>
+            <a href="#servicios" className="hover:text-[#F472B6] transition-colors uppercase">Lo que hago</a>
+            <a href="#cotizar" className="text-[#0D9488] hover:text-[#F472B6] font-bold uppercase tracking-widest transition-colors">Contacto</a>
+          </div>
         </div>
-    </div>
+      </nav>
 
-    <!-- Navbar -->
-    <nav class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40">
-        <div class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
-                <a href="#" class="flex items-center gap-2 group">
-                    <div class="bg-brand-orange text-white p-2 rounded-full w-10 h-10 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                        <i class="fas fa-paw text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-bold text-gray-800 tracking-tight">Conectando<span class="text-brand-orange">Patitas</span></span>
-                </a>
+      {/* Hero Section */}
+      <header className="pt-44 pb-24 px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block bg-[#E0F2F1] text-[#00897B] text-[10px] font-bold px-4 py-1.5 rounded-full mb-8 uppercase tracking-[0.2em]">
+            Diseño y papelería personalizada
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-[#1F2937] leading-tight mb-8">
+            Cada detalle cuenta, y yo <span className="text-[#40E0D0]">lo diseño para ti</span>.
+          </h1>
+          <p className="text-xl text-[#6B7280] max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+            Piezas gráficas y papelería personalizada con una propuesta visual cuidada, adaptable a distintos formatos y necesidades.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+            <a href="#cotizar" className="bg-[#40E0D0] text-white px-10 py-4 rounded-2xl font-bold hover:bg-[#F472B6] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0">
+              Cuéntame tu idea
+            </a>
+            <a href="#proyectos" className="bg-white border-2 border-[#E5E1DA] px-10 py-4 rounded-2xl font-bold text-[#4B5563] hover:border-[#F472B6] hover:text-[#F472B6] transition-all">
+              Mira mis trabajos
+            </a>
+          </div>
+        </div>
+      </header>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-6 font-semibold">
-                    <a href="#inicio" class="text-gray-600 hover:text-brand-orange transition-colors">Inicio</a>
-                    <a href="#donar" class="text-gray-600 hover:text-brand-orange transition-colors">Ayudar</a>
-                    <a href="#adoptar" class="text-gray-600 hover:text-brand-orange transition-colors">Adopta</a>
-                    <a href="#tienda" class="text-gray-600 hover:text-brand-orange transition-colors">Tienda</a>
-                    
-                    <!-- USER BUTTON (Desktop) -->
-                    <button onclick="openAuthModal()" class="text-gray-600 hover:text-brand-orange transition-colors focus:outline-none" title="Acceso Refugios">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </button>
+      {/* Sección Especialidades */}
+      <section id="servicios" className="py-20 bg-white border-y border-[#E5E1DA]">
+        <div className="max-w-7xl mx-auto px-8">
+          <h3 className="text-center text-sm font-bold tracking-[0.3em] text-[#9CA3AF] mb-12 uppercase">En qué puedo ayudarte</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
+              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Scissors size={32}/></div>
+              <span className="font-bold text-sm text-[#1F2937]">Papelería Creativa</span>
+            </div>
+            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#40E0D0] transition-all">
+              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Monitor size={32}/></div>
+              <span className="font-bold text-sm text-[#1F2937]">Diseño Digital</span>
+            </div>
+            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
+              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><GraduationCap size={32}/></div>
+              <span className="font-bold text-sm text-[#1F2937]">Apoyo Académico</span>
+            </div>
+            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
+              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Music size={32}/></div>
+              <span className="font-bold text-sm text-[#1F2937]">Diseño Musical</span>
+            </div>
+            <div className="p-8 rounded-3xl bg-[#FDFBF7] border border-[#F3F0E9] flex flex-col items-center text-center gap-4 group hover:border-[#F472B6] transition-all">
+              <div className="text-[#40E0D0] group-hover:text-[#F472B6] group-hover:scale-110 transition-all duration-300"><Video size={32}/></div>
+              <span className="font-bold text-sm text-[#1F2937]">Videos y Reels</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                    <!-- CART BUTTON (Desktop) -->
-                    <button onclick="openCartModal()" class="relative bg-brand-teal text-white p-2 rounded-full hover:bg-teal-600 transition-colors">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-count-desktop" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full hidden">0</span>
-                    </button>
-                </div>
-
-                <div class="flex items-center gap-4 md:hidden">
-                    <!-- USER BUTTON (Mobile) -->
-                    <button onclick="openAuthModal()" class="text-gray-600 focus:outline-none" title="Acceso Refugios">
-                        <i class="fas fa-user-circle text-2xl"></i>
-                    </button>
-
-                    <!-- CART BUTTON (Mobile) -->
-                    <button onclick="openCartModal()" class="relative text-gray-600 focus:outline-none">
-                        <i class="fas fa-shopping-cart text-2xl"></i>
-                        <span id="cart-count-mobile" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full hidden">0</span>
-                    </button>
-
-                    <button class="text-gray-600 focus:outline-none" onclick="toggleMobileMenu()">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
+      {/* Portafolio Llamativo */}
+      <section id="proyectos" className="py-28 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-16 gap-10">
+            <div className="max-w-md relative">
+              <div className="absolute -top-6 -left-6 text-[#40E0D0]/20 -rotate-12">
+                <Brush size={64} />
+              </div>
+              <h3 className="text-4xl md:text-5xl font-bold mb-4 text-[#1F2937] relative z-10">Mis Creaciones</h3>
+              <p className="text-[#6B7280] font-medium text-lg leading-relaxed">Una selección de trabajos donde aplico mi propuesta visual.</p>
             </div>
             
-            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-2 border-t pt-4">
-                <a href="#inicio" class="block py-2 text-gray-600 hover:text-brand-orange">Inicio</a>
-                <a href="#donar" class="block py-2 text-brand-teal font-bold">Ayudar</a>
-                <a href="#adoptar" class="block py-2 text-gray-600 hover:text-brand-orange">Adopta</a>
-                <a href="#tienda" class="block py-2 text-gray-600 hover:text-brand-orange">Tienda</a>
+            {/* Contenedor de filtros mejorado */}
+            <div className="flex flex-wrap gap-3 bg-white/50 p-2 rounded-[2rem] border border-[#E5E1DA] backdrop-blur-sm">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 transform ${
+                    activeCategory === cat 
+                    ? 'bg-[#40E0D0] text-white shadow-[0_8px_20px_-5px_rgba(64,224,208,0.6)] scale-105' 
+                    : 'bg-transparent text-[#6B7280] hover:text-[#F472B6] hover:bg-[#F472B6]/5'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
-        </div>
-    </nav>
+          </div>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="relative bg-brand-yellow/10 pt-16 pb-32 overflow-hidden">
-        <div class="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center relative z-10">
-            <div class="w-full md:w-1/2 text-center md:text-left mt-10 md:mt-0">
-                <span class="inline-block py-1 px-3 rounded-full bg-brand-orange/10 text-brand-orange font-bold text-sm mb-4">
-                    <i class="fas fa-map-marker-alt mr-1"></i> Somos de Valparaíso
-                </span>
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-gray-800">
-                    Conectando Patitas con <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-red-500">corazones porteños</span>.
-                </h1>
-                <p class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
-                    Vinculamos refugios y rescatistas de los cerros de Valparaíso con personas que quieren ayudar, adoptar y darles la segunda oportunidad que merecen.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="#adoptar" class="px-8 py-3 bg-brand-orange text-white rounded-full font-bold shadow-lg hover:bg-orange-600 transition-all transform hover:-translate-y-1">
-                        Ver Rescatados
-                    </a>
-                    <button onclick="document.getElementById('contacto').scrollIntoView()" class="px-8 py-3 bg-white text-brand-orange border-2 border-brand-orange rounded-full font-bold hover:bg-brand-orange/5 transition-all">
-                        Contáctanos
-                    </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {filteredProjects.map(project => (
+              <div key={project.id} className="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-[#F3F0E9] hover:-translate-y-2">
+                <div className="aspect-[4/3] overflow-hidden relative">
+                  <img 
+                    src={project.img} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover grayscale-[5%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute top-6 left-6">
+                    <span className="bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-[#0D9488] shadow-sm">
+                      {project.category}
+                    </span>
+                  </div>
+                  {/* Overlay sutil al hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1F2937]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-            </div>
-            <div class="w-full md:w-1/2 flex justify-center relative">
-                <div class="relative w-80 h-80 md:w-[500px] md:h-[500px]">
-                    <div class="absolute inset-0 bg-brand-yellow rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
-                    
-                    <!-- IMAGEN PORTADA PRINCIPAL -->
-                    <img id="hero-main-img" alt="Perro y Gato felices" class="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 border-4 border-white">
-                    
-                    <div class="absolute -bottom-5 -left-5 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
-                        <div class="bg-green-100 p-2 rounded-full text-green-600">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500">Buscando hogar</p>
-                            <p class="font-bold text-gray-800">8 Peludos</p>
-                        </div>
-                    </div>
+                <div className="p-10">
+                  <h4 className="text-2xl font-bold mb-3 text-[#1F2937] transition-colors group-hover:text-[#F472B6]">{project.title}</h4>
+                  <p className="text-sm text-[#6B7280] leading-relaxed font-medium">{project.description}</p>
+                  <div className="mt-6 flex items-center gap-2 text-[#40E0D0] font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
+                    Ver proyecto <ChevronRight size={14} />
+                  </div>
                 </div>
-            </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div class="hero-curve text-brand-teal fill-current">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
-            </svg>
-        </div>
-    </section>
+      </section>
 
-    <!-- Donation / CTA -->
-    <section id="donar" class="py-20 bg-brand-teal relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 pattern-dots"></div>
-        <div class="container mx-auto px-6 relative z-10 text-center text-white">
-            <h2 class="text-4xl font-bold mb-6">¿No puedes adoptar?</h2>
-            <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-                Gracias a tu ayuda, un corazón peludo tendrá la segunda oportunidad que merece.
+      {/* Sección "¿Qué puedo hacer por ti?" */}
+      <section className="py-28 bg-[#1F2937] text-white rounded-[4rem] mx-4 md:mx-8 mb-28 shadow-2xl relative overflow-hidden">
+        {/* Decoración de fondo */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#40E0D0]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#F472B6]/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
+
+        <div className="max-w-6xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+          <div>
+            <h3 className="text-4xl md:text-5xl font-bold mb-10 leading-tight">
+              ¿Qué puedo hacer <span className="text-[#40E0D0]">por ti?</span>
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 text-neutral-300">
+              {[
+                "Stickers y Etiquetas", 
+                "Agendas y Cuadernos", 
+                "Impresiones y Anillados", 
+                "Invitaciones Interactivas", 
+                "Contenido para Redes Sociales", 
+                "Flyers y Promoción", 
+                "Cover Art y Dossier", 
+                "Booking Musical", 
+                "Presentaciones y Encargos Académicos", 
+                "Edición de Reels",
+                "Logotipos e Identidad Visual"
+              ].map((service, idx) => (
+                <div key={idx} className="flex items-center gap-4 py-3 border-b border-white/5 group cursor-default">
+                  <CheckCircle size={18} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors flex-shrink-0" />
+                  <span className="text-sm font-medium group-hover:text-white transition-colors">{service}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-[#2D3748] p-12 rounded-[3rem] border border-white/5 relative shadow-inner group hover:border-[#F472B6]/20 transition-all duration-500">
+            <h4 className="text-2xl font-bold mb-6 text-[#40E0D0] group-hover:text-[#F472B6] transition-colors">Versatilidad visual</h4>
+            <p className="text-neutral-300 leading-relaxed mb-10 font-medium text-lg">
+              Me especializo en adaptar mi lenguaje gráfico a diferentes soportes. Ya sea que necesites algo físico como una agenda o algo digital como un reel, cuido que la propuesta sea profesional y coherente.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <button onclick="openDonationModal()" class="px-10 py-4 text-lg bg-white text-brand-teal font-bold rounded-full shadow-xl hover:bg-gray-100 transition-colors transform hover:scale-105 hover:shadow-2xl">
-                    <i class="fas fa-hand-holding-heart mr-2"></i> Donar
+            <div className="flex flex-col gap-5">
+              <div className="flex items-center gap-5 text-sm bg-white/5 p-5 rounded-2xl border border-white/5 group-hover:bg-white/10 transition-all">
+                <Layout size={24} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors"/>
+                <span className="font-bold">Diseño Multiformato</span>
+              </div>
+              <div className="flex items-center gap-5 text-sm bg-white/5 p-5 rounded-2xl border border-white/5 group-hover:bg-white/10 transition-all">
+                <Sparkles size={24} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors"/>
+                <span className="font-bold">Detalle y Precisión</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Formulario de Cotización Actualizado */}
+      <section id="cotizar" className="py-24 px-8">
+        <div className="max-w-5xl mx-auto bg-white rounded-[3.5rem] shadow-2xl border border-[#F3F0E9] overflow-hidden flex flex-col md:flex-row">
+          <div className="md:w-1/3 bg-[#FDFBF7] p-12 flex flex-col justify-between border-r border-[#F3F0E9]">
+            <div>
+              <h3 className="text-3xl font-bold mb-6 text-[#1F2937]">Iniciemos tu proyecto</h3>
+              <p className="text-[#6B7280] text-sm leading-relaxed mb-10 font-medium">
+                Cuéntame los detalles de tu idea y te responderé de forma personalizada con una propuesta clara y un presupuesto acorde a tu pedido.
+              </p>
+            </div>
+            <div className="space-y-6">
+              <div className="flex items-center gap-4 text-sm text-[#4B5563] font-bold group cursor-pointer hover:text-[#F472B6] transition-all">
+                <Instagram size={20} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors" /> @mi_taller_creativo
+              </div>
+              <div className="flex items-center gap-4 text-sm text-[#4B5563] font-bold group cursor-pointer hover:text-[#F472B6] transition-all">
+                <Mail size={20} className="text-[#40E0D0] group-hover:text-[#F472B6] transition-colors" /> hola@mitaller.com
+              </div>
+            </div>
+          </div>
+
+          <div className="md:w-2/3 p-12 lg:p-16">
+            {showQuoteSuccess ? (
+              <div className="h-full flex flex-col items-center justify-center text-center py-10">
+                <div className="w-24 h-24 bg-[#FDF2F8] text-[#DB2777] rounded-full flex items-center justify-center mb-8 shadow-inner animate-bounce">
+                  <CheckCircle size={48} />
+                </div>
+                <h4 className="text-3xl font-bold text-[#1F2937] mb-3">¡Recibido!</h4>
+                <p className="text-[#6B7280] font-medium text-lg">Revisaré tu idea con detalle y te contactaré muy pronto.</p>
+                <button onClick={() => setShowQuoteSuccess(false)} className="mt-10 px-8 py-3 bg-[#F472B6] text-white rounded-full font-bold shadow-lg shadow-[#F472B6]/20 hover:scale-105 transition-all">
+                  Enviar otra consulta
                 </button>
-                <button onclick="openFosterModal()" class="px-10 py-4 text-lg bg-brand-orange text-white font-bold rounded-full shadow-xl hover:bg-orange-600 transition-colors hover:shadow-2xl">
-                    Ser Hogar Temporal
+              </div>
+            ) : (
+              <form onSubmit={handleSubmitQuote} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2">
+                    <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">Nombre completo</label>
+                    <input required type="text" placeholder="¿Cómo te llamas?" className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#F472B6] focus:ring-4 focus:ring-[#F472B6]/10 outline-none transition-all font-medium" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">Contacto</label>
+                    <input required type="text" placeholder="WhatsApp o Email" className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#40E0D0] focus:ring-4 focus:ring-[#40E0D0]/10 outline-none transition-all font-medium" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">¿Qué categoría buscas?</label>
+                  <select className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#40E0D0] focus:ring-4 focus:ring-[#40E0D0]/10 outline-none transition-all appearance-none cursor-pointer font-bold text-[#4B5563]">
+                    <option>Papelería Creativa</option>
+                    <option>Diseño Digital</option>
+                    <option>Apoyo Gráfico Académico</option>
+                    <option>Diseño Musical</option>
+                    <option>Diseño Videos y Reels</option>
+                    <option>Otro proyecto especial</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[11px] uppercase tracking-widest font-bold text-[#9CA3AF]">Detalles de tu idea</label>
+                  <textarea rows="4" placeholder="Háblame de formatos, estilos y necesidades específicas..." className="w-full bg-[#FDFBF7] border border-[#E5E1DA] rounded-2xl px-5 py-4 focus:border-[#40E0D0] focus:ring-4 focus:ring-[#40E0D0]/10 outline-none transition-all resize-none font-medium text-sm leading-relaxed"></textarea>
+                </div>
+                <button type="submit" className="w-full bg-[#40E0D0] text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-3 hover:bg-[#F472B6] shadow-lg shadow-[#40E0D0]/10 hover:shadow-[#F472B6]/20 active:scale-[0.98] transition-all text-lg tracking-wide">
+                  Solicitar presupuesto <Send size={20} />
                 </button>
-            </div>
+              </form>
+            )}
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Adoption Gallery -->
-    <section id="adoptar" class="py-20 paw-pattern">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl md:text-5xl font-bold text-brand-dark mb-4">Nuestros <span class="text-brand-orange">Rescatados</span></h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Estos pequeños han sido rescatados de las calles y cerros de Valparaíso. Están listos para bajar del cerro a tu corazón.</p>
-                
-                <!-- Filters & Match Button -->
-                <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-8">
-                    <div class="flex gap-2">
-                        <button onclick="filterPets('all')" class="filter-btn active px-4 py-2 rounded-full border-2 border-brand-orange bg-brand-orange text-white font-bold text-sm transition-all hover:shadow-lg focus:outline-none" data-filter="all">Todos</button>
-                        <button onclick="filterPets('dog')" class="filter-btn px-4 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold text-sm transition-all hover:shadow-lg focus:outline-none" data-filter="dog">
-                            <i class="fas fa-dog mr-1"></i>Perros
-                        </button>
-                        <button onclick="filterPets('cat')" class="filter-btn px-4 py-2 rounded-full border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold text-sm transition-all hover:shadow-lg focus:outline-none" data-filter="cat">
-                            <i class="fas fa-cat mr-1"></i>Gatos
-                        </button>
-                    </div>
-                    
-                    <!-- Match Button -->
-                    <button onclick="openMatchModal()" class="ml-0 md:ml-4 px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2 animate-pulse">
-                        <i class="fas fa-magic"></i> Encuentra tu Match
-                    </button>
-                </div>
+      {/* Footer */}
+      <footer className="py-20 border-t border-[#E5E1DA]">
+        <div className="max-w-6xl mx-auto px-8 flex flex-col items-center text-center">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 bg-[#40E0D0] rounded-xl flex items-center justify-center text-white transition-all hover:bg-[#F472B6] hover:rotate-6">
+              <Palette size={20} />
             </div>
-
-            <div id="pets-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Pets injected via JS -->
-            </div>
+            <span className="text-xl font-bold tracking-tight text-[#1F2937]">MI TALLER</span>
+          </div>
+          <p className="text-[#9CA3AF] text-sm max-w-md mb-10 font-medium leading-relaxed">
+            Diseño gráfico y papelería personalizada adaptable a tus necesidades. <br/> Piezas cuidadas y creadas con atención al detalle.
+          </p>
+          <div className="flex gap-10">
+            <a href="#" className="text-[#6B7280] hover:text-[#F472B6] transition-colors scale-125"><Instagram size={24} /></a>
+            <a href="#" className="text-[#6B7280] hover:text-[#40E0D0] transition-colors scale-125"><Mail size={24} /></a>
+          </div>
+          <div className="mt-16 text-[#D1D5DB] text-[10px] uppercase tracking-[0.4em] font-bold">
+            © 2024 MI TALLER CREATIVO · DISEÑO DE AUTOR
+          </div>
         </div>
-    </section>
-
-    <!-- FORMULARIO DE CONTACTO (COMPACTO Y RECTANGULAR) -->
-    <section id="contacto" class="py-10 bg-white relative z-10">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <div class="text-center mb-6">
-                <h2 class="text-3xl font-extrabold text-brand-dark mb-1 font-display tracking-tight">Contáctanos</h2>
-                <p class="text-gray-500 text-sm">¿Quieres adoptar o ser voluntario? ¡Escríbenos!</p>
-            </div>
-            
-            <div class="bg-brand-cream rounded-2xl p-5 md:p-8 shadow-sm border border-[#EFE8D8]">
-                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
-                    <!-- Fila 1: 3 Columnas en computador -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-[#4A5568] mb-1">Nombre Completo</label>
-                            <input type="text" placeholder="Tu nombre" required class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all text-gray-700">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-[#4A5568] mb-1">Email</label>
-                            <input type="email" placeholder="tu@email.com" required class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all text-gray-700">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-[#4A5568] mb-1">Asunto</label>
-                            <select class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all text-gray-700">
-                                 <option>Otro</option>
-                                 <option>Quiero Adoptar</option>
-                                 <option>Ser Voluntario</option>
-                                 <option>Donar comida o accesorios</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- Fila 2: Mensaje y Botón lado a lado en computador -->
-                    <div class="flex flex-col md:flex-row gap-4 items-end">
-                        <div class="flex-grow w-full">
-                            <label class="block text-xs font-bold text-[#4A5568] mb-1">Mensaje</label>
-                            <textarea rows="2" placeholder="Cuéntanos un poco más..." required class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-brand-orange bg-white transition-all resize-none text-gray-700"></textarea>
-                        </div>
-                        <button type="submit" class="w-full md:w-auto bg-brand-orange hover:bg-orange-500 text-white font-bold px-8 h-[56px] rounded-lg transition-colors shadow-sm text-sm flex items-center justify-center gap-2">
-                            Enviar Mensaje <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tienda (CON CARRITO) -->
-    <section id="tienda" class="py-24 bg-brand-teal relative overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <span class="inline-block py-1 px-4 rounded-full bg-white text-brand-teal font-bold text-xs mb-4 shadow-lg">
-                    <i class="fas fa-store mr-1"></i> PetShop
-                </span>
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
-                    Nuestra <span class="bg-white text-brand-teal px-4 py-1 rounded-2xl shadow-lg inline-block mt-2 md:mt-0">Tienda</span>
-                </h2>
-                <p class="text-white/90 max-w-2xl mx-auto text-lg mt-4">
-                    Encuentra los mejores alimentos y accesorios para consentir a tu mascota. <br>
-                    <strong class="text-white">Calidad y variedad para el bienestar de tu mejor amigo.</strong>
-                </p>
-            </div>
-
-            <div id="shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Los productos se inyectan con JS -->
-            </div>
-            
-            <div class="text-center mt-12">
-                <p class="text-brand-dark text-sm font-medium bg-white inline-block px-6 py-2 rounded-full shadow-lg">
-                    ¿Buscas algo específico? <a href="#contacto" class="text-brand-orange font-bold hover:underline ml-1">Pregúntanos por stock</a>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Community & Education Section -->
-    <section class="py-16 bg-white relative overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10">
-            
-            <!-- Mission Banner -->
-            <div class="bg-brand-orange rounded-3xl p-8 md:p-12 shadow-xl text-white mb-16 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"></div>
-                <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-10 -mb-10 transition-transform group-hover:scale-110 duration-700"></div>
-                
-                <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
-                    <div class="md:w-2/3">
-                        <div class="inline-block bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-4 backdrop-blur-sm">
-                            <i class="fas fa-bullhorn mr-1"></i> Difusión y Apoyo
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Apoya en redes sociales</h2>
-                        <p class="text-lg opacity-90 leading-relaxed mb-6">
-                            Nuestra misión es vincular y dar voz a los rescatistas y refugios independientes de Valparaíso que luchan solos en su proyecto.
-                            <br><strong>Funcionamos gracias a personas como tú <i class="fas fa-heart"></i></strong>
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#" class="bg-white text-brand-orange hover:bg-gray-100 font-bold py-2 px-6 rounded-full transition-all shadow-md flex items-center gap-2 transform hover:-translate-y-1">
-                                <i class="fab fa-instagram text-xl"></i> @conectandopatitasvalparaiso
-                            </a>
-                            <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-2 px-6 rounded-full transition-all flex items-center gap-2">
-                                <i class="fab fa-facebook-f"></i> Compartir Causa
-                            </a>
-                        </div>
-                    </div>
-                    <div class="md:w-1/3 flex justify-center">
-                        <div class="bg-white/20 p-6 rounded-2xl backdrop-blur-sm text-center transform rotate-3 hover:rotate-0 transition-all duration-300 border border-white/30 shadow-lg">
-                            <i class="fas fa-hands-helping text-5xl mb-3 block"></i>
-                            <span class="font-bold text-xl">Red de Apoyo</span>
-                            <p class="text-sm mt-2 opacity-90">Uniendo fuerzas por los sin voz en los cerros.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sterilization Info -->
-            <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-brand-dark mb-4">Tenencia Responsable: <span class="text-brand-teal">Esteriliza</span></h3>
-                <p class="text-gray-600 max-w-2xl mx-auto">La esterilización es el único método ético y efectivo para controlar la sobrepoblación y el abandono en nuestros cerros. ¡Es un acto de amor!</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-shadow border-l-4 border-brand-teal group">
-                    <div class="w-12 h-12 bg-brand-teal/10 text-brand-teal rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-brand-teal group-hover:text-white transition-colors">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h4 class="font-bold text-xl text-gray-800 mb-2">Salud y Vida</h4>
-                    <p class="text-gray-600 text-sm">Previene tumores, infecciones uterinas y cáncer. Tu mascota vivirá más tiempo y más sana.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-shadow border-l-4 border-brand-orange group">
-                    <div class="w-12 h-12 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-brand-orange group-hover:text-white transition-colors">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <h4 class="font-bold text-xl text-gray-800 mb-2">Fin al Abandono</h4>
-                    <p class="text-gray-600 text-sm">Evita camadas no deseadas que terminan sufriendo en las calles. Corta el ciclo del abandono.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-shadow border-l-4 border-brand-yellow group">
-                    <div class="w-12 h-12 bg-brand-yellow/10 text-brand-yellow rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-brand-yellow group-hover:text-white transition-colors">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h4 class="font-bold text-xl text-gray-800 mb-2">Comportamiento</h4>
-                    <p class="text-gray-600 text-sm">Reduce el marcaje de territorio, la agresividad y las fugas por celo. Hogares más tranquilos.</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Testimonios / Slider Section -->
-    <section class="py-12 bg-brand-cream relative border-t border-orange-100 overflow-hidden pause-on-hover">
-        <div class="container mx-auto px-6 mb-8 text-center relative z-10">
-            <h3 class="text-2xl md:text-3xl font-bold text-gray-800">Familias <span class="text-brand-orange">Conectadas</span></h3>
-            <p class="text-gray-500 text-sm mt-2">Conoce las experiencias de quienes ya le abrieron las puertas de su hogar a un rescatado.</p>
-        </div>
-        
-        <!-- Contenedor del Slider Infinito -->
-        <div class="flex animate-scroll-testimonials">
-            
-            <!-- GRUPO 1 DE TARJETAS -->
-            <div class="flex gap-6 px-3">
-                <!-- Testimonio 1 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="carlaAraya" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Carla Araya</h5>
-                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Rolo y Ragnar</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Nunca había tenido gatos, pero se acostumbraron muy bien a mi casa, son regalones y los amo más que a todo!"</p>
-                </div>
-
-                <!-- Testimonio 2 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="ignacioGomez" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Ignacio Gomez</h5>
-                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Roco</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Roco llenó la casa de energía. Estaba súper temeroso al principio, pero con paciencia ahora es el rey."</p>
-                </div>
-
-                <!-- Testimonio 3 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="valentinaP" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Valentina P.</h5>
-                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Liah</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Liah me hace muy feliz! La recontra amo y es mi compañera de vida <3"</p>
-                </div>
-
-                <!-- Testimonio 4 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="donCarlos" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Don Juan</h5>
-                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Viejito</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Decidí adoptar un perro senior y ha sido maravilloso. No hace destrozos y me acompaña viendo tele."</p>
-                </div>
-
-                <!-- Testimonio 5 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="johannaEspinoza" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Johanna Espinoza</h5>
-                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Grumo</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Estoy feliz de haber adoptado a esta bebé, ya que le devolvió la vida a mi casa con sus travesuras"</p>
-                </div>
-            </div>
-
-            <!-- GRUPO 2 DE TARJETAS (Duplicado exacto para efecto infinito sin cortes) -->
-            <div class="flex gap-6 px-3">
-                <!-- Testimonio 1 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="carlaAraya" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Carla Araya</h5>
-                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Rolo y Ragnar</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Nunca había tenido gatos, pero se acostumbraron muy bien a mi casa, son regalones y los amo más que a todo!"</p>
-                </div>
-
-                <!-- Testimonio 2 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="ignacioGomez" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Ignacio Gomez</h5>
-                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Roco</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Roco llenó la casa de energía. Estaba súper temeroso al principio, pero con paciencia ahora es el rey."</p>
-                </div>
-
-                <!-- Testimonio 3 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="valentinaP" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Valentina P.</h5>
-                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Liah</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Liah me hace muy feliz! La recontra amo y es mi compañera de vida <3"</p>
-                </div>
-
-                <!-- Testimonio 4 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="donCarlos" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Don Juan</h5>
-                            <p class="text-[10px] text-brand-teal font-bold uppercase tracking-wide">Adoptó a Viejito</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Decidí adoptar un perro senior y ha sido maravilloso. No hace destrozos y me acompaña viendo tele."</p>
-                </div>
-
-                <!-- Testimonio 5 -->
-                <div class="w-[300px] bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-shrink-0 cursor-default">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img data-testimonio="johannaEspinoza" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <h5 class="font-bold text-gray-800 text-sm">Johanna Espinoza</h5>
-                            <p class="text-[10px] text-brand-orange font-bold uppercase tracking-wide">Adoptó a Grumo</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-xs mb-2 space-x-1">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm italic leading-relaxed">"Estoy feliz de haber adoptado a esta bebé, ya que le devolvió la vida a mi casa con sus travesuras"</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Gradientes para difuminar los bordes laterales del carrusel -->
-        <div class="absolute top-0 left-0 h-full w-12 bg-gradient-to-r from-brand-cream to-transparent z-20 pointer-events-none"></div>
-        <div class="absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-brand-cream to-transparent z-20 pointer-events-none"></div>
-    </section>
-
-    <!-- Sponsors Section -->
-    <section class="py-12 bg-gray-50 border-t border-gray-200">
-        <div class="container mx-auto px-6 text-center">
-            <h3 class="text-xl font-bold text-gray-400 mb-8 uppercase tracking-widest text-sm">Empresas que nos apoyan</h3>
-            
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-                <!-- Sponsor 1: Pedigree Style -->
-                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
-                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 group-hover:border-yellow-400">
-                        <i class="fas fa-award text-yellow-500 text-3xl"></i>
-                        <span class="font-black text-2xl text-blue-900 font-sans tracking-tighter">Pedigree</span>
-                    </div>
-                </div>
-
-                <!-- Sponsor 2: Dog Chow Style -->
-                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
-                    <div class="flex items-center gap-1 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 group-hover:border-green-600">
-                        <span class="font-black text-2xl text-green-700 italic">DOG</span>
-                        <span class="font-black text-2xl text-red-600 italic">CHOW</span>
-                    </div>
-                </div>
-
-                <!-- Sponsor 3: Tienda Local -->
-                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
-                    <div class="flex flex-col items-center">
-                        <div class="flex items-center gap-2 text-xl font-bold text-gray-600 group-hover:text-purple-600">
-                            <i class="fas fa-store-alt"></i>
-                            <span>PetShop Valpo</span>
-                        </div>
-                        <span class="text-[10px] text-gray-400">Collares y Accesorios</span>
-                    </div>
-                </div>
-
-                <!-- Sponsor 4: Farmacia -->
-                <div class="group cursor-pointer transition-all duration-300 filter grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transform hover:scale-105">
-                    <div class="flex flex-col items-center">
-                        <div class="flex items-center gap-2 text-xl font-bold text-gray-600 group-hover:text-green-500">
-                            <i class="fas fa-prescription-bottle-alt"></i>
-                            <span>FarmaVet</span>
-                        </div>
-                        <span class="text-[10px] text-gray-400">Desparasitarios y Salud</span>
-                    </div>
-                </div>
-            </div>
-            
-            <p class="mt-8 text-xs text-gray-400">¿Quieres ser patrocinador? <a href="#contacto" class="text-brand-orange hover:underline">Contáctanos aquí</a></p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white pt-16 pb-8">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-paw text-brand-orange text-2xl"></i>
-                        <span class="text-2xl font-bold">Conectando<span class="text-brand-orange">Patitas</span></span>
-                    </div>
-                    <p class="text-gray-400 leading-relaxed mb-6 max-w-md">
-                        Somos un grupo de rescatistas independientes de Valparaíso, Chile. Dedicamos nuestro tiempo y recursos a rescatar, rehabilitar y buscar familias para los animales abandonados en nuestra región.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-brand-orange transition-colors"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-brand-orange transition-colors"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-brand-orange transition-colors"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Enlaces</h4>
-                    <ul class="space-y-3 text-gray-400">
-                        <li><a href="#inicio" class="hover:text-white transition-colors">Inicio</a></li>
-                        <li><a href="#adoptar" class="hover:text-white transition-colors">Mascotas</a></li>
-                        <li><a href="#proceso" class="hover:text-white transition-colors">Proceso</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Transparencia</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2 inline-block">Contacto</h4>
-                    <ul class="space-y-3 text-gray-400">
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-map-marker-alt mt-1 text-brand-orange"></i>
-                            <span>Valparaíso, Chile<br>(Atención coordinada)</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-phone text-brand-orange"></i>
-                            <span>+56 9 1234 5678</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-envelope text-brand-orange"></i>
-                            <span>hola@conectandopatitasvalparaiso.cl</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 pt-8 text-center text-gray-500 text-sm">
-                <p>&copy; 2024 Conectando Patitas Valparaíso. Hecho con amor.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Pet Modal -->
-    <div id="pet-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors shadow-sm">
-                <i class="fas fa-times text-xl text-gray-600"></i>
-            </button>
-            <div class="flex flex-col md:flex-row h-full">
-                <div class="w-full md:w-1/2 h-64 md:h-auto relative">
-                    <!-- IMAGEN MASCOTA (MODAL) -->
-                    <img id="modal-img" src="" alt="Pet" class="w-full h-full object-cover">
-                </div>
-                <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col overflow-y-auto max-h-[80vh] md:max-h-full">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 id="modal-name" class="text-3xl font-extrabold text-gray-800">Name</h3>
-                        <span id="modal-gender" class="bg-blue-100 text-blue-600 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide">Macho</span>
-                    </div>
-                    <p id="modal-breed" class="text-gray-500 font-medium mb-4 text-lg">Raza</p>
-                    <div class="grid grid-cols-3 gap-4 mb-6">
-                        <div class="text-center p-3 bg-gray-50 rounded-xl">
-                            <span class="block text-gray-400 text-xs uppercase">Edad</span>
-                            <span id="modal-age" class="font-bold text-gray-800">2 años</span>
-                        </div>
-                        <div class="text-center p-3 bg-gray-50 rounded-xl">
-                            <span class="block text-gray-400 text-xs uppercase">Tamaño</span>
-                            <span id="modal-size" class="font-bold text-gray-800">Mediano</span>
-                        </div>
-                        <div class="text-center p-3 bg-gray-50 rounded-xl">
-                            <span class="block text-gray-400 text-xs uppercase">Vacunado</span>
-                            <span class="font-bold text-green-500"><i class="fas fa-check"></i></span>
-                        </div>
-                    </div>
-
-                    <!-- SECCIÓN SOBRE MÍ CON ETIQUETA DE ESTADO -->
-                    <div class="flex items-center gap-3 mb-2">
-                        <h4 class="font-bold text-gray-800">Sobre mí</h4>
-                        <span id="modal-status" class="px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border">Refugio</span>
-                    </div>
-                    
-                    <p id="modal-desc" class="text-gray-600 mb-4 leading-relaxed">Descripción...</p>
-                    
-                    <!-- BOTÓN CONOCER HISTORIA -->
-                    <button onclick="toggleStory()" id="btn-story" class="text-brand-orange font-bold text-sm mb-6 flex items-center gap-2 hover:underline focus:outline-none transition-all">
-                        <i class="fas fa-book-reader"></i> Conocer historia de rescate
-                    </button>
-
-                    <!-- HISTORIA DESPLEGABLE -->
-                    <div id="modal-story" class="hidden bg-orange-50 p-4 rounded-xl mb-6 text-sm text-gray-700 italic border-l-4 border-brand-orange transition-all duration-300">
-                        <!-- Se llena con JS -->
-                    </div>
-
-                    <div class="mt-auto">
-                        <!-- SECCIÓN DE ADOPCIÓN -->
-                        <div class="space-y-3" id="modal-adoption-section">
-                            <h4 class="font-bold text-gray-800 border-t pt-4">¿Te interesa adoptarme?</h4>
-                            <p class="text-sm text-gray-600">Para asegurar que somos la familia perfecta el uno para el otro, necesitamos conocerte un poco más.</p>
-                            
-                            <button onclick="closeModal(); openAdoptionForm()" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex justify-center items-center gap-2 shadow-lg shadow-orange-200 transform active:scale-95">
-                                <i class="fas fa-clipboard-list"></i> Llenar Formulario de Pre-Adopción
-                            </button>
-                        </div>
-                        
-                        <!-- BOTÓN DONAR / APADRINAR -->
-                        <div class="mt-4 pt-4 border-t border-gray-100">
-                            <button onclick="closeModal(); openDonationModal()" class="w-full py-3 bg-brand-cream text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-white transition-colors flex items-center justify-center gap-2 group">
-                                <i class="fas fa-hand-holding-heart group-hover:scale-110 transition-transform"></i>
-                                Apadrinar o Donar
-                            </button>
-                            <p class="text-xs text-center text-gray-400 mt-2">¿No puedes adoptar? Ayúdanos a cuidarlo.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </footer>
     </div>
+  );
+};
 
-    <!-- Process Modal -->
-    <div id="process-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeProcessModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-8">
-                <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-800">¿Cómo <span class="text-brand-teal">Adoptar?</span></h2>
-                    <p class="text-gray-600 mt-2">Nuestro proceso busca el mejor hogar definitivo.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-gray-50 p-6 rounded-2xl text-center">
-                        <div class="w-12 h-12 bg-brand-orange text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-orange-200 shadow-lg">1</div>
-                        <h3 class="text-lg font-bold mb-2">Conócelo</h3>
-                        <p class="text-gray-600 text-sm">Revisa nuestra galería. Si te enamoras, contáctanos para una visita.</p>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-2xl text-center">
-                        <div class="w-12 h-12 bg-brand-teal text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-teal-200 shadow-lg">2</div>
-                        <h3 class="text-lg font-bold mb-2">Entrevista</h3>
-                        <p class="text-gray-600 text-sm">Hacemos una entrevista para asegurar compatibilidad y seguridad.</p>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-2xl text-center">
-                        <div class="w-12 h-12 bg-brand-yellow text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-yellow-200 shadow-lg">3</div>
-                        <h3 class="text-lg font-bold mb-2">¡A Casa!</h3>
-                        <p class="text-gray-600 text-sm">Firmamos el compromiso y llevamos a tu nuevo amigo a su hogar.</p>
-                    </div>
-                </div>
-                <div class="mt-8 text-center">
-                    <button onclick="closeProcessModal()" class="bg-brand-dark text-white px-8 py-3 rounded-xl font-bold hover:bg-gray-800 transition-colors">Entendido</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Matchmaking Modal -->
-    <div id="match-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeMatchModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            
-            <div class="p-8">
-                <div class="text-center mb-6">
-                     <div class="inline-block p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white text-3xl shadow-lg mb-2">
-                        <i class="fas fa-magic"></i>
-                     </div>
-                     <h3 class="text-2xl font-bold text-gray-800">Encuentra tu Match Ideal</h3>
-                     <p class="text-gray-500 text-sm">Responde 3 preguntas simples y te diremos quién te espera.</p>
-                </div>
-
-                <form id="match-form" onsubmit="handleMatchSubmit(event)" class="space-y-5">
-                    
-                    <!-- P1: Especie -->
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">1. ¿Qué buscas?</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <label class="cursor-pointer">
-                                <input type="radio" name="match_type" value="dog" class="peer hidden" required>
-                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-brand-orange peer-checked:bg-orange-50 transition-all">
-                                    <i class="fas fa-dog text-xl mb-1 block text-gray-400 peer-checked:text-brand-orange"></i>
-                                    <span class="text-xs font-bold text-gray-600">Perro</span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="match_type" value="cat" class="peer hidden">
-                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-brand-orange peer-checked:bg-orange-50 transition-all">
-                                    <i class="fas fa-cat text-xl mb-1 block text-gray-400 peer-checked:text-brand-orange"></i>
-                                    <span class="text-xs font-bold text-gray-600">Gato</span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="match_type" value="any" class="peer hidden">
-                                <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-brand-orange peer-checked:bg-orange-50 transition-all">
-                                    <i class="fas fa-heart text-xl mb-1 block text-gray-400 peer-checked:text-brand-orange"></i>
-                                    <span class="text-xs font-bold text-gray-600">Me da igual</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- P2: Energía -->
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">2. Tu estilo de vida es...</label>
-                        <select name="match_energy" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                            <option value="low">Tranquilo (Sofá, series, paseos cortos)</option>
-                            <option value="medium">Equilibrado (Juego un rato, descanso otro)</option>
-                            <option value="high">Activo (Trekking, correr, mucha actividad)</option>
-                        </select>
-                    </div>
-
-                    <!-- P3: Espacio -->
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">3. Vives en...</label>
-                        <select name="match_space" class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                            <option value="apartment">Departamento (Espacio reducido)</option>
-                            <option value="house">Casa con patio (Espacio medio)</option>
-                            <option value="parcel">Parcela / Espacio grande</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="w-full bg-brand-dark text-white font-bold py-3 rounded-xl mt-4 hover:bg-gray-800 shadow-lg transition-all transform active:scale-95">
-                        ¡Buscar mi Match!
-                    </button>
-                </form>
-
-                <!-- Results Section -->
-                <div id="match-results" class="hidden mt-4 text-center">
-                    <h4 class="font-bold text-brand-orange text-lg mb-3">¡Encontramos a tu media naranja!</h4>
-                    <div id="match-list" class="space-y-3 max-h-48 overflow-y-auto">
-                        <!-- Results injected here -->
-                    </div>
-                    <button onclick="resetMatchForm()" class="text-xs text-gray-400 underline mt-4">Volver a intentar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Adoption Form Modal -->
-    <div id="adoption-form-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeAdoptionForm()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            
-            <div class="p-8">
-                <div class="text-center mb-8">
-                     <div class="inline-block p-3 bg-brand-orange/10 rounded-full text-brand-orange text-3xl shadow-sm mb-3">
-                        <i class="fas fa-heart"></i>
-                     </div>
-                     <h3 class="text-3xl font-bold text-brand-dark">Formulario de Pre-Adopción</h3>
-                     <p class="text-gray-500 text-sm mt-2">Queremos asegurarnos de que nuestros rescatados encuentren un hogar para toda la vida.</p>
-                </div>
-
-                <form onsubmit="handleFullAdoptionSubmit(event)" class="space-y-6">
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-                        <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-user"></i> Datos Personales</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1">Nombre Completo</label>
-                                <input type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1">Edad</label>
-                                <input type="number" required min="18" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1">Teléfono / WhatsApp</label>
-                                <input type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1">Comuna de residencia</label>
-                                <input type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-                        <h4 class="font-bold text-brand-teal mb-3 flex items-center gap-2"><i class="fas fa-home"></i> Vivienda y Seguridad</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1">Tipo de Vivienda</label>
-                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                                    <option>Casa con patio cerrado</option>
-                                    <option>Casa con patio abierto</option>
-                                    <option>Departamento</option>
-                                    <option>Parcela</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1">Tenencia</label>
-                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                                    <option>Propia</option>
-                                    <option>Arrendada (Con permiso escrito)</option>
-                                    <option>Arrendada (Sin permiso explícito)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-brand-orange text-white font-bold py-4 rounded-xl shadow-xl hover:bg-orange-600 transition-all transform active:scale-95 text-lg">
-                        Enviar Postulación
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Donation Modal -->
-    <div id="donation-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeDonationModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-8">
-                <div class="text-center mb-4">
-                     <div class="inline-block p-3 bg-brand-cream rounded-full text-brand-teal text-2xl shadow-sm">
-                        <i class="fas fa-hand-holding-heart"></i>
-                     </div>
-                </div>
-                <h3 class="text-2xl font-bold text-center text-brand-dark mb-2">Conectando tu Ayuda</h3>
-                <p class="text-center text-gray-500 mb-4 text-sm leading-relaxed px-2">
-                    Tu aporte se distribuye directamente entre nuestros <span class="font-bold text-brand-orange">refugios independientes</span> y casos urgentes de Valparaíso.
-                </p>
-                <div class="flex justify-center gap-2 mb-6 text-xs font-semibold text-gray-600">
-                    <span class="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-1 border border-gray-200"><i class="fas fa-utensils text-brand-orange"></i> Alimento</span>
-                    <span class="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-1 border border-gray-200"><i class="fas fa-stethoscope text-brand-teal"></i> Veterinario</span>
-                    <span class="bg-gray-100 px-3 py-1 rounded-full flex items-center gap-1 border border-gray-200"><i class="fas fa-home text-brand-yellow"></i> Refugio</span>
-                </div>
-                <div class="flex bg-gray-100 p-1 rounded-xl mb-6">
-                    <button onclick="setDonationType('unique')" id="btn-unique" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-brand-teal shadow-sm transition-all">Aporte Único</button>
-                    <button onclick="setDonationType('monthly')" id="btn-monthly" class="flex-1 py-2 text-sm font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all">Padrino Mensual</button>
-                </div>
-                <div class="space-y-4">
-                    <p id="donation-text" class="text-sm text-gray-600 font-medium text-center">Selecciona un monto para ayudar:</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="selectAmount(this)" class="amount-btn border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/5 text-brand-teal font-bold py-3 rounded-xl transition-all">$3.000</button>
-                        <button onclick="selectAmount(this)" class="amount-btn border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/5 text-brand-teal font-bold py-3 rounded-xl transition-all">$5.000</button>
-                        <div class="col-span-2">
-                            <input type="number" placeholder="Ingresa otro monto voluntario" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-teal text-center font-bold text-gray-700 transition-colors">
-                        </div>
-                    </div>
-                    <button onclick="closeDonationModal(); openPaymentModal()" class="w-full bg-brand-teal text-white font-bold py-3 rounded-xl mt-6 hover:bg-teal-600 shadow-lg shadow-teal-200 transition-all transform active:scale-95 flex justify-center items-center gap-2 group">
-                        <span>Donar Ahora</span> <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </button>
-                    <p class="text-xs text-center text-gray-400 mt-4 flex items-center justify-center gap-1">
-                        <i class="fas fa-shield-alt text-brand-teal"></i> Transferencia directa a la cuenta de la agrupación
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payment Method Modal -->
-    <div id="payment-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closePaymentModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-8">
-                <h3 class="text-2xl font-bold text-center text-brand-dark mb-2">Elige tu medio de pago</h3>
-                <p class="text-center text-gray-500 mb-6 text-sm">Tu aporte llega a los peludos.</p>
-                <div class="space-y-3">
-                    <button onclick="showToastPayment('Redirigiendo a WebPay...')" class="w-full border-2 border-gray-100 hover:border-brand-teal hover:bg-teal-50 p-4 rounded-xl flex items-center justify-between group transition-all">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600"><i class="fas fa-credit-card"></i></div>
-                            <div class="text-left">
-                                <span class="block font-bold text-gray-800">WebPay / Tarjetas</span>
-                                <span class="text-xs text-gray-500">Débito, Crédito, Prepago</span>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-brand-teal"></i>
-                    </button>
-                    <button onclick="showToastPayment('Abriendo Mercado Pago...')" class="w-full border-2 border-gray-100 hover:border-blue-400 hover:bg-blue-50 p-4 rounded-xl flex items-center justify-between group transition-all">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-2 rounded-lg text-blue-500"><i class="fas fa-hand-holding-usd"></i></div>
-                            <div class="text-left">
-                                <span class="block font-bold text-gray-800">Mercado Pago</span>
-                                <span class="text-xs text-gray-500">QR, Saldo en cuenta</span>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
-                    </button>
-                    <!-- Transferencia Details -->
-                    <div class="border-2 border-gray-100 rounded-xl overflow-hidden">
-                        <button onclick="toggleTransferDetails()" class="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-brand-orange/20 p-2 rounded-lg text-brand-orange"><i class="fas fa-university"></i></div>
-                                <div class="text-left">
-                                    <span class="block font-bold text-gray-800">Transferencia</span>
-                                    <span class="text-xs text-gray-500">Datos bancarios</span>
-                                </div>
-                            </div>
-                            <i id="transfer-arrow" class="fas fa-chevron-down text-gray-300 transition-transform"></i>
-                        </button>
-                        <div id="transfer-details" class="hidden bg-gray-50 p-4 border-t border-gray-100 text-sm text-gray-600 space-y-2">
-                            <p class="font-bold text-brand-dark mb-2">Datos de Transferencia:</p>
-                            <div class="flex justify-between items-center bg-white p-2 rounded border border-gray-200">
-                                <span>Banco Estado</span>
-                                <span class="text-xs font-bold bg-gray-200 px-2 py-1 rounded">Vista/RUT</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-white p-2 rounded border border-gray-200 group cursor-pointer" onclick="copyText('12345678')">
-                                <span>Cuenta: 12345678</span>
-                                <i class="far fa-copy text-gray-400 group-hover:text-brand-teal"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Foster Modal -->
-    <div id="foster-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeFosterModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-8">
-                <div class="text-center mb-6">
-                     <div class="inline-block p-3 bg-brand-orange/10 rounded-full text-brand-orange text-2xl shadow-sm">
-                        <i class="fas fa-home"></i>
-                     </div>
-                     <h3 class="text-2xl font-bold text-brand-dark mt-4">Ser Hogar Temporal</h3>
-                     <p class="text-gray-500 text-sm">¡Gracias por querer abrir las puertas de tu casa!</p>
-                </div>
-                <form onsubmit="handleFosterSubmit(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">¿Tienes patio o espacio cerrado?</label>
-                        <select class="w-full border-2 border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-brand-orange transition-colors">
-                            <option>Sí, patio cerrado</option>
-                            <option>Departamento con mallas</option>
-                            <option>No tengo patio</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="w-full bg-brand-orange text-white font-bold py-3 rounded-xl mt-4 hover:bg-orange-600 shadow-lg transition-all transform active:scale-95">
-                        Enviar Postulación
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Info Modal -->
-    <div id="info-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeInfoModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-8">
-                <div class="text-center">
-                    <div id="info-icon-container" class="inline-block p-4 rounded-full mb-4 shadow-sm">
-                        <i id="info-icon" class="text-3xl"></i>
-                    </div>
-                    <h3 id="info-title" class="text-2xl font-bold text-gray-800 mb-4">Título</h3>
-                    <div id="info-content" class="text-left text-gray-600 space-y-3">
-                        <!-- Content injected via JS -->
-                    </div>
-                </div>
-                <button onclick="closeInfoModal()" class="w-full bg-gray-100 text-gray-600 font-bold py-3 rounded-xl mt-6 hover:bg-gray-200 transition-colors">
-                    Entendido
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="fixed inset-0 bg-black/60 z-[80] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeCartModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-6 border-b border-gray-100 flex items-center gap-3">
-                <div class="bg-brand-teal/10 p-2 rounded-full text-brand-teal">
-                    <i class="fas fa-shopping-cart text-xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800">Tu Carrito</h3>
-            </div>
-            <div id="cart-items" class="p-6 overflow-y-auto flex-grow space-y-4">
-                <div class="text-center text-gray-400 py-8">
-                    <i class="fas fa-shopping-basket text-4xl mb-2 opacity-50"></i>
-                    <p>Tu carrito está vacío</p>
-                </div>
-            </div>
-            <div class="p-6 bg-gray-50 border-t border-gray-200">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="font-bold text-gray-600">Total a Pagar:</span>
-                    <span id="cart-total" class="font-extrabold text-2xl text-brand-teal">$0</span>
-                </div>
-                <button onclick="checkoutWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-colors flex justify-center items-center gap-2 shadow-lg shadow-green-200 transform active:scale-95">
-                    <i class="fab fa-whatsapp text-xl"></i> Finalizar Compra
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="fixed inset-0 bg-black/60 z-[90] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-8">
-                <div class="text-center mb-6">
-                    <div class="inline-block p-3 bg-brand-orange/10 rounded-full text-brand-orange text-3xl shadow-sm mb-2">
-                        <i class="fas fa-paw"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800">Acceso Refugios</h3>
-                    <p class="text-gray-500 text-sm mt-1">Administra tu base de datos de rescatados.</p>
-                </div>
-                <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Correo Electrónico</label>
-                        <input type="email" value="refugio@valpo.cl" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-orange bg-gray-50">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Contraseña</label>
-                        <input type="password" value="123456" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-orange bg-gray-50">
-                    </div>
-                    <button type="submit" class="w-full bg-brand-dark text-white font-bold py-3 rounded-xl mt-2 hover:bg-gray-800 shadow-lg transition-all transform active:scale-95">
-                        Ingresar a la Base de Datos
-                    </button>
-                    <p class="text-xs text-center text-gray-400 mt-4">¿Eres un refugio nuevo? <a href="#" onclick="openRegisterModal(); return false;" class="text-brand-orange font-bold hover:underline">Crea tu cuenta aquí</a></p>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div id="register-modal" class="fixed inset-0 bg-black/60 z-[95] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeRegisterModal()" class="absolute top-4 right-4 bg-gray-100 p-2 rounded-full hover:bg-gray-200 z-10 transition-colors">
-                <i class="fas fa-times text-gray-600"></i>
-            </button>
-            <div class="p-8">
-                <div class="text-center mb-6">
-                    <div class="inline-block p-3 bg-brand-teal/10 rounded-full text-brand-teal text-3xl shadow-sm mb-2">
-                        <i class="fas fa-clipboard-check"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800">Registro de Rescatistas</h3>
-                    <p class="text-gray-500 text-sm mt-1">Por la seguridad de los peludos, verificamos cada cuenta.</p>
-                </div>
-                <form onsubmit="handleRegisterSubmit(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Nombre del Refugio</label>
-                            <input type="text" placeholder="Ej: Patitas Puerto" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Tu Nombre</label>
-                            <input type="text" placeholder="Juan Pérez" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Correo Electrónico</label>
-                            <input type="email" placeholder="contacto@..." required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Contraseña</label>
-                            <input type="password" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-teal bg-gray-50">
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-100 pt-4 mt-2">
-                        <h4 class="font-bold text-gray-700 text-sm mb-3"><i class="fas fa-shield-alt text-brand-orange mr-1"></i> Verificación de Labor</h4>
-                        
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Link de Red Social (Instagram/Facebook)</label>
-                                <input type="url" placeholder="https://instagram.com/tu_refugio" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-orange bg-gray-50">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Cuéntanos sobre tu labor en Valparaíso</label>
-                                <textarea rows="2" placeholder="¿Dónde operas? ¿Cuántos rescatados tienes actualmente?" required class="w-full border-2 border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-orange bg-gray-50 resize-none"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full bg-brand-teal text-white font-bold py-3 rounded-xl mt-4 hover:bg-teal-600 shadow-lg transition-all transform active:scale-95">
-                        Enviar Solicitud de Registro
-                    </button>
-                    <p class="text-[10px] text-center text-gray-400 mt-2 leading-tight">Revisaremos tu solicitud manualmente para proteger a los animales. Te enviaremos un correo de activación en 24-48 hrs.</p>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Dashboard Modal -->
-    <div id="admin-modal" class="fixed inset-0 bg-black/60 z-[90] hidden flex items-center justify-center p-2 sm:p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-gray-50 rounded-3xl max-w-6xl w-full h-[95vh] flex flex-col shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden">
-            
-            <!-- Header -->
-            <div class="bg-white p-4 sm:p-6 border-b border-gray-200 flex justify-between items-center z-10 shadow-sm shrink-0">
-                <div class="flex items-center gap-3">
-                    <div class="bg-brand-dark text-white p-2 rounded-lg"><i class="fas fa-database"></i></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800">Panel de Administración</h3>
-                        <p class="text-xs text-gray-500">Refugio Valparaíso</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="closeAdminModal()" class="text-sm font-bold text-gray-500 hover:text-red-500 bg-gray-100 hover:bg-red-50 px-4 py-2 rounded-lg transition-colors">
-                        Cerrar Sesión
-                    </button>
-                </div>
-            </div>
-
-            <!-- Body -->
-            <div class="flex-grow overflow-hidden flex flex-col md:flex-row">
-                
-                <!-- Left Col: List of Pets -->
-                <div class="w-full md:w-2/3 h-1/2 md:h-full overflow-y-auto p-4 sm:p-6 border-b md:border-b-0 md:border-r border-gray-200">
-                    <h4 class="font-bold text-gray-700 mb-4 flex items-center justify-between">
-                        <span>Base de Datos: Tus Rescatados</span>
-                        <span class="bg-brand-teal text-white text-xs px-2 py-1 rounded-full" id="admin-pet-count">0</span>
-                    </h4>
-                    <div class="space-y-3" id="admin-pet-list">
-                        <!-- Pets injected via JS -->
-                    </div>
-                </div>
-
-                <!-- Right Col: Add New Pet Form -->
-                <div class="w-full md:w-1/3 h-1/2 md:h-full overflow-y-auto p-4 sm:p-6 bg-white">
-                    <h4 class="font-bold text-gray-700 mb-4"><i class="fas fa-plus-circle text-brand-orange mr-1"></i> Ingresar Nuevo Rescatado</h4>
-                    <form onsubmit="handleNewPet(event)" class="space-y-4">
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Nombre</label>
-                            <input type="text" id="new-pet-name" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Especie</label>
-                                <select id="new-pet-type" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                                    <option value="dog">Perro</option>
-                                    <option value="cat">Gato</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Sexo</label>
-                                <select id="new-pet-gender" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                                    <option value="Macho">Macho</option>
-                                    <option value="Hembra">Hembra</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Edad (Ej: 2 meses)</label>
-                                <input type="text" id="new-pet-age" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Tamaño</label>
-                                <select id="new-pet-size" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                                    <option value="Pequeño">Pequeño</option>
-                                    <option value="Mediano">Mediano</option>
-                                    <option value="Grande">Grande</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">URL de Imagen</label>
-                            <input type="url" id="new-pet-img" placeholder="https://..." required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 mb-1 uppercase">Breve Descripción</label>
-                            <textarea id="new-pet-desc" rows="2" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-orange resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-brand-orange text-white font-bold py-3 rounded-xl mt-2 hover:bg-orange-600 shadow-md transition-all active:scale-95 text-sm">
-                            <i class="fas fa-save mr-1"></i> Guardar en Base de Datos
-                        </button>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script>
-        // ==========================================
-        // 📁 CONFIGURACIÓN CENTRAL DE IMÁGENES
-        // Cambia los enlaces aquí para actualizar las fotos de todo el sitio
-        // ==========================================
-        const SITE_IMAGES = {
-            // 1. Portada Principal Inicio
-            hero: "images/portada_principal.jpeg", 
-            
-            // 2. Sección Nuestros Rescatados
-            pets: {
-                lobito: "images/lobito.jpeg",
-                liah: "images/liah.jpeg",
-                doddy: "images/doddy.jpeg",
-                ragnar: "images/ragnar.jpeg",
-                rolo: "images/rolo.jpeg",
-                amanda: "images/amanda.jpeg",
-                grumo: "images/Grumo.jpeg",
-                rocky: "images/Rocky.jpeg"
-            },
-
-            // 3. Productos de la Tienda
-            shop: {
-                packPedigree: "images/tienda_pedigree1.jpg",
-                arnes: "images/tienda_arnes2.jpg",
-                plato: "images/tienda_plato3.jpg",
-                packDogChow: "images/tienda_dogchow4.jpg",
-                kitSalud: "images/tienda_kitsalud5.jpg",
-                cama: "images/tienda_cama6.jpg"
-            },
-
-            // 4. Testimonios 
-            testimonials: {
-                carlaAraya: "images/testimonio_carla.JPEG",
-                ignacioG: "images/testimonio_diego.jpeg",
-                valentinaP: "images/testimonio_valentina.jpeg",
-                donCarlos: "images/testimonio_doncarlos.jpg",
-                johannaEspinoza: "images/testimonio_johanna.jpg"
-            },
-
-            // 5. Imagen de respaldo 
-            fallback: "images/placeholder.jpeg"
-        };
-
-        // --- Carga Inicial de Imágenes Estáticas ---
-        document.addEventListener('DOMContentLoaded', () => { 
-            // Cargar imagen de portada
-            const heroImg = document.getElementById('hero-main-img');
-            if(heroImg) heroImg.src = SITE_IMAGES.hero;
-
-            // Cargar imágenes de testimonios
-            document.querySelectorAll('[data-testimonio]').forEach(img => {
-                const key = img.dataset.testimonio;
-                if(SITE_IMAGES.testimonials[key]) {
-                    img.src = SITE_IMAGES.testimonials[key];
-                }
-            });
-
-            // Inicializar grillas
-            renderPets(); 
-            renderProducts(); 
-        });
-
-        // --- Shopping Cart Logic ---
-        let cart = [];
-
-        // BASE DE DATOS DE PRODUCTOS (TIENDA) - Usando el diccionario central
-        const products = [
-            { id: 1, name: "Alimento Pedigree 10kg", priceInt: 15990, price: "$15.990", img: SITE_IMAGES.shop.packPedigree, desc: "Saco de 10kg de alimento balanceado para perro adulto. Sabor carne." },
-            { id: 2, name: "Arnés de Seguridad", priceInt: 8990, price: "$8.990", img: SITE_IMAGES.shop.arnes, desc: "Arnés acolchado y reflectante. Ideal para paseos cómodos y seguros." },
-            { id: 3, name: "Plato Acero Inoxidable", priceInt: 3990, price: "$3.990", img: SITE_IMAGES.shop.plato, desc: "Plato resistente, antideslizante y fácil de limpiar para agua o comida." },
-            { id: 4, name: "Alimento Dog Chow 15kg", priceInt: 18990, price: "$18.990", img: SITE_IMAGES.shop.packDogChow, desc: "Saco de 15kg con extra calcio para una nutrición completa y balanceada." },
-            { id: 5, name: "Kit Desparasitario", priceInt: 12990, price: "$12.990", img: SITE_IMAGES.shop.kitSalud, desc: "Incluye desparasitario interno y pipeta externa de protección prolongada." },
-            { id: 6, name: "Cama Acolchada Premium", priceInt: 22990, price: "$22.990", img: SITE_IMAGES.shop.cama, desc: "Cama suave y térmica, perfecta para mantener a tu mascota calentita en invierno." }
-        ];
-
-        function addToCart(id) {
-            const prod = products.find(p => p.id === id);
-            if(prod) {
-                cart.push(prod);
-                updateCartUI();
-                const btn = event.currentTarget;
-                const originalContent = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i> Agregado';
-                btn.classList.add('bg-green-500', 'border-green-500', 'text-white');
-                btn.classList.remove('text-brand-teal', 'border-brand-teal');
-                setTimeout(() => {
-                    btn.innerHTML = originalContent;
-                    btn.classList.remove('bg-green-500', 'border-green-500', 'text-white');
-                    btn.classList.add('text-brand-teal', 'border-brand-teal');
-                }, 1500);
-            }
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-            renderCartItems();
-        }
-
-        function updateCartUI() {
-            const desktopBadge = document.getElementById('cart-count-desktop');
-            const mobileBadge = document.getElementById('cart-count-mobile');
-            if(cart.length > 0) {
-                desktopBadge.classList.remove('hidden');
-                mobileBadge.classList.remove('hidden');
-                desktopBadge.textContent = cart.length;
-                mobileBadge.textContent = cart.length;
-                desktopBadge.classList.add('animate-bounce-short');
-                setTimeout(() => desktopBadge.classList.remove('animate-bounce-short'), 300);
-            } else {
-                desktopBadge.classList.add('hidden');
-                mobileBadge.classList.add('hidden');
-            }
-        }
-
-        function renderCartItems() {
-            const container = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-            if(cart.length === 0) {
-                container.innerHTML = `<div class="text-center text-gray-400 py-8"><i class="fas fa-shopping-basket text-4xl mb-2 opacity-50"></i><p>Tu carrito está vacío</p></div>`;
-                totalEl.textContent = "$0";
-                return;
-            }
-            let html = '';
-            let total = 0;
-            cart.forEach((item, index) => {
-                total += item.priceInt;
-                html += `
-                    <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                        <img src="${item.img}" class="w-16 h-16 rounded-lg object-cover">
-                        <div class="flex-grow">
-                            <h5 class="font-bold text-gray-800 text-sm">${item.name}</h5>
-                            <p class="text-brand-teal font-bold text-sm">${item.price}</p>
-                        </div>
-                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 p-2"><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-            totalEl.textContent = "$" + total.toLocaleString('es-CL');
-        }
-
-        function openCartModal() {
-            const modal = document.getElementById('cart-modal');
-            renderCartItems();
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('div').classList.remove('scale-95');
-                modal.querySelector('div').classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeCartModal() {
-            const modal = document.getElementById('cart-modal');
-            modal.classList.add('opacity-0');
-            modal.querySelector('div').classList.remove('scale-100');
-            modal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); }, 300);
-        }
-
-        function checkoutWhatsApp() {
-            if(cart.length === 0) return;
-            let message = "Hola! Quiero comprar en la Tienda:%0A";
-            let total = 0;
-            cart.forEach(item => {
-                message += `- ${item.name} (${item.price})%0A`;
-                total += item.priceInt;
-            });
-            message += `%0ATotal: $${total.toLocaleString('es-CL')}`;
-            window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
-            cart = [];
-            updateCartUI();
-            closeCartModal();
-        }
-
-        function renderProducts() {
-            const grid = document.getElementById('shop-grid');
-            if(!grid) return;
-            grid.innerHTML = '';
-            products.forEach(prod => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)] transition-all duration-300 group hover:-translate-y-2 border-2 border-transparent hover:border-brand-orange/20 flex flex-col';
-                card.innerHTML = `
-                    <div class="relative h-56 overflow-hidden p-3 bg-white">
-                        <img src="${prod.img}" class="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105" onerror="this.src=SITE_IMAGES.fallback">
-                        <div class="absolute top-5 right-5 bg-white/90 backdrop-blur text-brand-orange w-8 h-8 rounded-full shadow-md flex items-center justify-center">
-                           <i class="fas fa-heart text-[10px]"></i>
-                        </div>
-                        <div class="absolute bottom-6 left-6 bg-brand-teal text-white px-3 py-1 rounded-lg text-sm font-black shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                            ${prod.price}
-                        </div>
-                    </div>
-                    <div class="p-6 pt-2 flex-grow flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2 gap-2">
-                                <h4 class="font-bold text-gray-800 text-lg leading-tight">${prod.name}</h4>
-                                <span class="bg-orange-50 text-brand-orange px-2 py-1 rounded-md text-sm font-bold group-hover:opacity-0 transition-opacity duration-300">${prod.price}</span>
-                            </div>
-                            <p class="text-gray-500 text-sm mb-5 leading-relaxed">${prod.desc}</p>
-                        </div>
-                        <button onclick="addToCart(${prod.id})" class="w-full border-2 border-brand-teal text-brand-teal font-bold py-3 rounded-xl hover:bg-brand-teal hover:text-white transition-all duration-300 text-sm flex items-center justify-center gap-2 group/btn">
-                            Añadir al Carrito <i class="fas fa-cart-plus group-hover/btn:scale-110 transition-transform"></i>
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-        
-        let pets = [
-            { id: 1, name: "Lobito", type: "dog", breed: "Mestizo Chileno", age: "9 años", gender: "Macho", size: "Grande", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "El clásico negrito fiel. Fue rescatado cerca de la Municipalidad de Valparaíso.", story: "Su tutor falleció y quedó en la calle, vagando por las calles enfermito y siempre tan cariñoso con sus vecinos", img: SITE_IMAGES.pets.lobito },
-            { id: 2, name: "Liah", type: "dog", breed: "Mestiza", age: "2 años", gender: "Hembra", size: "Mediano", status: "Hogar Temporal", energyLevel: "low", idealSpace: "apartment", desc: "Es miedosa, nerviosa pero muy amorosa. Su vida fue difícil porque la tenían de incubadora, pero ahora está hermosa y solo necesita pollito.", story: "Su vida fue difícil porque la tenían de incubadora, pero ahora está hermosa y solo necesita pollito.", img: SITE_IMAGES.pets.liah },
-            { id: 3, name: "Doddy", type: "dog", breed: "Poodle Toy", age: "12 años", gender: "Macho", size: "Pequeño", status: "Refugio", energyLevel: "low", idealSpace: "apartment", desc: "Un abuelito muy regalón. Le encanta dormir en la cama y estar calientito.", story: "Doddy llegó a nosotros tras el fallecimiento de su dueña, una señora mayor que lo adoraba.", img: SITE_IMAGES.pets.doddy },
-            { id: 4, name: "Ragnar", type: "cat", breed: "Felis Silvestris Catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "Hogar Temporal", energyLevel: "high", idealSpace: "apartment", desc: "Ragnar es pura curiosidad. Le encanta mirar por la ventana aunque asustadizo.", story: "Ragnar y Rolo fueron encontrados en una caja junto a sus otros 6 hermanitos.", img: SITE_IMAGES.pets.ragnar },
-            { id: 5, name: "Rolo", type: "cat", breed: "Felis silvestris catus", age: "2 años", gender: "Macho", size: "Pequeño", status: "En Recuperación", energyLevel: "low", idealSpace: "apartment", desc: "Rolo es un gato joven lleno de energía. Necesita paciencia y cariño mientras termina su recuperación.", story: "Al igual que su hermano Ragnar, Rolo fue rescatado de una caja húmeda.", img: SITE_IMAGES.pets.rolo },
-            { id: 6, name: "Amanda", type: "dog", breed: "Mestiza", age: "2 años", gender: "Hembra", size: "Mediano", status: "Refugio", energyLevel: "medium", idealSpace: "apartment", desc: "Amanda es un poco tímida al principio, típico de perrita de calle que ha sufrido.", story: "Nació en los cerros altos, en una camada que nadie quería.", img: SITE_IMAGES.pets.amanda },
-            { id: 8, name: "Grumo", type: "dog", breed: "Mestiza", age: "2 meses", gender: "Hembra", size: "Pequeño", status: "Caso Externo", energyLevel: "high", idealSpace: "house", desc: "Grumo es una cachorra súper despierta e inteligente. Está lista para ser tu compañera de aventuras.", story: "Estaba en un patio sin cuidados. A pesar de todo, es una cachorrita feliz que busca una familia responsable.", img: SITE_IMAGES.pets.grumo },
-            { id: 9, name: "Rocky", type: "dog", breed: "Mestizo", age: "5 años", gender: "Macho", size: "Mediano", status: "Refugio", energyLevel: "medium", idealSpace: "house", desc: "Rocky es muy juguetón y cariñoso. Le encanta buscar la pelota y dar abrazos.", story: "Fue rescatado en Playa Ancha. A pesar de su pasado, ha vuelto a confiar plenamente en las personas.", img: SITE_IMAGES.pets.rocky }
-        ];
-
-        function renderPets(filter = 'all') {
-            const grid = document.getElementById('pets-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            
-            // Copiamos el array para no mutarlo al hacer sort
-            let filteredPets = filter === 'all' ? [...pets] : pets.filter(pet => pet.type === filter);
-            
-            // ORDENAR: Animales NO adoptados van primero, Adoptados al final
-            filteredPets.sort((a, b) => {
-                const aAdoptado = a.status === 'Adoptado';
-                const bAdoptado = b.status === 'Adoptado';
-                if (aAdoptado && !bAdoptado) return 1;
-                if (!aAdoptado && bAdoptado) return -1;
-                return 0;
-            });
-            
-            // Render Pets
-            filteredPets.forEach(pet => {
-                const card = document.createElement('div');
-                let genderColorClass = (pet.gender === "Hembra") ? "bg-pink-100 text-pink-600" : "bg-blue-100 text-blue-600";
-                let genderIconClass = (pet.gender === "Hembra") ? "fa-venus" : "fa-mars";
-                
-                // Si está adoptado, creamos un letrero especial por encima
-                let adoptedOverlay = pet.status === 'Adoptado' ? `
-                    <div class="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-20 flex items-center justify-center pointer-events-none rounded-2xl">
-                        <div class="bg-green-500 text-white font-black px-6 py-3 rounded-2xl transform -rotate-12 shadow-2xl border-4 border-white text-xl md:text-2xl tracking-widest uppercase">
-                            ¡Adoptado!
-                        </div>
-                    </div>
-                ` : '';
-
-                // El botón cambia si ya fue adoptado
-                let actionButton = pet.status === 'Adoptado' ? 
-                    `<button class="w-full py-2 border-2 border-gray-300 text-gray-400 font-bold rounded-lg bg-gray-50 cursor-default">Familia Encontrada <i class="fas fa-heart text-red-400"></i></button>` :
-                    `<button onclick="openModal(${pet.id})" class="w-full py-2 border-2 border-brand-teal text-brand-teal font-bold rounded-lg hover:bg-brand-teal hover:text-white transition-colors">Conóceme</button>`;
-
-                card.className = 'bg-white rounded-2xl overflow-hidden shadow-md card-hover group h-full flex flex-col relative';
-                card.innerHTML = `
-                    ${adoptedOverlay}
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="${pet.img}" alt="${pet.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src=SITE_IMAGES.fallback">
-                        <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent">
-                            <h3 class="text-white text-2xl font-bold">${pet.name}</h3>
-                            <p class="text-white/90 text-sm"><i class="fas fa-${pet.type === 'dog' ? 'dog' : 'cat'} mr-1"></i> ${pet.breed}</p>
-                        </div>
-                        <button onclick="openModal(${pet.id})" class="absolute top-3 right-3 bg-white/90 hover:bg-white text-brand-orange p-2 rounded-full shadow-lg transition-colors"><i class="fas fa-heart"></i></button>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-between">
-                        <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
-                            <span class="bg-gray-100 px-2 py-1 rounded-md"><i class="far fa-clock mr-1"></i> ${pet.age}</span>
-                            <span class="${genderColorClass} px-2 py-1 rounded-md font-bold"><i class="fas ${genderIconClass} mr-1"></i> ${pet.gender}</span>
-                        </div>
-                        <p class="text-gray-600 line-clamp-2 mb-4 text-sm">${pet.desc}</p>
-                        ${actionButton}
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function filterPets(type) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                if(btn.dataset.filter === type) {
-                    btn.classList.add('bg-brand-orange', 'text-white');
-                    btn.classList.remove('text-brand-orange', 'hover:bg-brand-orange');
-                } else {
-                    btn.classList.remove('bg-brand-orange', 'text-white');
-                    btn.classList.add('text-brand-orange', 'hover:bg-brand-orange');
-                }
-            });
-            renderPets(type);
-        }
-
-        // --- Handle Contact Submit inside grid ---
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const original = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Enviado';
-            btn.classList.remove('bg-brand-orange');
-            btn.classList.add('bg-green-500');
-            setTimeout(() => {
-                btn.innerHTML = original;
-                btn.classList.add('bg-brand-orange');
-                btn.classList.remove('bg-green-500');
-                e.target.reset();
-                showToast(); // Reuse existing toast logic
-            }, 2000);
-        }
-
-        // --- Process Modal Logic ---
-        const processModal = document.getElementById('process-modal');
-        function openProcessModal() {
-            if (!processModal) return;
-            processModal.classList.remove('hidden');
-            setTimeout(() => {
-                processModal.classList.remove('opacity-0');
-                processModal.querySelector('div').classList.remove('scale-95');
-                processModal.querySelector('div').classList.add('scale-100');
-            }, 10);
-        }
-        function closeProcessModal() {
-            if (!processModal) return;
-            processModal.classList.add('opacity-0');
-            processModal.querySelector('div').classList.remove('scale-100');
-            processModal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => { processModal.classList.add('hidden'); }, 300);
-        }
-        processModal?.addEventListener('click', (e) => { if (e.target === processModal) closeProcessModal(); });
-
-        // --- Pet Modal Logic ---
-        const modal = document.getElementById('pet-modal');
-        const modalContent = modal?.querySelector('div');
-
-        function openModal(id) {
-            const pet = pets.find(p => p.id === id);
-            if(!pet || !modal) return;
-            
-            const setSafe = (id, val) => {
-                const el = document.getElementById(id);
-                if(el) el.textContent = val;
-            };
-            const setSrc = (id, val) => {
-                const el = document.getElementById(id);
-                if(el) el.src = val;
-            }
-
-            setSrc('modal-img', pet.img);
-            setSafe('modal-name', pet.name);
-            setSafe('modal-breed', pet.breed);
-            setSafe('modal-age', pet.age);
-            
-            const genderBadge = document.getElementById('modal-gender');
-            if (genderBadge) {
-                if (pet.gender === "Hembra") {
-                    genderBadge.className = "bg-pink-100 text-pink-600 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide";
-                    genderBadge.innerHTML = '<i class="fas fa-venus mr-1"></i> Hembra';
-                } else {
-                    genderBadge.className = "bg-blue-100 text-blue-600 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide";
-                    genderBadge.innerHTML = '<i class="fas fa-mars mr-1"></i> Macho';
-                }
-            }
-
-            const statusBadge = document.getElementById('modal-status');
-            if (statusBadge) {
-                statusBadge.textContent = pet.status;
-                if(pet.status === 'Refugio') statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-purple-200 bg-purple-50 text-purple-600";
-                else if (pet.status === 'Hogar Temporal') statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-orange-200 bg-orange-50 text-brand-orange";
-                else if (pet.status === 'En Recuperación') statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-red-200 bg-red-50 text-red-600";
-                else statusBadge.className = "px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-gray-200 bg-gray-50 text-gray-600";
-            }
-
-            setSafe('modal-size', pet.size);
-            setSafe('modal-desc', pet.desc);
-            
-            const storyDiv = document.getElementById('modal-story');
-            if (storyDiv) {
-                storyDiv.textContent = pet.story;
-                storyDiv.classList.add('hidden');
-            }
-            
-            const btnStory = document.getElementById('btn-story');
-            if (btnStory) {
-                 const icon = btnStory.querySelector('i');
-                 if(icon) icon.className = "fas fa-book-reader";
-            }
-
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modalContent?.classList.remove('scale-95');
-                modalContent?.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeModal() {
-            if (!modal) return;
-            modal.classList.add('opacity-0');
-            modalContent?.classList.remove('scale-100');
-            modalContent?.classList.add('scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); }, 300);
-        }
-        
-        function toggleStory() {
-            const storyDiv = document.getElementById('modal-story');
-            const btnIcon = document.getElementById('btn-story')?.querySelector('i');
-            
-            if (storyDiv) {
-                storyDiv.classList.toggle('hidden');
-                if (btnIcon) {
-                    if (!storyDiv.classList.contains('hidden')) {
-                        btnIcon.className = "fas fa-chevron-up";
-                    } else {
-                        btnIcon.className = "fas fa-book-reader";
-                    }
-                }
-            }
-        }
-
-        modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-        function handleAdoptionSubmit(e) {
-            e.preventDefault();
-            closeModal();
-            showToast();
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            if (!toast) return;
-            toast.classList.remove('translate-x-full');
-            setTimeout(() => { toast.classList.add('translate-x-full'); }, 3000);
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu')?.classList.toggle('hidden');
-        }
-
-        // --- Toggle Info Sidebar Logic (MODIFICADO) ---
-        function toggleInfoSidebar() {
-            const sidebar = document.getElementById('info-sidebar');
-            // 'translate-x-full' hides it to the right. Removing it shows it.
-            sidebar.classList.toggle('translate-x-full');
-        }
-
-        // --- Adoption Form Modal Logic ---
-        const adoptionFormModal = document.getElementById('adoption-form-modal');
-        const adoptionFormContent = adoptionFormModal?.querySelector('div');
-
-        function openAdoptionForm() {
-            if (!adoptionFormModal) return;
-            adoptionFormModal.classList.remove('hidden');
-            setTimeout(() => {
-                adoptionFormModal.classList.remove('opacity-0');
-                adoptionFormContent?.classList.remove('scale-95');
-                adoptionFormContent?.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeAdoptionForm() {
-            if (!adoptionFormModal) return;
-            adoptionFormModal.classList.add('opacity-0');
-            adoptionFormContent?.classList.remove('scale-100');
-            adoptionFormContent?.classList.add('scale-95');
-            setTimeout(() => { adoptionFormModal.classList.add('hidden'); }, 300);
-        }
-
-        function handleFullAdoptionSubmit(e) {
-            e.preventDefault();
-            closeAdoptionForm();
-            showToast();
-        }
-
-        adoptionFormModal?.addEventListener('click', (e) => { if (e.target === adoptionFormModal) closeAdoptionForm(); });
-
-        // --- Matchmaking Modal Logic ---
-        const matchModal = document.getElementById('match-modal');
-        const matchContent = matchModal?.querySelector('div');
-
-        function openMatchModal() {
-            if (!matchModal) return;
-            // Reset form UI
-            document.getElementById('match-results').classList.add('hidden');
-            document.getElementById('match-form').classList.remove('hidden');
-            
-            matchModal.classList.remove('hidden');
-            setTimeout(() => {
-                matchModal.classList.remove('opacity-0');
-                matchContent?.classList.remove('scale-95');
-                matchContent?.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeMatchModal() {
-            if (!matchModal) return;
-            matchModal.classList.add('opacity-0');
-            matchContent?.classList.remove('scale-100');
-            matchContent?.classList.add('scale-95');
-            setTimeout(() => { matchModal.classList.add('hidden'); }, 300);
-        }
-
-        function handleMatchSubmit(e) {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const type = formData.get('match_type');
-            const energy = formData.get('match_energy');
-            const space = formData.get('match_space');
-
-            // Algorithm
-            const matches = pets.filter(pet => {
-                // FILTRO ESTRICTO: Si se elige un tipo específico y no coincide, se descarta inmediatamente.
-                if (type !== 'any' && pet.type !== type) return false;
-
-                let score = 0;
-                
-                // Energy match
-                if (pet.energyLevel === energy) score += 2;
-                else if (
-                    (energy === 'medium' && (pet.energyLevel === 'low' || pet.energyLevel === 'high')) || 
-                    (energy === 'high' && pet.energyLevel === 'medium') ||
-                    (energy === 'low' && pet.energyLevel === 'medium')
-                ) score += 1;
-
-                // Space match
-                if (space === 'parcel') score += 1; // parcel fits all
-                else if (space === 'house' && (pet.idealSpace === 'house' || pet.idealSpace === 'apartment')) score += 1;
-                else if (space === 'apartment' && pet.idealSpace === 'apartment') score += 1;
-                else if (space === 'apartment' && pet.idealSpace === 'house') score -= 1; // not ideal
-
-                // Threshold: Al haber filtrado estrictamente por tipo, bajamos el umbral
-                // para mostrar resultados compatibles en energía/espacio.
-                return score >= 1; 
-            }).sort((a, b) => 0.5 - Math.random()); // Shuffle slightly
-
-            displayMatches(matches);
-        }
-
-        function displayMatches(results) {
-            const list = document.getElementById('match-list');
-            list.innerHTML = '';
-            
-            if (results.length === 0) {
-                list.innerHTML = '<p class="text-gray-500">No encontramos un match exacto, ¡pero revisa nuestra galería completa!</p>';
-            } else {
-                results.slice(0, 2).forEach(pet => {
-                    const item = document.createElement('div');
-                    item.className = "flex items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-100 hover:border-brand-orange transition-colors cursor-pointer";
-                    item.onclick = () => { closeMatchModal(); openModal(pet.id); };
-                    item.innerHTML = `
-                        <img src="${pet.img}" class="w-12 h-12 rounded-full object-cover">
-                        <div class="text-left">
-                            <h5 class="font-bold text-gray-800">${pet.name}</h5>
-                            <p class="text-xs text-gray-500">${pet.breed}</p>
-                        </div>
-                        <i class="fas fa-chevron-right ml-auto text-gray-300"></i>
-                    `;
-                    list.appendChild(item);
-                });
-            }
-
-            document.getElementById('match-form').classList.add('hidden');
-            document.getElementById('match-results').classList.remove('hidden');
-        }
-
-        function resetMatchForm() {
-            document.getElementById('match-form').reset();
-            document.getElementById('match-results').classList.add('hidden');
-            document.getElementById('match-form').classList.remove('hidden');
-        }
-
-        matchModal?.addEventListener('click', (e) => { if (e.target === matchModal) closeMatchModal(); });
-
-        // --- Donation Modal Logic ---
-        const donationModal = document.getElementById('donation-modal');
-        const donationContent = donationModal?.querySelector('div');
-
-        function openDonationModal() {
-            if (!donationModal) return;
-            donationModal.classList.remove('hidden');
-            setTimeout(() => {
-                donationModal.classList.remove('opacity-0');
-                donationContent?.classList.remove('scale-95');
-                donationContent?.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeDonationModal() {
-            if (!donationModal) return;
-            donationModal.classList.add('opacity-0');
-            donationContent?.classList.remove('scale-100');
-            donationContent?.classList.add('scale-95');
-            setTimeout(() => { donationModal.classList.add('hidden'); }, 300);
-        }
-
-        function setDonationType(type) {
-            const btnUnique = document.getElementById('btn-unique');
-            const btnMonthly = document.getElementById('btn-monthly');
-            const text = document.getElementById('donation-text');
-            if (type === 'unique') {
-                btnUnique.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-brand-teal shadow-sm transition-all";
-                btnMonthly.className = "flex-1 py-2 text-sm font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all";
-                text.textContent = "Selecciona un monto único:";
-            } else {
-                btnMonthly.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-brand-teal shadow-sm transition-all";
-                btnUnique.className = "flex-1 py-2 text-sm font-bold rounded-lg text-gray-500 hover:text-gray-700 transition-all";
-                text.textContent = "Selecciona tu aporte mensual:";
-            }
-        }
-
-        function selectAmount(btn) {
-            document.querySelectorAll('.amount-btn').forEach(b => {
-                b.classList.remove('bg-brand-teal', 'text-white', 'border-brand-teal');
-                b.classList.add('text-brand-teal', 'border-brand-teal/30');
-            });
-            btn.classList.remove('text-brand-teal', 'border-brand-teal/30');
-            btn.classList.add('bg-brand-teal', 'text-white', 'border-brand-teal');
-        }
-
-        donationModal?.addEventListener('click', (e) => { if (e.target === donationModal) closeDonationModal(); });
-        
-        // --- Foster Modal Logic ---
-        const fosterModal = document.getElementById('foster-modal');
-        const fosterContent = fosterModal?.querySelector('div');
-
-        function openFosterModal() {
-            if (!fosterModal) return;
-            fosterModal.classList.remove('hidden');
-            setTimeout(() => {
-                fosterModal.classList.remove('opacity-0');
-                fosterContent?.classList.remove('scale-95');
-                fosterContent?.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeFosterModal() {
-            if (!fosterModal) return;
-            fosterModal.classList.add('opacity-0');
-            fosterContent?.classList.remove('scale-100');
-            fosterContent?.classList.add('scale-95');
-            setTimeout(() => { fosterModal.classList.add('hidden'); }, 300);
-        }
-        
-        function handleFosterSubmit(e) {
-            e.preventDefault();
-            closeFosterModal();
-            showToast();
-        }
-
-        fosterModal?.addEventListener('click', (e) => { if (e.target === fosterModal) closeFosterModal(); });
-
-        // --- Payment Modal Logic ---
-        const paymentModal = document.getElementById('payment-modal');
-        const paymentContent = paymentModal?.querySelector('div');
-
-        function openPaymentModal() {
-            if (!paymentModal) return;
-            paymentModal.classList.remove('hidden');
-            setTimeout(() => {
-                paymentModal.classList.remove('opacity-0');
-                paymentContent?.classList.remove('scale-95');
-                paymentContent?.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closePaymentModal() {
-            if (!paymentModal) return;
-            paymentModal.classList.add('opacity-0');
-            paymentContent?.classList.remove('scale-100');
-            paymentContent?.classList.add('scale-95');
-            setTimeout(() => { paymentModal.classList.add('hidden'); }, 300);
-        }
-
-        function toggleTransferDetails() {
-            const details = document.getElementById('transfer-details');
-            const arrow = document.getElementById('transfer-arrow');
-            details?.classList.toggle('hidden');
-            arrow?.classList.toggle('rotate-180');
-        }
-
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            const icon = event.currentTarget.querySelector('i');
-            if(icon) {
-                icon.className = "fas fa-check text-green-500";
-                setTimeout(() => {
-                    icon.className = "far fa-copy text-gray-400 group-hover:text-brand-teal";
-                }, 1000);
-            }
-        }
-
-        function showToastPayment(msg) {
-            const toast = document.getElementById('toast');
-            if (!toast) return;
-            const toastText = toast.querySelector('h4');
-            const originalText = toastText.textContent;
-            const toastDesc = toast.querySelector('p');
-            const originalDesc = toastDesc.textContent;
-
-            toastText.textContent = "Procesando...";
-            toastDesc.textContent = msg;
-
-            closePaymentModal();
-            toast.classList.remove('translate-x-full');
-            
-            setTimeout(() => {
-                toast.classList.add('translate-x-full');
-                setTimeout(() => {
-                    toastText.textContent = originalText;
-                    toastDesc.textContent = originalDesc;
-                }, 300);
-            }, 3000);
-        }
-
-        paymentModal?.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
-
-
-        // --- Info Modal Logic ---
-        const infoModal = document.getElementById('info-modal');
-        const infoContentDiv = infoModal?.querySelector('div');
-        
-        const infoData = {
-            'mental': {
-                title: "Beneficios de Salud Mental",
-                icon: "fa-heartbeat",
-                colorClass: "bg-red-100 text-red-500",
-                content: `
-                    <p class="mb-2">Tener una mascota es una terapia de amor diaria:</p>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Reduce el estrés:</strong> Acariciar a un perro o gato baja los niveles de cortisol.</li>
-                        <li><strong>Combate la soledad:</strong> Su compañía incondicional nos hace sentir queridos.</li>
-                        <li><strong>Fomenta la rutina:</strong> Te ayudan a estructurar tu día y mantenerte activo.</li>
-                        <li><strong>Aumenta la felicidad:</strong> Jugar con ellos libera oxitocina y serotonina.</li>
-                    </ul>
-                `
-            },
-            'care': {
-                title: "Tips de Cuidado",
-                icon: "fa-book-open",
-                colorClass: "bg-teal-100 text-brand-teal",
-                content: `
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2"><i class="fas fa-walking mt-1 text-brand-teal"></i> <span><strong>Paseos diarios:</strong> Vitales para su salud física y mental.</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-hand-sparkles mt-1 text-brand-teal"></i> <span><strong>Rascar pancita:</strong> ¡La mejor forma de demostrar amor!</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-paw mt-1 text-brand-teal"></i> <span><strong>Patitas suaves:</strong> Echa un poco de aceite de coco en sus almohadillas si están secas.</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-water mt-1 text-brand-teal"></i> <span><strong>Verano fresco:</strong> Moja su guatita con agua fresca en días de calor.</span></li>
-                    </ul>
-                `
-            },
-            'ownership': {
-                title: "Tenencia Responsable",
-                icon: "fa-shield-alt",
-                colorClass: "bg-yellow-100 text-yellow-600",
-                content: `
-                    <p class="mb-2">Ser dueño responsable significa:</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-yellow-500"></i> <span><strong>Esterilizar:</strong> Es un acto de amor que previene el abandono.</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-syringe mt-1 text-yellow-500"></i> <span><strong>Vacunas al día:</strong> Protégelo de enfermedades mortales.</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-cut mt-1 text-yellow-500"></i> <span><strong>Higiene:</strong> Llévalo a la peluquería o báñalo regularmente.</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-id-card mt-1 text-yellow-500"></i> <span><strong>Registro:</strong> Chip e inscripción en el Registro Nacional.</span></li>
-                    </ul>
-                `
-            }
-        };
-
-        function openInfoModal(type) {
-            const data = infoData[type];
-            if(!data || !infoModal) return;
-
-            document.getElementById('info-title').textContent = data.title;
-            document.getElementById('info-content').innerHTML = data.content;
-            
-            const iconContainer = document.getElementById('info-icon-container');
-            const icon = document.getElementById('info-icon');
-            
-            // Reset classes
-            iconContainer.className = `inline-block p-4 rounded-full mb-4 shadow-sm ${data.colorClass}`;
-            icon.className = `fas ${data.icon} text-3xl`;
-
-            infoModal.classList.remove('hidden');
-            setTimeout(() => {
-                infoModal.classList.remove('opacity-0');
-                infoContentDiv?.classList.remove('scale-95');
-                infoContentDiv?.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeInfoModal() {
-            if (!infoModal) return;
-            infoModal.classList.add('opacity-0');
-            infoContentDiv?.classList.remove('scale-100');
-            infoContentDiv?.classList.add('scale-95');
-            setTimeout(() => { infoModal.classList.add('hidden'); }, 300);
-        }
-
-        infoModal?.addEventListener('click', (e) => { if (e.target === infoModal) closeInfoModal(); });
-
-        // ==========================================
-        // --- AUTH & ADMIN DASHBOARD LOGIC ---
-        // ==========================================
-        
-        const authModal = document.getElementById('auth-modal');
-        const adminModal = document.getElementById('admin-modal');
-        const registerModal = document.getElementById('register-modal');
-
-        function openAuthModal() {
-            authModal.classList.remove('hidden');
-            setTimeout(() => {
-                authModal.classList.remove('opacity-0');
-                authModal.querySelector('div').classList.remove('scale-95');
-                authModal.querySelector('div').classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeAuthModal() {
-            authModal.classList.add('opacity-0');
-            authModal.querySelector('div').classList.remove('scale-100');
-            authModal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => { authModal.classList.add('hidden'); }, 300);
-        }
-
-        function openRegisterModal() {
-            closeAuthModal();
-            registerModal.classList.remove('hidden');
-            setTimeout(() => {
-                registerModal.classList.remove('opacity-0');
-                registerModal.querySelector('div').classList.remove('scale-95');
-                registerModal.querySelector('div').classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeRegisterModal() {
-            registerModal.classList.add('opacity-0');
-            registerModal.querySelector('div').classList.remove('scale-100');
-            registerModal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => { registerModal.classList.add('hidden'); }, 300);
-        }
-
-        function handleRegisterSubmit(e) {
-            e.preventDefault();
-            closeRegisterModal();
-            
-            // Mostrar notificación de éxito personalizada
-            const toast = document.getElementById('toast');
-            const toastTitle = toast.querySelector('h4');
-            const toastDesc = toast.querySelector('p');
-            const originalTitle = toastTitle.textContent;
-            const originalDesc = toastDesc.textContent;
-            
-            toastTitle.textContent = "¡Solicitud Recibida!";
-            toastDesc.textContent = "Revisaremos tus datos y te contactaremos pronto.";
-            toast.classList.remove('translate-x-full');
-            
-            setTimeout(() => { 
-                toast.classList.add('translate-x-full'); 
-                setTimeout(() => {
-                    toastTitle.textContent = originalTitle;
-                    toastDesc.textContent = originalDesc;
-                }, 300);
-            }, 4000);
-        }
-
-        registerModal?.addEventListener('click', (e) => { if (e.target === registerModal) closeRegisterModal(); });
-
-        function handleAuthSubmit(e) {
-            e.preventDefault();
-            closeAuthModal();
-            // Simulamos el inicio de sesión abriendo el panel de control
-            setTimeout(() => {
-                openAdminModal();
-            }, 300);
-        }
-
-        function openAdminModal() {
-            adminModal.classList.remove('hidden');
-            renderAdminPets();
-            setTimeout(() => {
-                adminModal.classList.remove('opacity-0');
-                adminModal.querySelector('div').classList.remove('scale-95');
-                adminModal.querySelector('div').classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeAdminModal() {
-            adminModal.classList.add('opacity-0');
-            adminModal.querySelector('div').classList.remove('scale-100');
-            adminModal.querySelector('div').classList.add('scale-95');
-            setTimeout(() => { adminModal.classList.add('hidden'); }, 300);
-        }
-
-        function renderAdminPets() {
-            const list = document.getElementById('admin-pet-list');
-            const count = document.getElementById('admin-pet-count');
-            list.innerHTML = '';
-            count.textContent = pets.length;
-
-            // Mostramos los animales desde el último ingresado al primero
-            [...pets].reverse().forEach(pet => {
-                const item = document.createElement('div');
-                item.className = "flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm";
-                
-                const isAdopted = pet.status === 'Adoptado';
-                const statusColor = isAdopted ? 'text-green-600 bg-green-50 border-green-200' : 'text-brand-orange bg-orange-50 border-orange-200';
-
-                item.innerHTML = `
-                    <img src="${pet.img}" class="w-12 h-12 rounded-lg object-cover">
-                    <div class="flex-grow">
-                        <h5 class="font-bold text-gray-800 text-sm leading-tight">${pet.name}</h5>
-                        <p class="text-[10px] text-gray-500 uppercase tracking-wide">${pet.type === 'dog' ? 'Perro' : 'Gato'} - ${pet.gender}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <select onchange="updatePetStatus(${pet.id}, this.value)" class="text-xs font-bold px-2 py-1.5 rounded-lg border focus:outline-none ${statusColor} cursor-pointer">
-                            <option value="Refugio" ${pet.status === 'Refugio' ? 'selected' : ''}>Refugio</option>
-                            <option value="Hogar Temporal" ${pet.status === 'Hogar Temporal' ? 'selected' : ''}>Hogar Temporal</option>
-                            <option value="En Recuperación" ${pet.status === 'En Recuperación' ? 'selected' : ''}>En Recuperación</option>
-                            <option value="Adoptado" ${isAdopted ? 'selected' : ''}>¡Adoptado!</option>
-                        </select>
-                        <button onclick="deletePetAdmin(${pet.id})" class="text-gray-400 hover:text-red-500 p-2 transition-colors bg-gray-50 hover:bg-red-50 rounded-lg">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        function updatePetStatus(id, newStatus) {
-            const index = pets.findIndex(p => p.id === id);
-            if (index !== -1) {
-                pets[index].status = newStatus;
-                renderAdminPets(); // Actualizar lista de admin
-                
-                // Re-renderizar galería principal para mostrar el cambio (ej: Letrero ¡Adoptado!)
-                const activeFilterBtn = document.querySelector('.filter-btn.bg-brand-orange');
-                const currentFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
-                renderPets(currentFilter);
-            }
-        }
-
-        function deletePetAdmin(id) {
-            // Eliminación directa en la BD simulada
-            pets = pets.filter(p => p.id !== id);
-            renderAdminPets();
-            
-            // Re-renderizar galería principal
-            const activeFilterBtn = document.querySelector('.filter-btn.bg-brand-orange');
-            const currentFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
-            renderPets(currentFilter);
-        }
-
-        function handleNewPet(e) {
-            e.preventDefault();
-            
-            const newId = pets.length > 0 ? Math.max(...pets.map(p => p.id)) + 1 : 1;
-            const newPet = {
-                id: newId,
-                name: document.getElementById('new-pet-name').value,
-                type: document.getElementById('new-pet-type').value,
-                breed: "Mestizo(a)", 
-                age: document.getElementById('new-pet-age').value,
-                gender: document.getElementById('new-pet-gender').value,
-                size: document.getElementById('new-pet-size').value,
-                status: "Refugio",
-                energyLevel: "medium", 
-                idealSpace: "apartment", 
-                desc: document.getElementById('new-pet-desc').value,
-                story: "Recién ingresado a la base de datos. ¡Buscamos cambiar su destino pronto!",
-                img: document.getElementById('new-pet-img').value
-            };
-
-            pets.push(newPet);
-            e.target.reset(); // Limpiar formulario
-            
-            // Mostrar notificación visual
-            const toast = document.getElementById('toast');
-            const toastTitle = toast.querySelector('h4');
-            const toastDesc = toast.querySelector('p');
-            const originalTitle = toastTitle.textContent;
-            const originalDesc = toastDesc.textContent;
-            
-            toastTitle.textContent = "¡Registrado!";
-            toastDesc.textContent = "Mascota añadida a la base de datos.";
-            toast.classList.remove('translate-x-full');
-            
-            setTimeout(() => { 
-                toast.classList.add('translate-x-full'); 
-                setTimeout(() => {
-                    toastTitle.textContent = originalTitle;
-                    toastDesc.textContent = originalDesc;
-                }, 300);
-            }, 3000);
-
-            renderAdminPets();
-            
-            // Re-renderizar galería principal para mostrar el nuevo animal
-            const activeFilterBtn = document.querySelector('.filter-btn.bg-brand-orange');
-            const currentFilter = activeFilterBtn ? activeFilterBtn.dataset.filter : 'all';
-            renderPets(currentFilter);
-        }
-    </script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default App;
