@@ -47,16 +47,41 @@
             line-height: 1.1;
         }
 
-        /* Estilo de categorías (image_e19e05.png) */
+        /* Botón con margen respetado - Inspirado en image_ed85d7.png */
+        .btn-cta {
+            background-color: #70011B;
+            color: white;
+            padding: 1.25rem 4rem; /* Margen interno amplio para que la letra no toque el borde */
+            border-radius: 9999px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(112, 1, 27, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-cta:hover {
+            background-color: #F472B6;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(244, 114, 182, 0.3);
+        }
+
+        /* Categorías */
         .category-btn {
             background: #fff;
             border: 1px solid #e5e7eb;
             color: #4b5563;
             font-weight: 600;
-            padding: 0.7rem 1.8rem;
+            padding: 0.6rem 1.4rem;
             border-radius: 12px;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 0.05em;
             transition: all 0.3s ease;
         }
@@ -65,10 +90,10 @@
             background-color: #70011B;
             color: white !important;
             border-color: #70011B;
-            box-shadow: 0 8px 20px rgba(112, 1, 27, 0.2);
+            box-shadow: 0 8px 15px rgba(112, 1, 27, 0.15);
         }
 
-        /* Estilo de tarjetas de proyecto (image_e36f61.jpg) */
+        /* Portafolio */
         .reveal-color-img {
             filter: grayscale(100%);
             transition: all 0.6s ease;
@@ -83,49 +108,41 @@
             overflow: hidden;
             background: white;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border: 1px solid #f3f4f6;
+            border: 1px solid #f1f1f1;
         }
 
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.1);
         }
 
-        /* Barra de navegación agrupada */
-        .grouped-bar {
-            display: flex;
-            align-items: center;
-            border: 2px solid white;
-            border-radius: 9999px;
-            padding: 0.5rem 2rem;
-            gap: 2rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        /* Contenedor de servicios derecha (image_e37a28.png) */
-        .services-card-right {
-            background: #1e242f;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2.5rem;
-        }
-
-        /* Corte inclinado */
-        .slant-border {
-            clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
-        }
-
-        /* Tarjetas de especialidades (image_e38281.png) */
+        /* Especialidades - image_e38281.png */
         .spec-card {
-            background: #1A202C;
+            background: #1e242f;
             border-left: 6px solid #70011B;
             border-radius: 0 1.5rem 1.5rem 0;
             transition: all 0.4s ease;
         }
         
         .spec-card:hover {
-            background: #70011B;
+            background: #2D3748;
             transform: translateX(5px);
+        }
+
+        /* Barra de navegación agrupada */
+        .grouped-bar {
+            display: flex;
+            align-items: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            padding: 0.5rem 1.5rem;
+            gap: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .slant-border {
+            clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
         }
 
         ::-webkit-scrollbar { width: 10px; }
@@ -136,87 +153,82 @@
 <body class="antialiased">
 
     <!-- Navegación -->
-    <nav class="fixed top-0 w-full bg-negroGoth/95 text-white z-50 border-b border-cherry/20 py-5 shadow-2xl backdrop-blur-md">
+    <nav class="fixed top-0 w-full bg-negroGoth/95 text-white z-50 border-b border-white/10 py-5 shadow-2xl backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-10 flex items-center justify-between">
             <div class="flex items-center gap-4 group cursor-pointer">
-                <div class="w-12 h-12 bg-cherry rounded-full flex items-center justify-center text-white shadow-lg group-hover:bg-rosado transition-all">
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-cherry shadow-lg group-hover:bg-rosado transition-all">
                     <i data-lucide="heart" fill="currentColor" size="24"></i>
                 </div>
-                <span class="text-2xl font-bold tracking-tighter uppercase">VALENTINA CREA</span>
+                <span class="text-2xl font-bold tracking-tighter uppercase text-white">VALENTINA CREA</span>
             </div>
             
             <div class="hidden md:flex grouped-bar">
-                <a href="#proyectos" class="text-xs font-bold uppercase tracking-widest hover:text-cherry transition-colors">Portafolio</a>
-                <a href="#servicios" class="text-xs font-bold uppercase tracking-widest hover:text-cherry transition-colors">Servicios</a>
-                <a href="#cotizar" class="text-xs font-bold uppercase tracking-widest hover:text-cherry transition-colors">Contacto</a>
+                <a href="#proyectos" class="text-xs font-bold uppercase tracking-widest hover:text-rosado transition-colors text-white">Portafolio</a>
+                <a href="#servicios" class="text-xs font-bold uppercase tracking-widest hover:text-rosado transition-colors text-white">Servicios</a>
+                <a href="#cotizar" class="text-xs font-bold uppercase tracking-widest hover:text-rosado transition-colors text-white">Contacto</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="pt-64 pb-44 px-10 bg-crema relative overflow-hidden text-center">
-        <div class="max-w-6xl mx-auto relative z-10">
-            <span class="bg-negroGoth text-crema px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-12 inline-block shadow-xl">
+        <div class="max-w-6xl mx-auto relative z-10 text-plomoOscuro">
+            <span class="bg-negroGoth text-crema px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-12 inline-block shadow-lg text-white">
                 Diseño y papelería personalizada
             </span>
-            <h1 class="text-7xl md:text-9xl font-black text-negroGoth mb-12 title-ultra">
-                Cada detalle <br> <span class="text-cherry italic">cuenta.</span>
+            <h1 class="text-6xl md:text-8xl font-black mb-12 title-ultra">
+                Cada detalle cuenta, <br> y yo <span class="text-cherry italic">lo diseño para ti.</span>
             </h1>
-            <p class="text-2xl md:text-3xl text-plomoOscuro max-w-4xl mx-auto mb-20 font-medium opacity-80 leading-snug">
+            <p class="text-2xl md:text-3xl max-w-4xl mx-auto mb-20 font-medium opacity-80 leading-snug">
                 Piezas gráficas y papelería personalizada con una propuesta visual <span class="border-b-4 border-cherry">única</span> y adaptable.
             </p>
             <div class="flex flex-col sm:flex-row gap-8 justify-center items-center">
-                <a href="#cotizar" class="bg-cherry text-white px-16 py-8 rounded-full font-black text-xl uppercase tracking-tighter shadow-2xl hover:bg-rosado transition-all transform hover:scale-105">
+                <a href="#cotizar" class="btn-cta">
                     Cuéntame tu idea
                 </a>
-                <a href="#proyectos" class="border-4 border-negroGoth text-negroGoth px-16 py-8 rounded-full font-black text-xl uppercase tracking-tighter hover:bg-negroGoth hover:text-white transition-all shadow-md">
+                <a href="#proyectos" class="border-4 border-negroGoth text-negroGoth px-14 py-5 rounded-full font-black text-xl uppercase tracking-tighter hover:bg-negroGoth hover:text-white transition-all shadow-md">
                     Ver Portafolio
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Sección Especialidades (Actualizada según image_e38281.png) -->
-    <section id="servicios" class="py-48 bg-negroGoth text-white slant-border relative z-20 shadow-2xl">
-        <div class="max-w-7xl mx-auto px-10">
-            <h2 class="text-center text-5xl md:text-7xl font-black mb-24 uppercase tracking-tighter text-white">¿CÓMO PUEDO AYUDARTE?</h2>
+    <!-- Sección Especialidades (image_e38281.png) -->
+    <section id="servicios" class="py-52 bg-negroGoth text-white slant-border relative z-20 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-10 text-center">
+            <h2 class="text-5xl md:text-7xl font-black mb-24 uppercase tracking-tighter text-white">¿CÓMO PUEDO AYUDARTE?</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                <!-- Tarjeta 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 text-left">
                 <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
-                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="scissors" size="40"></i></div>
-                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Papelería <br> Creativa</span>
+                    <div class="text-crema group-hover:text-white transition-colors"><i data-lucide="scissors" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight leading-tight text-white">Papelería <br> Creativa</span>
                 </div>
-                <!-- Tarjeta 2 -->
                 <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
-                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="monitor" size="40"></i></div>
-                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Diseño <br> Digital</span>
+                    <div class="text-crema group-hover:text-white transition-colors"><i data-lucide="monitor" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight text-white">Diseño <br> Digital</span>
                 </div>
-                <!-- Tarjeta 3 -->
                 <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
-                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="graduation-cap" size="40"></i></div>
-                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Apoyo <br> Académico</span>
+                    <div class="text-crema group-hover:text-white transition-colors"><i data-lucide="graduation-cap" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight text-white">Apoyo <br> Académico</span>
                 </div>
-                <!-- Tarjeta 4 -->
                 <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
-                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="music" size="40"></i></div>
-                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Diseño <br> Musical</span>
+                    <div class="text-crema group-hover:text-white transition-colors"><i data-lucide="music" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight text-white">Diseño <br> Musical</span>
                 </div>
-                <!-- Tarjeta 5 -->
                 <div class="spec-card p-10 flex flex-col items-center text-center gap-6 group cursor-default">
-                    <div class="text-cherry group-hover:text-white transition-colors"><i data-lucide="video" size="40"></i></div>
-                    <span class="text-lg font-bold uppercase tracking-tight leading-tight">Videos <br> y Reels</span>
+                    <div class="text-crema group-hover:text-white transition-colors"><i data-lucide="video" size="40"></i></div>
+                    <span class="text-lg font-bold uppercase tracking-tight text-white">Videos <br> y Reels</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portafolio (Inspirado en image_e19e05.png y image_e36f61.jpg) -->
+    <!-- Portafolio -->
     <section id="proyectos" class="py-40 bg-crema">
         <div class="max-w-7xl mx-auto px-10">
             <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-24 gap-12 text-center lg:text-left">
                 <div class="max-w-2xl">
-                    <h3 class="text-7xl md:text-8xl font-black text-negroGoth mb-6 tracking-tighter uppercase">Mis Creaciones</h3>
+                    <h3 class="text-7xl font-black text-negroGoth mb-6 tracking-tighter uppercase leading-none">Mis Creaciones</h3>
                     <p class="text-2xl text-plomoOscuro font-medium opacity-60 leading-relaxed">Una selección de trabajos donde aplico mi propuesta visual.</p>
                 </div>
                 
@@ -231,86 +243,83 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14" id="projects-grid">
-                <!-- Proyectos vía JavaScript -->
+                <!-- Proyectos JS -->
             </div>
         </div>
     </section>
 
-    <!-- ¿Qué puedo hacer por ti? (image_e37a28.png) -->
+    <!-- ¿Qué puedo hacer por ti? -->
     <section class="py-40 bg-plomoOscuro text-white relative z-10 shadow-2xl">
         <div class="max-w-7xl mx-auto px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                 
-                <!-- Lista de servicios (Izquierda) -->
                 <div class="lg:col-span-7">
-                    <h3 class="text-6xl md:text-8xl font-black mb-20 leading-none tracking-tighter">¿Qué puedo hacer <br> <span class="text-cherry italic">por ti?</span></h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+                    <h3 class="text-6xl md:text-8xl font-black mb-20 leading-none tracking-tighter text-white">¿Qué puedo hacer <br> <span class="text-rosado italic">por ti?</span></h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10 text-left">
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Stickers y Etiquetas
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Anillados y Agendas
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Invitaciones Interactivas
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Contenido para Redes
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Flyers y Promoción
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Cover Art y Dossier
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Booking Musical
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Presentaciones de Tesis
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Láminas Académicas
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Edición de Reels
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Video Corporativo
                         </div>
                         <div class="flex items-center gap-4 text-xl font-medium group cursor-default">
-                            <i data-lucide="check-circle" size="24" class="text-cherry group-hover:text-rosado transition-colors"></i>
+                            <i data-lucide="check-circle" size="24" class="text-crema group-hover:text-rosado transition-colors"></i>
                             Logotipos e Identidad Visual
                         </div>
                     </div>
                 </div>
 
-                <!-- Tarjeta informativa (Derecha) -->
-                <div class="lg:col-span-5 services-card-right p-16 shadow-2xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-cherry/10 blur-3xl rounded-full translate-x-10 -translate-y-10"></div>
-                    <h4 class="text-3xl font-bold mb-10 text-cherry uppercase tracking-tight">Versatilidad visual</h4>
+                <div class="lg:col-span-5 bg-[#1e242f] p-16 shadow-2xl rounded-[2.5rem] border border-white/10 relative overflow-hidden group">
+                    <h4 class="text-3xl font-bold mb-10 text-white uppercase tracking-tight">Versatilidad visual</h4>
                     <p class="text-xl leading-relaxed mb-16 text-gray-300 font-light">
-                        Me especializo en adaptar mi lenguaje gráfico a diferentes soportes. Ya sea que necesites algo físico como una agenda o algo digital como un reel, cuido que la propuesta sea profesional y coherente.
+                        Me especializo en adaptar mi lenguaje gráfico a diferentes soportes. Ya sea que necesites algo físico como stickers de emprendimiento o algo digital como un flyer, catálogos o reels, cuidando la propuesta haciéndola coherente.
                     </p>
                     <div class="space-y-6">
-                        <div class="flex items-center gap-6 bg-white/5 p-6 rounded-2xl border border-white/5 group-hover:border-cherry/50 transition-all cursor-default">
-                            <i data-lucide="layout" size="28" class="text-cherry"></i>
-                            <span class="text-xl font-bold uppercase tracking-widest text-sm">Diseño Multiformato</span>
+                        <div class="flex items-center gap-6 bg-white/5 p-6 rounded-2xl border border-white/10 group-hover:border-rosado/50 transition-all">
+                            <i data-lucide="layout" size="28" class="text-crema"></i>
+                            <span class="text-xl font-bold uppercase tracking-widest text-sm text-white">Diseño Multiformato</span>
                         </div>
-                        <div class="flex items-center gap-6 bg-white/5 p-6 rounded-2xl border border-white/5 group-hover:border-cherry/50 transition-all cursor-default">
-                            <i data-lucide="sparkles" size="28" class="text-cherry"></i>
-                            <span class="text-xl font-bold uppercase tracking-widest text-sm">Detalle y Precisión</span>
+                        <div class="flex items-center gap-6 bg-white/5 p-6 rounded-2xl border border-white/10 group-hover:border-rosado/50 transition-all">
+                            <i data-lucide="sparkles" size="28" class="text-crema"></i>
+                            <span class="text-xl font-bold uppercase tracking-widest text-sm text-white">Detalle y Precisión</span>
                         </div>
                     </div>
                 </div>
@@ -324,47 +333,48 @@
         <div class="max-w-6xl mx-auto bg-white border-8 border-negroGoth rounded-[4.5rem] overflow-hidden flex flex-col md:flex-row shadow-[40px_40px_0_0_#70011B]">
             <div class="md:w-2/5 bg-negroGoth p-20 text-white flex flex-col justify-between">
                 <div>
-                    <h3 class="text-6xl font-black mb-10 uppercase tracking-tighter">Hablemos</h3>
-                    <p class="text-xl font-bold opacity-60 mb-16 leading-tight">
-                        Cuéntame los detalles de tu idea y te responderé con una propuesta personalizada.
+                    <h3 class="text-6xl font-black mb-10 uppercase tracking-tighter text-white">Hablemos</h3>
+                    <p class="text-xl font-bold opacity-60 mb-16 leading-tight text-white">
+                        Cuéntame los detalles de tu idea y te responderé con una propuesta personalizada por email y WhatsApp.
                     </p>
                 </div>
                 
-                <div class="flex items-center border-2 border-white/20 rounded-3xl p-6 gap-8 bg-white/5 backdrop-blur shadow-inner">
-                    <a href="https://www.instagram.com/valentina.crea" target="_blank" class="text-cherry hover:text-rosado transition-all transform hover:scale-125">
+                <div class="flex items-center border-2 border-white/20 rounded-3xl p-6 gap-8 bg-white/5 shadow-inner">
+                    <a href="https://www.instagram.com/logosbalecita/" target="_blank" class="text-white hover:text-rosado transition-all transform hover:scale-125">
                         <i data-lucide="instagram" size="32"></i>
                     </a>
-                    <a href="mailto:valentinacrea@gmail.com" class="text-cherry hover:text-rosado transition-all transform hover:scale-125">
+                    <a href="mailto:logosbalecita@gmail.com" class="text-white hover:text-rosado transition-all transform hover:scale-125">
                         <i data-lucide="mail" size="32"></i>
                     </a>
-                    <a href="https://wa.me/56989166216" target="_blank" class="text-cherry hover:text-rosado transition-all transform hover:scale-125">
+                    <a href="https://wa.me/56989166216" target="_blank" class="text-white hover:text-rosado transition-all transform hover:scale-125">
                         <i data-lucide="phone" size="32"></i>
                     </a>
                 </div>
             </div>
 
-            <div class="md:w-3/5 p-20 lg:p-24 bg-white relative">
+            <div class="md:w-3/5 p-16 lg:p-24 bg-white relative">
                 <div id="success-message" class="hidden text-center py-20">
                     <i data-lucide="check-circle" size="120" class="text-cherry mx-auto mb-10 animate-bounce"></i>
-                    <h4 class="text-6xl font-black text-negroGoth mb-8 uppercase tracking-tighter">¡Listo!</h4>
-                    <p class="text-2xl font-bold mb-12 italic opacity-50">Abriendo WhatsApp para concretar tu idea...</p>
+                    <h4 class="text-6xl font-black text-negroGoth mb-8 uppercase tracking-tighter leading-none">¡Enviado!</h4>
+                    <p class="text-2xl font-bold mb-12 italic opacity-50 text-balance text-black">Te llegará una copia al correo y abriremos WhatsApp...</p>
                     <button onclick="resetForm()" class="bg-cherry text-white px-12 py-5 rounded-full text-lg font-black uppercase shadow-xl hover:bg-rosado transition-all">Nueva Consulta</button>
                 </div>
 
+                <!-- Formulario conectado a Email (Formspree) y WhatsApp -->
                 <form id="quote-form" class="space-y-12" onsubmit="handleForm(event)">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
                         <div class="space-y-4">
-                            <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Nombre</label>
-                            <input id="form-name" required type="text" placeholder="..." class="w-full border-b-4 border-gray-100 py-5 focus:border-cherry outline-none font-bold text-3xl placeholder:text-gray-100 bg-transparent transition-all">
+                            <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Tu Nombre</label>
+                            <input name="nombre" id="form-name" required type="text" placeholder="..." class="w-full border-b-4 border-gray-100 py-4 focus:border-cherry outline-none font-bold text-3xl placeholder:text-gray-100 bg-transparent transition-all">
                         </div>
                         <div class="space-y-4">
                             <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Contacto</label>
-                            <input id="form-contact" required type="text" placeholder="..." class="w-full border-b-4 border-gray-100 py-5 focus:border-cherry outline-none font-bold text-3xl placeholder:text-gray-100 bg-transparent transition-all">
+                            <input name="contacto" id="form-contact" required type="text" placeholder="..." class="w-full border-b-4 border-gray-100 py-4 focus:border-cherry outline-none font-bold text-3xl placeholder:text-gray-100 bg-transparent transition-all">
                         </div>
                     </div>
-                    <div class="space-y-4">
-                        <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Categoría del Proyecto</label>
-                        <select id="form-category" class="w-full bg-gray-50 border-4 border-gray-100 rounded-3xl px-8 py-6 outline-none font-black text-xl appearance-none cursor-pointer focus:border-cherry transition-all">
+                    <div class="space-y-4 text-left">
+                        <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Categoría</label>
+                        <select name="categoria" id="form-category" class="w-full bg-gray-50 border-4 border-gray-100 rounded-3xl px-8 py-5 outline-none font-black text-xl appearance-none cursor-pointer focus:border-cherry">
                             <option>Papelería Creativa</option>
                             <option>Diseño Digital</option>
                             <option>Apoyo Gráfico Académico</option>
@@ -373,13 +383,16 @@
                             <option>Otro proyecto...</option>
                         </select>
                     </div>
-                    <div class="space-y-4">
+                    <div class="space-y-4 text-left">
                         <label class="text-[11px] font-black uppercase tracking-widest text-gray-400">Detalles de la idea</label>
-                        <textarea id="form-details" rows="3" placeholder="Tu visión aquí..." class="w-full border-b-4 border-gray-100 py-5 focus:border-cherry outline-none font-bold text-xl placeholder:text-gray-100 bg-transparent transition-all"></textarea>
+                        <textarea name="detalles" id="form-details" rows="3" placeholder="..." class="w-full border-b-4 border-gray-100 py-4 focus:border-cherry outline-none font-bold text-xl placeholder:text-gray-100 bg-transparent transition-all"></textarea>
                     </div>
-                    <button type="submit" class="bg-cherry w-full text-white py-8 rounded-full font-black text-2xl uppercase tracking-tighter shadow-2xl hover:bg-rosado transition-all transform hover:scale-102">
-                        Solicitar Cotización
-                    </button>
+                    
+                    <div class="flex justify-center">
+                        <button type="submit" class="btn-cta">
+                            SOLICITAR COTIZACIÓN
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -388,13 +401,21 @@
     <!-- Footer -->
     <footer class="py-32 bg-negroGoth text-white text-center">
         <div class="max-w-7xl mx-auto px-10 flex flex-col items-center">
-            <div class="w-20 h-20 bg-cherry rounded-3xl rotate-12 flex items-center justify-center mb-16 shadow-2xl">
-                <i data-lucide="sparkles" size="32" class="-rotate-12"></i>
+            <div class="w-20 h-20 bg-white rounded-3xl rotate-12 flex items-center justify-center mb-16 shadow-2xl">
+                <i data-lucide="sparkles" size="32" class="text-cherry -rotate-12"></i>
             </div>
-            <p class="text-4xl font-black uppercase italic mb-12 max-w-2xl leading-none text-cherry">
+            <p class="text-4xl font-black uppercase italic mb-12 max-w-2xl leading-none text-white">
                 Diseño visual y papelería.
             </p>
-            <div class="w-32 h-1 bg-cherry/20 mb-16"></div>
+            <div class="flex gap-10 mb-16">
+                <a href="https://www.instagram.com/logosbalecita/" target="_blank" class="text-white hover:text-cherry transition-colors scale-125">
+                    <i data-lucide="instagram"></i>
+                </a>
+                <a href="mailto:logosbalecita@gmail.com" class="text-white hover:text-cherry transition-colors scale-125">
+                    <i data-lucide="mail"></i>
+                </a>
+            </div>
+            <div class="w-32 h-1 bg-white/20 mb-16"></div>
             <div class="text-gray-600 font-black text-[10px] uppercase tracking-[1em]">
                 © 2026 VALENTINA PALACIOS — VALPARAÍSO
             </div>
@@ -405,11 +426,12 @@
         lucide.createIcons();
 
         const WHATSAPP_NUMBER = "56989166216"; 
+        const EMAIL_RECEIVER = "logosbalecita@gmail.com";
 
         const projects = [
             { id: 1, title: 'Stickers y Etiquetas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=600', description: 'Diseño y troquelado de piezas físicas personalizadas.' },
             { id: 2, title: 'Feed de Instagram', category: 'Diseño Digital', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', description: 'Propuesta visual para redes sociales y marcas digitales.' },
-            { id: 3, title: 'Apoyo Académico', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
+            { id: 3, title: 'Presentación Académica', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
             { id: 4, title: 'Cover Art Single', category: 'Diseño Musical', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=600', description: 'Arte de tapa conceptual para lanzamientos musicales.' },
             { id: 5, title: 'Edición de Reels', category: 'Diseño Videos y Reels', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', description: 'Edición dinámica con ritmo y estética visual impactante.' },
             { id: 6, title: 'Agendas Personalizadas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&q=80&w=600', description: 'Encuadernación y diseño de interiores a medida.' },
@@ -431,7 +453,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="p-12">
+                        <div class="p-12 text-left">
                             <h4 class="text-4xl font-black text-plomoOscuro mb-6 uppercase tracking-tighter group-hover:text-cherry transition-colors leading-none">${project.title}</h4>
                             <p class="text-xl text-plomoOscuro font-medium opacity-50 mb-10 leading-tight">${project.description}</p>
                             <div class="flex items-center gap-3 text-cherry font-black text-sm uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-all -translate-x-6 group-hover:translate-x-0 cursor-pointer">
@@ -455,20 +477,37 @@
             });
         }
 
-        function handleForm(e) {
+        async function handleForm(e) {
             e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            
             const name = document.getElementById('form-name').value;
             const contact = document.getElementById('form-contact').value;
             const cat = document.getElementById('form-category').value;
             const details = document.getElementById('form-details').value;
 
+            // 1. Enviar a EMAIL vía Formspree
+            fetch("https://formspree.io/f/logosbalecita@gmail.com", {
+                method: "POST",
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            // 2. Construir mensaje para WhatsApp
             const message = `Hola Valentina! 🖤 Me gustaría una cotización.\n\n*Nombre:* ${name}\n*Contacto:* ${contact}\n*Categoría:* ${cat}\n*Detalles:* ${details}`;
             const encodedMessage = encodeURIComponent(message);
             const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
+            // 3. Mostrar éxito y abrir WhatsApp
             document.getElementById('quote-form').classList.add('hidden');
             document.getElementById('success-message').classList.remove('hidden');
-            window.open(whatsappLink, '_blank');
+            
+            setTimeout(() => {
+                window.open(whatsappLink, '_blank');
+            }, 500);
         }
 
         function resetForm() {
