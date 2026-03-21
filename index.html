@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mi Taller Creativo | Diseño y Papelería</title>
     <!-- Google Fonts: Quicksand -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons (via Development build) -->
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
@@ -48,7 +49,7 @@
         }
         .category-btn.active {
             background-color: #40E0D0;
-            color: white;
+            color: white !important;
             box-shadow: 0 8px 20px -5px rgba(64, 224, 208, 0.6);
             transform: scale(1.05);
         }
@@ -92,10 +93,10 @@
                 Piezas gráficas y papelería personalizada con una propuesta visual cuidada, adaptable a distintos formatos y necesidades.
             </p>
             <div class="flex flex-col sm:flex-row gap-5 justify-center">
-                <a href="#cotizar" class="btn-turquesa text-white px-10 py-4 rounded-2xl font-bold shadow-md">
+                <a href="#cotizar" class="btn-turquesa text-white px-10 py-4 rounded-2xl font-bold shadow-md text-center">
                     Cuéntame tu idea
                 </a>
-                <a href="#proyectos" class="bg-white border-2 border-gray-100 px-10 py-4 rounded-2xl font-bold text-gray-600 hover:border-rosado hover:text-rosado transition-all">
+                <a href="#proyectos" class="bg-white border-2 border-gray-100 px-10 py-4 rounded-2xl font-bold text-gray-600 hover:border-rosado hover:text-rosado transition-all text-center">
                     Mira mis trabajos
                 </a>
             </div>
@@ -154,12 +155,12 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" id="projects-grid">
-                <!-- Los proyectos se cargan via JS -->
+                <!-- Proyectos vía JS -->
             </div>
         </div>
     </section>
 
-    <!-- Sección "¿Qué puedo hacer por ti?" -->
+    <!-- ¿Qué puedo hacer por ti? -->
     <section class="py-28 bg-carbon text-white rounded-[4rem] mx-4 md:mx-8 mb-28 shadow-2xl relative overflow-hidden">
         <div class="absolute top-0 right-0 w-64 h-64 bg-turquesa/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-rosado/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
@@ -235,7 +236,7 @@
         </div>
     </section>
 
-    <!-- Formulario de Cotización -->
+    <!-- Cotizar -->
     <section id="cotizar" class="py-24 px-8">
         <div class="max-w-5xl mx-auto bg-white rounded-[3.5rem] shadow-2xl border border-gray-100 overflow-hidden flex flex-col md:flex-row">
             <div class="md:w-1/3 bg-crema p-12 flex flex-col justify-between border-r border-gray-100">
@@ -262,7 +263,7 @@
                     </div>
                     <h4 class="text-3xl font-bold text-carbon mb-3">¡Recibido!</h4>
                     <p class="text-gray-500 font-medium text-lg">Revisaré tu idea con detalle y te contactaré muy pronto.</p>
-                    <button onclick="resetForm()" class="mt-10 px-8 py-3 bg-rosado text-white rounded-full font-bold shadow-lg shadow-pink-100 hover:scale-105 transition-all">
+                    <button onclick="resetForm()" class="mt-10 px-8 py-3 bg-rosado text-white rounded-full font-bold shadow-lg hover:scale-105 transition-all">
                         Enviar otra consulta
                     </button>
                 </div>
@@ -324,27 +325,21 @@
     </footer>
 
     <script>
-        // Inicializar iconos
         lucide.createIcons();
 
-        // Datos del Portafolio
         const projects = [
             { id: 1, title: 'Stickers y Etiquetas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=600', description: 'Diseño y troquelado de piezas físicas personalizadas.' },
             { id: 2, title: 'Feed de Instagram', category: 'Diseño Digital', img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', description: 'Propuesta visual para redes sociales y marcas digitales.' },
-            { id: 3, title: 'Apoyo Académico', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
+            { id: 3, title: 'Presentación Académica', category: 'Apoyo Gráfico Académico', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600', description: 'Diseño de láminas y presentaciones para defensas académicas.' },
             { id: 4, title: 'Cover Art Single', category: 'Diseño Musical', img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=600', description: 'Arte de tapa y concepto visual para lanzamientos musicales.' },
             { id: 5, title: 'Edición de Reels', category: 'Diseño Videos y Reels', img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', description: 'Montaje y edición de contenido dinámico para plataformas de video.' },
             { id: 6, title: 'Agendas Personalizadas', category: 'Papelería Creativa', img: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&q=80&w=600', description: 'Encuadernación y diseño de interiores a medida.' },
         ];
 
-        // Función para renderizar proyectos
         function renderProjects(filter = 'Todos') {
             const grid = document.getElementById('projects-grid');
             grid.innerHTML = '';
-            
-            const filtered = filter === 'Todos' 
-                ? projects 
-                : projects.filter(p => p.category === filter);
+            const filtered = filter === 'Todos' ? projects : projects.filter(p => p.category === filter);
 
             filtered.forEach(project => {
                 const card = `
@@ -364,20 +359,15 @@
                                 Ver proyecto <i data-lucide="chevron-right" size="14"></i>
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 grid.insertAdjacentHTML('beforeend', card);
             });
             lucide.createIcons();
         }
 
-        // Función de filtrado
         function filterProjects(category) {
             renderProjects(category);
-            
-            // Actualizar estado de botones
-            const buttons = document.querySelectorAll('.category-btn');
-            buttons.forEach(btn => {
+            document.querySelectorAll('.category-btn').forEach(btn => {
                 if (btn.textContent.trim() === category) {
                     btn.classList.add('active');
                     btn.classList.remove('text-gray-500');
@@ -388,7 +378,6 @@
             });
         }
 
-        // Lógica del Formulario
         function handleForm(e) {
             e.preventDefault();
             document.getElementById('quote-form').classList.add('hidden');
@@ -401,10 +390,7 @@
             document.getElementById('success-message').classList.add('hidden');
         }
 
-        // Carga inicial
-        window.onload = () => {
-            renderProjects();
-        };
+        window.onload = () => renderProjects();
     </script>
 </body>
 </html>
